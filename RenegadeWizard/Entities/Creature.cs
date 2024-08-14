@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenegadeWizard.Entities.Creatures
+namespace RenegadeWizard.Entities
 {
     public class Creature : Entity
     {
@@ -14,17 +14,17 @@ namespace RenegadeWizard.Entities.Creatures
         {
             if (Conditions.Any(con => con is Slippery))
             {
-                Console.WriteLine($" # {Name} too slippery!");
+                Console.WriteLine($" ! {Name} too slippery!");
                 return 0;
             }
 
             if (Conditions.Any(con => con is Burning))
             {
-                grabber.ApplyCondition(new Burning(3), $"trying to grab {Name}");
+                grabber.ApplyCondition(new Burning(3), $"trying to grab Burning {Name}");
             }
 
             grabber.HeldObject = this;
-            Console.WriteLine($" # {Name} is being used as a shield by {grabber.Name}");
+            Console.WriteLine($"{Name} is being used as a shield by {grabber.Name} | ");
             return 1;
         }
         public override int WhenThrown(Entity target, Entity thrower)

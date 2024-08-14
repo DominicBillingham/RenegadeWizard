@@ -21,17 +21,17 @@ namespace RenegadeWizard.Entities
         // WhenAction Methods
         public virtual int WhenThrown(Entity target, Entity thrower)
         {
-            Console.WriteLine($" ! {thrower.Name} tries to throw {Name}, but it fails");
+            Console.Write($"{thrower.Name} tries to throw {Name}, but it fails | ");
             return 0;
         }
         public virtual int WhenDrank(Entity drinker)
         {
-            Console.WriteLine($" ! {drinker.Name} tries to drink {Name}, but it fails");
+            Console.Write($"{drinker.Name} tries to drink {Name}, but it fails | ");
             return 0;
         }
         public virtual int WhenGrabbed(Entity grabber)
         {
-            Console.WriteLine($" ! {grabber.Name} tries to grab {Name}, but it fails");
+            Console.Write($"{grabber.Name} tries to grab {Name}, but it fails | ");
             return 0;
         }
         public virtual int WhenInspected()
@@ -46,13 +46,12 @@ namespace RenegadeWizard.Entities
             return 0;
         }
 
-
         // Generic Entity Methods
         public virtual void ApplyDamage(int damage, string? source = null)
         {
             if (Conditions.Any(con => con is Immortal))
             {
-                Console.WriteLine($"{Name} is immortal and takes 0 damage from {source}");
+                Console.Write($"{Name} is immortal and takes 0 damage from {source} | ");
                 return;
             }
 
@@ -61,12 +60,12 @@ namespace RenegadeWizard.Entities
             if (HeldObject != null && HeldObject.IsDestroyed == false)
             {
                 HeldObject.Health -= damage;
-                Console.WriteLine($" # {HeldObject.Name} takes -{damage}hp from {source} to shield {Name}");
+                Console.Write($"{HeldObject.Name} takes -{damage}hp from {source} to shield {Name} | ");
 
                 if ( HeldObject.IsDestroyed )
                 {
                     HeldObject.SelfDestruct();
-                    Console.WriteLine($" # {HeldObject.Name} is destroyed!");
+                    Console.Write($"{HeldObject.Name} is destroyed! | ");
                 }
 
                 return;
@@ -75,19 +74,18 @@ namespace RenegadeWizard.Entities
             if (IsDestroyed == false)
             {
                 Health -= damage;
-                Console.Write($" # {Name} takes -{damage}hp from {source}");
+                Console.Write($"{Name} takes -{damage}hp from {source} | ");
                 if(IsDestroyed)
                 {
                     SelfDestruct();
                 }
-                Console.WriteLine();
             }
         }
         public virtual void ApplyConditionDamage(int damage, string? source = null)
         {
             if (Conditions.Any(con => con is Immortal))
             {
-                Console.WriteLine($"{Name} is immortal and takes 0 damage from {source}");
+                Console.Write($"{Name} is immortal and takes 0 damage from {source} | ");
                 return;
             }
 
@@ -95,28 +93,26 @@ namespace RenegadeWizard.Entities
             if (IsDestroyed == false)
             {
                 Health -= damage;
-                Console.Write($" # {Name} takes -{damage}hp from {source}");
+                Console.Write($"{Name} takes -{damage}hp from {source} | ");
                 if (IsDestroyed)
                 {
-                    Console.Write($" | {Name} has been destroyed");
+                    Console.Write($"{Name} has been destroyed | ");
                 }
-                Console.WriteLine();
             }
         }
-
         public virtual void ApplyHealing(int heal, string? source = null)
         {
             Health += heal;
-            Console.WriteLine($" # {Name} recovers +{heal}hp from {source}");
+            Console.Write($"{Name} recovers +{heal}hp from {source} | ");
         }
         public virtual void ApplyCondition(Condition condition, string? source = null)
         {
-            Console.WriteLine($" # {Name} is {condition.Name} from {source} ");
+            Console.Write($"{Name} is {condition.Name} from {source} | ");
             Conditions.Add(condition);
         }
         public virtual void SelfDestruct()
         {
-            Console.Write($" | {Name} has been destroyed");
+            Console.Write($"{Name} has been destroyed | ");
             Scene.Entities.Remove(this);
         }
 

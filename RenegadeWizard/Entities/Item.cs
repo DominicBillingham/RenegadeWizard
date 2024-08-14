@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RenegadeWizard.Conditions;
 using RenegadeWizard.GameClasses;
 
-namespace RenegadeWizard.Entities.Items
+namespace RenegadeWizard.Entities
 {
     public class Item : Entity
     {
@@ -20,13 +20,14 @@ namespace RenegadeWizard.Entities.Items
 
             if (Conditions.Any(con => con is Burning))
             {
-                grabber.ApplyCondition(new Burning(3), $"trying to grab {Name}");
+                grabber.ApplyCondition(new Burning(3), $"trying to grab Burning {Name}");
             }
 
             grabber.HeldObject = this;
-            Console.WriteLine($" # {Name} is being used as a shield by {grabber.Name}");
+            Console.WriteLine($"{Name} is being used as a shield by {grabber.Name} | ");
             return 1;
         }
+
     }
 
 }

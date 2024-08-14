@@ -1,6 +1,5 @@
 ﻿using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
-using RenegadeWizard.Entities.Items;
 using RenegadeWizard.Entities.Items.Drinks;
 
 namespace RenegadeWizard.GameClasses
@@ -10,18 +9,23 @@ namespace RenegadeWizard.GameClasses
         public static List<Entity> Entities { get; set; } = new();
         static Scene()
         {
-            Entities.Add(new BackwaterBeer());
-            Entities.Add(new Knife());
-            Entities.Add(new Table());
-            Entities.Add(new TitanStout());
-            Entities.Add(new StickOfButter());
-            Entities.Add(new FireflameWine());
-            Entities.Add(new Grenade());
-            Entities.Add(new GreatBritishTea());
-
-            Entities.Add(new Goblin("Goblin"));
             Entities.Add(new Player("NotHarry"));
-            Entities.Add(new Kobold("Kobold"));
+            Entities.Add(new Goblin("Goblin"));
+
+            AddBarItems();
+        }
+
+        public static void AddBarItems()
+        {
+
+            var items = typeof(Item).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Item)));
+            foreach (var item in items)
+            {
+                Item instance = (Item)Activator.CreateInstance(item);
+                Entities.Add(instance);
+            }
+
+
         }
 
         public static Entity GetPlayer()
@@ -48,6 +52,8 @@ namespace RenegadeWizard.GameClasses
 
         public static void ApplyConditionEffects()
         {
+            Console.Write(" # ");
+
             foreach (var entity in Entities)
             {
                 foreach (var con in entity.Conditions)
@@ -58,14 +64,19 @@ namespace RenegadeWizard.GameClasses
             }
 
             Entities.RemoveAll(ent => ent.Health <= 0);
+
+            Console.WriteLine();
         }
 
         public static void EngageHyperArtificialIntelligence()
         {
             foreach (var NPC in GetNPCs())
             {
+
                 var rand = new Random();
                 var randomItem = GetItems()[rand.Next(GetItems().Count)];
+
+                Console.Write(" # ");
 
                 if (rand.Next(2) == 1)
                 {
@@ -76,8 +87,12 @@ namespace RenegadeWizard.GameClasses
                     NPC.Actions?.ActionDrink(randomItem);
                 }
 
+                Console.WriteLine();
 
             }
+
         }
+
+
     }
 }

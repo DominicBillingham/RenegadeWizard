@@ -1,5 +1,6 @@
 ﻿using RenegadeWizard.Components;
 using RenegadeWizard.Entities;
+using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.GameClasses;
 using System;
 using System.Linq;
@@ -13,7 +14,6 @@ Narrator.ShowRoundInfo(currentRound);
 
 while (hasPlayerWon == false)
 {
-
     Console.Write(" > ");
     var input = Console.ReadLine().ToLower().Split(" ")
         .Where(x => x.Length > 2)
@@ -63,7 +63,11 @@ while (hasPlayerWon == false)
     }
 
     // Perform Round Actions
+
+    Console.Write(" # ");
     int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().Actions, actionParameters.ToArray());
+    Console.WriteLine();
+
     if (actionCost > 0)
     {
         Scene.EngageHyperArtificialIntelligence();
@@ -71,10 +75,20 @@ while (hasPlayerWon == false)
         Scene.ApplyConditionEffects();
         currentRound++;
 
-        Narrator.ContinuePrompt();
+        if (currentRound % 2 == 0) {
+            Console.WriteLine(" # Some more goblins have shown up!");
 
+            string[] goblinNames = { "Grubnak", "Snaggletooth", "Ruknuk", "Zigzag", "Bogrot", "Nibbles", "Grizzle", "Muckmire", "Skreech", "Wartnose", "Dribble", "Snizzle", "Grubfoot", "Gnash", "Sludge", "Grogmar", "Spitfire", "Blister", "Crackle", "Fungus" };
+
+            var rand = new Random();
+            var nextGoblinName = goblinNames[rand.Next(20)];
+            Scene.Entities.Add(new Goblin(nextGoblinName));
+        }
+
+        Narrator.ContinuePrompt();
         Console.Clear();
         Narrator.ShowRoundInfo(currentRound);
     }
 
  }
+

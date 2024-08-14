@@ -3,6 +3,7 @@ O O O Total Pomegrantes O O O
 11/08/2024 - 5
 12/08/2024 - 5
 13/08/2024 - 3 + 3 + 
+14/08/24 - 1
 
 >>> FINISHED <<<
 Make all actions resolved by a ACTION RESOLVE CLASS
