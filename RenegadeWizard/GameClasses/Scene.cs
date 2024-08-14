@@ -27,7 +27,7 @@ namespace RenegadeWizard.GameClasses
         public static Entity GetPlayer()
         {
             // idea: allow for multiple players
-            return Entities.FirstOrDefault(x => x is Player);
+            return Entities.First(x => x is Player);
         }
 
         public static List<Entity> GetItems()
@@ -60,24 +60,24 @@ namespace RenegadeWizard.GameClasses
             Entities.RemoveAll(ent => ent.Health <= 0);
         }
 
-        //public static void EngageHyperArtificialIntelligence()
-        //{
-        //    foreach (var NPC in GetNPCs())
-        //    {
-        //        var rand = new Random();
-        //        var randomItem = GetItems()[rand.Next(GetItems().Count)];
+        public static void EngageHyperArtificialIntelligence()
+        {
+            foreach (var NPC in GetNPCs())
+            {
+                var rand = new Random();
+                var randomItem = GetItems()[rand.Next(GetItems().Count)];
 
-        //        if ( rand.Next(1) == 0 )
-        //        {
-        //            NPC.Actions.ActionThrow(randomItem, Scene.GetPlayer());
-        //        } 
-        //        else
-        //        {
-        //            NPC.Actions.ActionDrink(randomItem);
-        //        }
+                if (rand.Next(2) == 1)
+                {
+                    NPC.Actions?.ActionThrow(randomItem, Scene.GetPlayer());
+                }
+                else
+                {
+                    NPC.Actions?.ActionDrink(randomItem);
+                }
 
 
-        //    }
-        //}
+            }
+        }
     }
 }

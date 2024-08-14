@@ -66,7 +66,8 @@ while (hasPlayerWon == false)
     int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().Actions, actionParameters.ToArray());
     if (actionCost > 0)
     {
-        //Scene.EngageHyperArtificialIntelligence();
+        Scene.EngageHyperArtificialIntelligence();
+
         Scene.ApplyConditionEffects();
         currentRound++;
 

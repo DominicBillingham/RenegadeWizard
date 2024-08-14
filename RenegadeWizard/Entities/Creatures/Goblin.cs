@@ -13,16 +13,10 @@ namespace RenegadeWizard.Entities.Creatures
         public Goblin(string name)
         {
             Name = name;
-            Description = " # A weak, silly and clumsy goblin";
+            Description = "A weak, silly and clumsy goblin";
             Health = 5;
             Actions = new Actions(this);
             Attributes = new Attributes(5, 5, 5);
-        }
-        public override int WhenThrown(Entity target, Entity thrower)
-        {
-            ApplyDamage(1, "being thrown");
-            target.ApplyDamage(2, $"thrown {Name}");
-            return 1;
         }
 
     }

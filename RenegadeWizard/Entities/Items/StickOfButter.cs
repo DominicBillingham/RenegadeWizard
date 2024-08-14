@@ -13,13 +13,13 @@ namespace RenegadeWizard.Entities.Items
         public StickOfButter()
         {
             Name = "StickOfButter";
-            Description = " # Why does it have a bite mark!?";
+            Description = "Why does it have a bite mark!?";
             Health = 1;
             Conditions.Add(new Slippery(999));
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-            target.ApplyDamage(1, $"thrown {Name}");
+            target.ApplyDamage(1, $"{Name} thrown by {thrower.Name}");
             target.ApplyCondition(new Slippery(3), Name);
             return 1;
         }

@@ -14,7 +14,7 @@ namespace RenegadeWizard.Entities.Items
         {
             if (Conditions.Any(con => con is Slippery))
             {
-                Console.WriteLine($" # {Name} too slippery!");
+                Console.WriteLine($" ! {Name} too slippery!");
                 return 0;
             }
 

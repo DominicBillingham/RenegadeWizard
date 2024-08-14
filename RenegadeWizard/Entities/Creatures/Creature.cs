@@ -27,6 +27,12 @@ namespace RenegadeWizard.Entities.Creatures
             Console.WriteLine($" # {Name} is being used as a shield by {grabber.Name}");
             return 1;
         }
+        public override int WhenThrown(Entity target, Entity thrower)
+        {
+            ApplyDamage(1, "being thrown");
+            target.ApplyDamage(2, $"thrown {Name}");
+            return 1;
+        }
     }
 
 

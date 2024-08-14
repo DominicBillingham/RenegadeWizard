@@ -13,12 +13,12 @@ namespace RenegadeWizard.Entities.Items
         public Knife()
         {
             Name = "Knife";
-            Description = " # It's a serrated bread knife, covered in butter?";
+            Description = "It's a serrated bread knife, covered in butter?";
             Health = 1;
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-            target.ApplyDamage(1, $"thrown {Name}");
+            target.ApplyDamage(1, $"{Name} thrown by {thrower.Name}");
             target.ApplyCondition(new Bleeding(2), Name);
             return 1;
         }

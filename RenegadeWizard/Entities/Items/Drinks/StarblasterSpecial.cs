@@ -12,7 +12,7 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public StarblasterSpecial()
         {
             Name = "MugOfStarblasterSpecial";
-            Description = " # Is it a shortcut to success, or a longcut to hell?";
+            Description = "Is it a shortcut to success, or a longcut to hell?";
             Health = 1;
         }
 

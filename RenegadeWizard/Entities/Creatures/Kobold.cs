@@ -14,7 +14,7 @@ namespace RenegadeWizard.Entities.Creatures
         public Kobold(string name)
         {
             Name = name;
-            Description = " # Short gnome";
+            Description = "Short gnome";
             Health = 3;
             Actions = new Actions(this);
             Attributes = new Attributes(2, 8, 2);

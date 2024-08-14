@@ -21,23 +21,28 @@ namespace RenegadeWizard.Entities
         // WhenAction Methods
         public virtual int WhenThrown(Entity target, Entity thrower)
         {
-            Console.WriteLine($" ! {Name} cannot be thrown!");
+            Console.WriteLine($" ! {thrower.Name} tries to throw {Name}, but it fails");
             return 0;
         }
         public virtual int WhenDrank(Entity drinker)
         {
-            Console.WriteLine($" ! {Name} cannot be drank!");
+            Console.WriteLine($" ! {drinker.Name} tries to drink {Name}, but it fails");
             return 0;
         }
         public virtual int WhenGrabbed(Entity grabber)
         {
-            Console.WriteLine($" ! {Name} cannot be grabbed!");
+            Console.WriteLine($" ! {grabber.Name} tries to grab {Name}, but it fails");
             return 0;
         }
         public virtual int WhenInspected()
         {
             // idea: Make intellect requirements to get more details
-            Console.WriteLine(Description);
+            Console.Write($" # {Name} - {Description}");
+            if ( Attributes != null)
+            {
+                Console.Write($" | STR:{Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect}");
+            }
+            Console.WriteLine();
             return 0;
         }
 

@@ -12,12 +12,12 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public BackwaterBeer()
         {
             Name = "BackwaterBeer";
-            Description = " # It's half empty, or is it half full?";
+            Description = "It's half empty, or is it half full?";
             Health = 1;
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-            target.ApplyHealing(2, $"thrown {Name}");
+            target.ApplyHealing(2, $"{Name} thrown by {thrower.Name}");
             return 1;
         }
         public override int WhenDrank(Entity drinker)

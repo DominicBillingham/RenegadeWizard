@@ -12,7 +12,7 @@ namespace RenegadeWizard.Entities.Items
         public Table()
         {
             Name = "Table";
-            Description = " # It has four legs, like a horse";
+            Description = "It has four legs, like a horse";
             Health = 3;
         }
         public override int WhenThrown(Entity target, Entity thrower)
@@ -20,7 +20,7 @@ namespace RenegadeWizard.Entities.Items
 
             if (thrower.Attributes?.Strength > 10)
             {
-                target.ApplyDamage(4, $"thrown {Name}");
+                target.ApplyDamage(4, $"{Name} thrown by {thrower.Name}");
                 return 1;
             }
             else

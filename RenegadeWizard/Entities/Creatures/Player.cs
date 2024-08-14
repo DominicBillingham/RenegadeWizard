@@ -14,7 +14,7 @@ namespace RenegadeWizard.Entities.Creatures
         {
             Name = name;
             Health = 10;
-            Description = " # Admiring yourself I see?";
+            Description = "Admiring yourself I see?";
             Actions = new Actions(this);
             Attributes = new Attributes(10, 10, 10);
         }

@@ -14,12 +14,12 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public FireflameWine()
         {
             Name = "FireflameWine";
-            Description = " # Yeah of course I can handle th- OH GOD IT BURNS";
+            Description = "Yeah of course I can handle th- OH GOD IT BURNS";
             Health = 1;
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-            target.ApplyCondition(new Burning(3), Name);
+            target.ApplyCondition(new Burning(3), $"{Name} thrown by {thrower.Name}");
             return 1;
         }
         public override int WhenDrank(Entity drinker)

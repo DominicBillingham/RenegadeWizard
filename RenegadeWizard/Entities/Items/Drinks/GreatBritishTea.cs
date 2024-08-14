@@ -13,12 +13,12 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public GreatBritishTea()
         {
             Name = "GreatBritishTea";
-            Description = " # The finest in the world";
+            Description = "The finest in the world";
             Health = 1;
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-            target.ApplyCondition(new Immortal(1), Name);
+            target.ApplyCondition(new Immortal(1), $"{Name} thrown by {thrower.Name}");
             return 1;
         }
         public override int WhenDrank(Entity drinker)

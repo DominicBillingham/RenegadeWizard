@@ -13,12 +13,12 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public TitanStout()
         {
             Name = "TitanStout";
-            Description = " # It's time to over compensate!";
+            Description = "It's time to over compensate!";
             Health = 1;
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-            target.ApplyCondition(new Enlarged(3), Name);
+            target.ApplyCondition(new Enlarged(3), $"{Name} thrown by {thrower.Name}");
             return 1;
         }
         public override int WhenDrank(Entity drinker)

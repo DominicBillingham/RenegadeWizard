@@ -13,13 +13,13 @@ namespace RenegadeWizard.Entities.Items
         public Grenade()
         {
             Name = "Grenade";
-            Description = " # I think it's missing a piece at the top?";
+            Description = "I think it's missing a piece at the top?";
             Health = 1;
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
 
-            target.ApplyDamage(2, $"thrown {Name}");
+            target.ApplyDamage(2, $"{Name} thrown by {thrower.Name}");
             foreach (var creature in Scene.GetCreatures())
             {
                 creature.ApplyCondition(new Bleeding(2), Name);
