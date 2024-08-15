@@ -1,4 +1,5 @@
 ﻿using RenegadeWizard.Components;
+using RenegadeWizard.Conditions;
 using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.GameClasses;
@@ -12,7 +13,7 @@ bool hasPlayerWon = false;
 int currentRound = 1;
 Narrator.ShowRoundInfo(currentRound);
 
-while (hasPlayerWon == false)
+while (Scene.GetPlayer() != null)
 {
     Console.Write(" > ");
     var input = Console.ReadLine().ToLower().Split(" ")
@@ -49,6 +50,12 @@ while (hasPlayerWon == false)
         var paramerter = sceneEntities.FirstOrDefault(x => x.Name.ToLower().Contains(word));
         if (paramerter != null)
         {
+
+            if (Scene.GetPlayer().Conditions.Any(x => x is Madness)) {
+                actionParameters.Add( Scene.GetRandomEntity());
+                continue;
+            }
+
             actionParameters.Add(paramerter);
             sceneEntities.Remove(paramerter);
         }
@@ -63,9 +70,12 @@ while (hasPlayerWon == false)
     }
 
     // Perform Round Actions
-    Console.Write(" # ");
     int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().Actions, actionParameters.ToArray());
-    Console.WriteLine();
+
+    if (Scene.GetPlayer().Conditions.Any(x => x is Madness))
+    {
+        actionCost = 1;
+    }
 
     if (actionCost > 0)
     {
@@ -103,3 +113,4 @@ while (hasPlayerWon == false)
 
  }
 
+Console.WriteLine("You've lost you silly goose");

@@ -8,7 +8,7 @@ using RenegadeWizard.GameClasses;
 
 namespace RenegadeWizard.Entities.Items.Drinks
 {
-    public class TitanStout : Item
+    public class TitanStout : Drink
     {
         public TitanStout()
         {

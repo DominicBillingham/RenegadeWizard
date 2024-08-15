@@ -1,10 +1,11 @@
 ﻿using RenegadeWizard.Components;
-using RenegadeWizard.Conditions;
+using RenegadeWizard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RenegadeWizard.Enums;
 
 namespace RenegadeWizard.Entities.Creatures
 {
@@ -18,6 +19,7 @@ namespace RenegadeWizard.Entities.Creatures
             Weight = 12;
             Actions = new Actions(this);
             Attributes = new Attributes(5, 5, 5);
+            Faction = Factions.Goblin;
         }
 
     }

@@ -1,7 +1,9 @@
-﻿using RenegadeWizard.Entities;
+﻿using RenegadeWizard.Conditions;
+using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.Entities.Items;
 using RenegadeWizard.Entities.Items.Drinks;
+using RenegadeWizard.Enums;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -12,6 +14,7 @@ namespace RenegadeWizard.GameClasses
         {
             Entities.Add(new Player("NotHarry"));
             Entities.Add(new Goblin("Goblin"));
+            Entities.Add(new Toady("Toady"));
             Entities.Add(new Chandelier());
 
             AddBarItems();
@@ -38,7 +41,7 @@ namespace RenegadeWizard.GameClasses
         public static Entity GetPlayer()
         {
             // idea: allow for multiple players
-            return Entities.First(x => x is Player);
+            return Entities.FirstOrDefault(x => x is Player);
         }
 
         public static List<Entity> GetItems()
@@ -51,6 +54,12 @@ namespace RenegadeWizard.GameClasses
             var items = Scene.GetItems();
             var random = new Random();
             return items[random.Next(items.Count())];
+        }
+
+        public static Entity GetRandomEntity()
+        {
+            var random = new Random();
+            return Scene.Entities[random.Next(Scene.Entities.Count())];
         }
 
         public static List<Entity> GetNPCs()
@@ -70,9 +79,15 @@ namespace RenegadeWizard.GameClasses
             return creatures[random.Next(creatures.Count())];
         }
 
+        public static Entity GetRandomHostileCreature(Factions faction)
+        {
+            var hostiles = Scene.GetCreatures().Where(creature => creature.Faction != faction).ToList();
+            var random = new Random();
+            return hostiles[random.Next(hostiles.Count())];
+        }
+
         public static void ApplyConditionEffects()
         {
-            Console.Write(" # ");
 
             foreach (var entity in Entities)
             {
@@ -92,22 +107,10 @@ namespace RenegadeWizard.GameClasses
         {
             foreach (var NPC in GetNPCs())
             {
-
                 var rand = new Random();
                 var randomItem = GetItems()[rand.Next(GetItems().Count)];
-
-                if (GetNPCs().Count() > 0) {
-                    Console.Write(" # ");
-                }
-
+                var enemy = GetRandomHostileCreature(NPC.Faction);
                 var chosenAction = rand.Next(3);
-
-                var enemy = Scene.GetPlayer();
-
-                if (NPC is Demon)
-                {
-                    enemy = Scene.GetRandomCreature();
-                }
 
                 if (chosenAction == 2)
                 {
@@ -121,8 +124,6 @@ namespace RenegadeWizard.GameClasses
                 {
                     NPC.Actions?.ActionConsume(randomItem);
                 }
-
-                Console.WriteLine();
 
             }
 

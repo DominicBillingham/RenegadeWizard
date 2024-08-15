@@ -32,3 +32,4 @@ Conditions: Burn, Slippery, Blinded, Posioned,
 Actions: Shove, Hold, Give?
 Drinks: Tea, FlamefireWine, ElderflowerSurprise, Titanbreaker, Tinysizer, StarblasterSurprise (RANDOM EFFECT)
 Enemies: Goblins in a trench coat that can take 3 actions, Goblin support squad, 
+- Vampire, Slime, Zombie, Ultralin, Spawnhost

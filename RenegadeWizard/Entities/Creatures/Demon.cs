@@ -1,5 +1,6 @@
 ﻿using RenegadeWizard.Components;
 using RenegadeWizard.Conditions;
+using RenegadeWizard.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace RenegadeWizard.Entities.Creatures
             Actions = new Actions(this);
             Attributes = new Attributes(12, 12, 12);
             Conditions.Add(new Burning(999));
+            Faction = Factions.Demon;
         }
 
     }

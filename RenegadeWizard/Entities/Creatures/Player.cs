@@ -1,5 +1,6 @@
 ﻿using RenegadeWizard.Components;
 using RenegadeWizard.Conditions;
+using RenegadeWizard.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace RenegadeWizard.Entities.Creatures
             Description = "Admiring yourself I see?";
             Actions = new Actions(this);
             Attributes = new Attributes(10, 10, 10);
+            Faction = Factions.Player;
         }
 
     }

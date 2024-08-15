@@ -8,7 +8,7 @@ using RenegadeWizard.GameClasses;
 
 namespace RenegadeWizard.Entities.Items.Drinks
 {
-    public class GreatBritishTea : Item
+    public class GreatBritishTea : Drink
     {
         public GreatBritishTea()
         {

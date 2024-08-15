@@ -7,7 +7,7 @@ using RenegadeWizard.GameClasses;
 
 namespace RenegadeWizard.Entities.Items.Drinks
 {
-    public class BackwaterBeer : Item
+    public class BackwaterBeer : Drink
     {
         public BackwaterBeer()
         {

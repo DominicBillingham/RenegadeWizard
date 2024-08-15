@@ -1,5 +1,6 @@
 ﻿using RenegadeWizard.Components;
 using RenegadeWizard.Conditions;
+using RenegadeWizard.Enums;
 using RenegadeWizard.GameClasses;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -11,6 +12,7 @@ namespace RenegadeWizard.Entities
         public int Health { get; set; }
         public int Weight { get; set; }
         public string Description { get; set; } = string.Empty;
+        public Factions Faction { get; set; } = Factions.None;
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Condition> Conditions { get; set; } = new List<Condition>();
 
@@ -91,7 +93,7 @@ namespace RenegadeWizard.Entities
         {
             if (Conditions.Any(con => con is Immortal))
             {
-                Console.Write($"{Name} is immortal and takes 0 damage from {source} | ");
+                //Console.Write($"{Name} is immortal and takes 0 damage from {source} | ");
                 return;
             }
 
@@ -99,10 +101,10 @@ namespace RenegadeWizard.Entities
             if (IsDestroyed == false)
             {
                 Health -= damage;
-                Console.Write($"{Name} takes -{damage}hp from {source} | ");
+                //Console.Write($"{Name} takes -{damage}hp from {source} | ");
                 if (IsDestroyed)
                 {
-                    Console.Write($"{Name} has been destroyed | ");
+                    //Console.Write($"{Name} has been destroyed | ");
                 }
             }
         }

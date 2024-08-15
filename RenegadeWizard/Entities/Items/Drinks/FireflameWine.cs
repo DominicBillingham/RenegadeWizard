@@ -9,7 +9,7 @@ using RenegadeWizard.GameClasses;
 namespace RenegadeWizard.Entities.Items.Drinks
 {
 
-    public class FireflameWine : Item
+    public class FireflameWine : Drink
     {
         public FireflameWine()
         {
