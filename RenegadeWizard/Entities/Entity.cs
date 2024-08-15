@@ -34,6 +34,11 @@ namespace RenegadeWizard.Entities
             Console.Write($"{grabber.Name} tries to grab {Name}, but it fails | ");
             return 0;
         }
+        public virtual int WhenKicked(Entity kicker)
+        {
+            Console.Write($"{kicker.Name} tries to kick {Name}, but it fails | ");
+            return 0;
+        }
         public virtual int WhenInspected()
         {
             // idea: Make intellect requirements to get more details
@@ -103,6 +108,9 @@ namespace RenegadeWizard.Entities
         public virtual void ApplyHealing(int heal, string? source = null)
         {
             Health += heal;
+
+            Conditions.RemoveAll(con => con is Bleeding);
+
             Console.Write($"{Name} recovers +{heal}hp from {source} | ");
         }
         public virtual void ApplyCondition(Condition condition, string? source = null)

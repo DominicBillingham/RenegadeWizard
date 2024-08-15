@@ -63,7 +63,6 @@ while (hasPlayerWon == false)
     }
 
     // Perform Round Actions
-
     Console.Write(" # ");
     int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().Actions, actionParameters.ToArray());
     Console.WriteLine();
@@ -76,6 +75,7 @@ while (hasPlayerWon == false)
         currentRound++;
 
         if (currentRound % 2 == 0) {
+
             Console.WriteLine(" # Some more goblins have shown up!");
 
             string[] goblinNames = { "Grubnak", "Snaggletooth", "Ruknuk", "Zigzag", "Bogrot", "Nibbles", "Grizzle", "Muckmire", "Skreech", "Wartnose", "Dribble", "Snizzle", "Grubfoot", "Gnash", "Sludge", "Grogmar", "Spitfire", "Blister", "Crackle", "Fungus" };
@@ -83,6 +83,7 @@ while (hasPlayerWon == false)
             var rand = new Random();
             var nextGoblinName = goblinNames[rand.Next(20)];
             Scene.Entities.Add(new Goblin(nextGoblinName));
+
         }
 
         Narrator.ContinuePrompt();

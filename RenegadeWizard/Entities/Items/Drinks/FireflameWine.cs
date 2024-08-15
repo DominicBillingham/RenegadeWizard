@@ -24,8 +24,13 @@ namespace RenegadeWizard.Entities.Items.Drinks
         }
         public override int WhenDrank(Entity drinker)
         {
-            drinker.ApplyCondition(new Burning(3), Name);
+            drinker.ApplyCondition(new Burning(3), $"drinking {Name}");
             return 1;
+        }
+        public override void SelfDestruct()
+        {
+            base.SelfDestruct();
+            Scene.GetRandomCreature().ApplyCondition(new Burning(3), $"{Name} splashing randomly");
         }
 
     }

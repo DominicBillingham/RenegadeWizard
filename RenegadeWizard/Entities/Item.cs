@@ -20,11 +20,21 @@ namespace RenegadeWizard.Entities
 
             if (Conditions.Any(con => con is Burning))
             {
-                grabber.ApplyCondition(new Burning(3), $"trying to grab Burning {Name}");
+                grabber.ApplyCondition(new Burning(3), $"trying to grab Burning {Name} | ");
             }
 
             grabber.HeldObject = this;
-            Console.WriteLine($"{Name} is being used as a shield by {grabber.Name} | ");
+            Console.Write($"{Name} is being used as a shield by {grabber.Name} | ");
+            return 1;
+        }
+        public override void SelfDestruct()
+        {
+            Console.Write($"{Name} has been destroyed | ");
+            Scene.Entities.Remove(this);
+        }
+        public override int WhenKicked(Entity kicker)
+        {
+            ApplyDamage(2, $"being kicked by {kicker.Name}");
             return 1;
         }
 

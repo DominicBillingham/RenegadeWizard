@@ -31,6 +31,11 @@ namespace RenegadeWizard.Components
             int actionCost = entity.WhenGrabbed(Invoker);
             return actionCost;
         }
+        public int ActionKick(Entity entity)
+        {
+            int actionCost = entity.WhenKicked(Invoker);
+            return actionCost;
+        }
 
     }
 }

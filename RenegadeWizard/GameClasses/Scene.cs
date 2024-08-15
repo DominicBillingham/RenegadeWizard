@@ -36,8 +36,14 @@ namespace RenegadeWizard.GameClasses
 
         public static List<Entity> GetItems()
         {
-            // idea: should have entities split into creature / item rather than this bodged check
             return Entities.Where(ent => ent is Item).ToList();
+        }
+
+        public static Entity GetRandomItem()
+        {
+            var items = Scene.GetItems();
+            var random = new Random();
+            return items[random.Next(items.Count() + 1)];
         }
 
         public static List<Entity> GetNPCs()
@@ -48,6 +54,13 @@ namespace RenegadeWizard.GameClasses
         public static List<Entity> GetCreatures()
         {
             return Entities.Where(ent => ent is Creature).ToList();
+        }
+
+        public static Entity GetRandomCreature()
+        {
+            var creatures = Scene.GetCreatures();
+            var random = new Random();
+            return creatures[random.Next(creatures.Count() + 1)];
         }
 
         public static void ApplyConditionEffects()
@@ -76,7 +89,9 @@ namespace RenegadeWizard.GameClasses
                 var rand = new Random();
                 var randomItem = GetItems()[rand.Next(GetItems().Count)];
 
-                Console.Write(" # ");
+                if (GetNPCs().Count() > 0) {
+                    Console.Write(" # ");
+                }
 
                 if (rand.Next(2) == 1)
                 {
