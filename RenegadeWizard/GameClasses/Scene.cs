@@ -23,7 +23,9 @@ namespace RenegadeWizard.GameClasses
         public static void AddBarItems()
         {
 
-            var items = typeof(Item).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Item))).ToArray();
+            var items = typeof(Item).Assembly.GetTypes()
+                .Where(type => type.IsSubclassOf(typeof(Item)) && !type.IsAbstract)
+                .ToArray();
 
             for (int i = 0; i < 5; i++)
             {
@@ -34,8 +36,6 @@ namespace RenegadeWizard.GameClasses
                 Entities.Add(instance);
 
             }
-
-
         }
 
         public static Entity GetPlayer()

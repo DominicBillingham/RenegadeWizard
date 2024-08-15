@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RenegadeWizard.Entities.Items.Drinks
 {
-    public class Drink : Item
+    public abstract class Drink : Item
     {
     }
 }
