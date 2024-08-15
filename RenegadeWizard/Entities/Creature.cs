@@ -36,8 +36,15 @@ namespace RenegadeWizard.Entities
         }
         public override int WhenKicked(Entity kicker)
         {
-            ApplyDamage(2, $"being kicked by {kicker.Name}");
-            Scene.GetRandomItem().ApplyDamage(2, $"{Name} crashing into it");
+
+            if (kicker.Attributes?.Strength > Attributes?.Strength)
+            {
+                ApplyDamage(2, $"being kicked by {kicker.Name}");
+                Scene.GetRandomItem().ApplyDamage(2, $"{Name} crashing into it");
+            } else
+            {
+                Console.Write($"{kicker.Name} tries to kick {Name} but is too weak!");
+            }
 
             return 1;
         }

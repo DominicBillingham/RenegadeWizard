@@ -43,7 +43,7 @@ namespace RenegadeWizard.GameClasses
         {
             var items = Scene.GetItems();
             var random = new Random();
-            return items[random.Next(items.Count() + 1)];
+            return items[random.Next(items.Count())];
         }
 
         public static List<Entity> GetNPCs()
@@ -60,7 +60,7 @@ namespace RenegadeWizard.GameClasses
         {
             var creatures = Scene.GetCreatures();
             var random = new Random();
-            return creatures[random.Next(creatures.Count() + 1)];
+            return creatures[random.Next(creatures.Count())];
         }
 
         public static void ApplyConditionEffects()
@@ -93,9 +93,15 @@ namespace RenegadeWizard.GameClasses
                     Console.Write(" # ");
                 }
 
-                if (rand.Next(2) == 1)
+                var chosenAction = rand.Next(3);
+
+                if (chosenAction == 2)
                 {
                     NPC.Actions?.ActionThrow(randomItem, Scene.GetPlayer());
+                }
+                else if (chosenAction == 1)
+                {
+                    NPC.Actions?.ActionKick(Scene.GetPlayer());
                 }
                 else
                 {

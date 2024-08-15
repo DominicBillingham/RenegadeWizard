@@ -25,7 +25,7 @@ namespace RenegadeWizard.Entities.Items
             }
             else
             {
-                Console.WriteLine($"{thrower.Name} tries to throw {Name} but is not strong enough!");
+                Console.Write($"{thrower.Name} tries to throw {Name} but is not strong enough!");
                 return 0;
             }
         }
