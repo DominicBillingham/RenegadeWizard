@@ -7,7 +7,7 @@ using RenegadeWizard.GameClasses;
 
 namespace RenegadeWizard.Entities.Items
 {
-    public class Chandelier : Item
+    public class Chandelier : Entity
     {
         public Chandelier()
         {

@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 
 namespace RenegadeWizard.Entities.Creatures
 {
-    public class Player : Creature
+    public class Demon : Creature
     {
-        public Player(string name)
+        public Demon(string name)
         {
             Name = name;
+            Description = "A very angry, pissed off demon";
             Health = 7;
-            Description = "Admiring yourself I see?";
+            Weight = 15;
             Actions = new Actions(this);
-            Attributes = new Attributes(10, 10, 10);
+            Attributes = new Attributes(12, 12, 12);
+            Conditions.Add(new Burning(999));
         }
 
     }

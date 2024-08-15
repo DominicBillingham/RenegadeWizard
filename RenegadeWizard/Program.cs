@@ -74,7 +74,7 @@ while (hasPlayerWon == false)
         Scene.ApplyConditionEffects();
         currentRound++;
 
-        if (currentRound % 2 == 0) {
+        if (currentRound % 3 == 0) {
 
             Console.WriteLine(" # Some more goblins have shown up!");
 
@@ -83,6 +83,11 @@ while (hasPlayerWon == false)
             var rand = new Random();
             var nextGoblinName = goblinNames[rand.Next(20)];
             Scene.Entities.Add(new Goblin(nextGoblinName));
+
+            rand = new Random();
+            nextGoblinName = goblinNames[rand.Next(20)];
+            Scene.Entities.Add(new Goblin(nextGoblinName));
+            
 
         }
 

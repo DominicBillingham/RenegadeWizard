@@ -1,5 +1,6 @@
 ﻿using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
+using RenegadeWizard.Entities.Items;
 using RenegadeWizard.Entities.Items.Drinks;
 
 namespace RenegadeWizard.GameClasses
@@ -11,6 +12,7 @@ namespace RenegadeWizard.GameClasses
         {
             Entities.Add(new Player("NotHarry"));
             Entities.Add(new Goblin("Goblin"));
+            Entities.Add(new Chandelier());
 
             AddBarItems();
         }
@@ -95,13 +97,20 @@ namespace RenegadeWizard.GameClasses
 
                 var chosenAction = rand.Next(3);
 
+                var enemy = Scene.GetPlayer();
+
+                if (NPC is Demon)
+                {
+                    enemy = Scene.GetRandomCreature();
+                }
+
                 if (chosenAction == 2)
                 {
-                    NPC.Actions?.ActionThrow(randomItem, Scene.GetPlayer());
+                    NPC.Actions?.ActionThrow(randomItem, enemy);
                 }
                 else if (chosenAction == 1)
                 {
-                    NPC.Actions?.ActionKick(Scene.GetPlayer());
+                    NPC.Actions?.ActionKick(enemy);
                 }
                 else
                 {
