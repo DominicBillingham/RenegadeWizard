@@ -36,13 +36,13 @@ namespace RenegadeWizard.GameClasses
         public static string GetConfusedNarrator()
         {
             var Expressions = new List<string>();
-            Expressions.Add(". What the fuck?");
+            Expressions.Add("What the fuck?");
             Expressions.Add("!?");
-            Expressions.Add(". You do you I guess?");
-            Expressions.Add(". Why?");
-            Expressions.Add(". Sigh...");
-            Expressions.Add(". Is intelligence your dump stat?");
-            Expressions.Add(". Did the goblins hit your head?");
+            Expressions.Add("You do you I guess?");
+            Expressions.Add("Why?");
+            Expressions.Add("Sigh...");
+            Expressions.Add("Is intelligence your dump stat?");
+            Expressions.Add("Did the goblins hit your head?");
 
             Random rnd = new Random();
             int r = rnd.Next(Expressions.Count);

@@ -40,7 +40,6 @@ namespace RenegadeWizard.GameClasses
 
         public static Entity GetPlayer()
         {
-            // idea: allow for multiple players
             return Entities.FirstOrDefault(x => x is Player);
         }
 

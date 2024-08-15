@@ -50,12 +50,6 @@ while (Scene.GetPlayer() != null)
         var paramerter = sceneEntities.FirstOrDefault(x => x.Name.ToLower().Contains(word));
         if (paramerter != null)
         {
-
-            if (Scene.GetPlayer().Conditions.Any(x => x is Madness)) {
-                actionParameters.Add( Scene.GetRandomEntity());
-                continue;
-            }
-
             actionParameters.Add(paramerter);
             sceneEntities.Remove(paramerter);
         }
@@ -71,11 +65,6 @@ while (Scene.GetPlayer() != null)
 
     // Perform Round Actions
     int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().Actions, actionParameters.ToArray());
-
-    if (Scene.GetPlayer().Conditions.Any(x => x is Madness))
-    {
-        actionCost = 1;
-    }
 
     if (actionCost > 0)
     {
@@ -113,4 +102,6 @@ while (Scene.GetPlayer() != null)
 
  }
 
+Console.Clear();
 Console.WriteLine("You've lost you silly goose");
+Narrator.ContinuePrompt();

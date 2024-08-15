@@ -128,7 +128,7 @@ namespace RenegadeWizard.Entities
         {
             if (IsDestroyed == false)
             {
-                Console.Write($"{Name} is {condition.Name} from {source} | ");
+                Console.Write($"{Name} gained {condition.Name} from {source} | ");
                 Conditions.Add(condition);
             }
 
