@@ -15,7 +15,19 @@ namespace RenegadeWizard.Entities
         {
             if (Conditions.Any(con => con is Slippery))
             {
-                Console.Write($" ! {Name} too slippery! | ");
+                Console.Write($"{Name} is too slippery to be grabbed! | ");
+                return 0;
+            }
+
+            if (grabber.Attributes?.Strength < Attributes?.Agility)
+            {
+                Console.Write($"{Name} is too fast to be grabbed! | ");
+                return 0;
+            }
+
+            if (grabber.Attributes?.Strength < Weight)
+            {
+                Console.Write($"{Name} is too heavy to be grabbed! | ");
                 return 0;
             }
 
@@ -28,6 +40,21 @@ namespace RenegadeWizard.Entities
             Console.Write($"{Name} is being used as a shield by {grabber.Name} | ");
             return 1;
         }
+
+        public override int WhenConsumed(Entity consumer)
+        {
+            if (consumer.Attributes?.Strength < Weight)
+            {
+                Console.Write($"{Name} is too large to be eaten! | ");
+                return 0;
+            }
+
+            Console.Write($"{Name} is devoured by {consumer.Name}! | ");
+            SelfDestruct();
+            return 1;
+
+        }
+
         public override int WhenThrown(Entity target, Entity thrower)
         {
             ApplyDamage(1, "being thrown");

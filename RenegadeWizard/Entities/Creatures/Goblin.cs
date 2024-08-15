@@ -15,6 +15,7 @@ namespace RenegadeWizard.Entities.Creatures
             Name = name;
             Description = "A weak, silly and clumsy goblin";
             Health = 5;
+            Weight = 12;
             Actions = new Actions(this);
             Attributes = new Attributes(5, 5, 5);
         }

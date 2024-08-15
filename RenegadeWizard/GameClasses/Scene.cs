@@ -105,7 +105,7 @@ namespace RenegadeWizard.GameClasses
                 }
                 else
                 {
-                    NPC.Actions?.ActionDrink(randomItem);
+                    NPC.Actions?.ActionConsume(randomItem);
                 }
 
                 Console.WriteLine();

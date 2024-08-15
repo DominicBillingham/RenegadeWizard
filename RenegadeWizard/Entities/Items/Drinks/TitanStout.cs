@@ -21,9 +21,9 @@ namespace RenegadeWizard.Entities.Items.Drinks
             target.ApplyCondition(new Enlarged(3), $"{Name} thrown by {thrower.Name}");
             return 1;
         }
-        public override int WhenDrank(Entity drinker)
+        public override int WhenConsumed(Entity consumer)
         {
-            drinker.ApplyCondition(new Enlarged(3), $"drinking {Name}");
+            consumer.ApplyCondition(new Enlarged(3), $"consuming {Name}");
             return 1;
         }
         public override void SelfDestruct()

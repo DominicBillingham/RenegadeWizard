@@ -21,9 +21,9 @@ namespace RenegadeWizard.Entities.Items.Drinks
             target.ApplyCondition(new Immortal(1), $"{Name} thrown by {thrower.Name}");
             return 1;
         }
-        public override int WhenDrank(Entity drinker)
+        public override int WhenConsumed(Entity consumer)
         {
-            drinker.ApplyCondition(new Immortal(1), $"drinking {Name}");
+            consumer.ApplyCondition(new Immortal(1), $"consuming {Name}");
             return 1;
         }
         public override void SelfDestruct()

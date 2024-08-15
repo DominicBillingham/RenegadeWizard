@@ -20,9 +20,9 @@ namespace RenegadeWizard.Entities.Items.Drinks
             target.ApplyHealing(2, $"{Name} thrown by {thrower.Name}");
             return 1;
         }
-        public override int WhenDrank(Entity drinker)
+        public override int WhenConsumed(Entity consume)
         {
-            drinker.ApplyHealing(2, $"drinking {Name}");
+            consume.ApplyHealing(2, $"consuming {Name}");
             return 1;
         }
         public override void SelfDestruct()

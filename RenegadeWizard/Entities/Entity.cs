@@ -9,6 +9,7 @@ namespace RenegadeWizard.Entities
     {
         public string Name { get; set; } = string.Empty;
         public int Health { get; set; }
+        public int Weight { get; set; }
         public string Description { get; set; } = string.Empty;
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Condition> Conditions { get; set; } = new List<Condition>();
@@ -24,9 +25,9 @@ namespace RenegadeWizard.Entities
             Console.Write($"{thrower.Name} tries to throw {Name}, but it fails | ");
             return 0;
         }
-        public virtual int WhenDrank(Entity drinker)
+        public virtual int WhenConsumed(Entity consumer)
         {
-            Console.Write($"{drinker.Name} tries to drink {Name}, but it fails | ");
+            Console.Write($"{consumer.Name} tries to consume {Name}, but it fails | ");
             return 0;
         }
         public virtual int WhenGrabbed(Entity grabber)
@@ -60,18 +61,18 @@ namespace RenegadeWizard.Entities
                 return;
             }
 
-            // idea: Check for damage immunitiess
-
             if (HeldObject != null && HeldObject.IsDestroyed == false)
             {
                 HeldObject.Health -= damage;
-                Console.Write($"{HeldObject.Name} takes -{damage}hp from {source} to shield {Name} | ");
+                Console.Write($"{HeldObject.Name} takes -{damage}hp from {source} shielding {Name} | ");
 
                 if ( HeldObject.IsDestroyed )
                 {
                     HeldObject.SelfDestruct();
-                    Console.Write($"{HeldObject.Name} is destroyed! | ");
                 }
+
+                Console.Write($"{Name} drops {HeldObject.Name} | ");
+                HeldObject = null;
 
                 return;
             } 
@@ -115,8 +116,12 @@ namespace RenegadeWizard.Entities
         }
         public virtual void ApplyCondition(Condition condition, string? source = null)
         {
-            Console.Write($"{Name} is {condition.Name} from {source} | ");
-            Conditions.Add(condition);
+            if (IsDestroyed == false)
+            {
+                Console.Write($"{Name} is {condition.Name} from {source} | ");
+                Conditions.Add(condition);
+            }
+
         }
         public virtual void SelfDestruct()
         {

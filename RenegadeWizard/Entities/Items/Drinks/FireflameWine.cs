@@ -22,9 +22,9 @@ namespace RenegadeWizard.Entities.Items.Drinks
             target.ApplyCondition(new Burning(3), $"{Name} thrown by {thrower.Name}");
             return 1;
         }
-        public override int WhenDrank(Entity drinker)
+        public override int WhenConsumed(Entity consume)
         {
-            drinker.ApplyCondition(new Burning(3), $"drinking {Name}");
+            consume.ApplyCondition(new Burning(3), $"consuming {Name}");
             return 1;
         }
         public override void SelfDestruct()

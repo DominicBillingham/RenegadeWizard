@@ -17,8 +17,8 @@ namespace RenegadeWizard.Components
             int actionCost = item.WhenThrown(target, Invoker);
             return actionCost;
         }
-        public int ActionDrink(Entity drink) {
-            int actionCost = drink.WhenDrank(Invoker);
+        public int ActionConsume(Entity edibleItem) {
+            int actionCost = edibleItem.WhenConsumed(Invoker);
             return actionCost;
         }
         public int ActionInspect(Entity entity)
