@@ -17,12 +17,14 @@ namespace RenegadeWizard.Entities.Items.Drinks
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-
+            target.ApplyHealing(2, $"thrown {Name}");
+            Scene.Entities.Remove(this);
             return 1;
         }
         public override int WhenConsumed(Entity consume)
         {
             consume.ApplyHealing(2, $"consuming {Name}");
+            Scene.Entities.Remove(this);
             return 1;
         }
         public override void SelfDestruct()

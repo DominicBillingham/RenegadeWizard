@@ -29,6 +29,7 @@ namespace RenegadeWizard.Entities.Items.Drinks
             consume.ApplyHealing(2, $"consuming {Name}");
             consume.ApplyCondition(new Burning(3), $"consuming {Name}");
             consume.ApplyCondition(new Enlarged(3), $"consuming {Name}");
+            Scene.Entities.Remove(this);
             return 1;
         }
         public override void SelfDestruct()

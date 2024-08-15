@@ -21,6 +21,7 @@ namespace RenegadeWizard.Entities.Items
             if (thrower.Attributes?.Strength > 10)
             {
                 target.ApplyDamage(4, $"{Name} thrown by {thrower.Name}");
+                Scene.Entities.Remove(this);
                 return 1;
             }
             else

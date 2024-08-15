@@ -20,11 +20,13 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public override int WhenThrown(Entity target, Entity thrower)
         {
             target.ApplyCondition(new Burning(3), $"{Name} thrown by {thrower.Name}");
+            Scene.Entities.Remove(this);
             return 1;
         }
         public override int WhenConsumed(Entity consume)
         {
             consume.ApplyCondition(new Burning(3), $"consuming {Name}");
+            Scene.Entities.Remove(this);
             return 1;
         }
         public override void SelfDestruct()

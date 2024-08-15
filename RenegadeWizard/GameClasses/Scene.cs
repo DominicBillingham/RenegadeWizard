@@ -20,11 +20,16 @@ namespace RenegadeWizard.GameClasses
         public static void AddBarItems()
         {
 
-            var items = typeof(Item).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Item)));
-            foreach (var item in items)
+            var items = typeof(Item).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Item))).ToArray();
+
+            for (int i = 0; i < 5; i++)
             {
+                var random = new Random();
+                var item = items[random.Next(items.Count())];
+
                 Item instance = (Item)Activator.CreateInstance(item);
                 Entities.Add(instance);
+
             }
 
 

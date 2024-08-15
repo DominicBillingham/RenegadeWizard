@@ -20,6 +20,7 @@ namespace RenegadeWizard.Entities.Items
         {
             target.ApplyDamage(1, $"{Name} thrown by {thrower.Name}");
             target.ApplyCondition(new Bleeding(2), Name);
+            Scene.Entities.Remove(this);
             return 1;
         }
     }

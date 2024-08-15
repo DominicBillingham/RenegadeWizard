@@ -74,6 +74,11 @@ while (hasPlayerWon == false)
         Scene.ApplyConditionEffects();
         currentRound++;
 
+        if (Scene.GetItems().Count < 3) {
+            Console.WriteLine(" # More items are nearby! ");
+            Scene.AddBarItems();
+        }
+
         if (currentRound % 3 == 0) {
 
             Console.WriteLine(" # Some more goblins have shown up!");
