@@ -21,7 +21,7 @@ namespace RenegadeWizard.Entities
         public Attributes? Attributes { get; set; }
         public Entity? HeldObject { get; set; }
 
-        // WhenAction Methods
+        #region WhenAction Methods
         public virtual int WhenThrown(Entity target, Entity thrower)
         {
             Console.Write($"{thrower.Name} tries to throw {Name}, but it fails | ");
@@ -54,7 +54,9 @@ namespace RenegadeWizard.Entities
             return 0;
         }
 
-        // Generic Entity Methods
+        #endregion
+
+        #region Health Methods
         public virtual void ApplyDamage(int damage, string? source = null)
         {
             if (Conditions.Any(con => con is Immortal))
@@ -89,6 +91,19 @@ namespace RenegadeWizard.Entities
                 }
             }
         }
+        public virtual void ApplyHealing(int heal, string? source = null)
+        {
+            Health += heal;
+
+            Conditions.RemoveAll(con => con is Bleeding);
+
+            Console.Write($"{Name} recovers +{heal}hp from {source} | ");
+        }
+
+        #endregion
+
+        #region Condition Methods
+
         public virtual void ApplyConditionDamage(int damage, string? source = null)
         {
             if (Conditions.Any(con => con is Immortal))
@@ -108,14 +123,7 @@ namespace RenegadeWizard.Entities
                 }
             }
         }
-        public virtual void ApplyHealing(int heal, string? source = null)
-        {
-            Health += heal;
 
-            Conditions.RemoveAll(con => con is Bleeding);
-
-            Console.Write($"{Name} recovers +{heal}hp from {source} | ");
-        }
         public virtual void ApplyCondition(Condition condition, string? source = null)
         {
             if (IsDestroyed == false)
@@ -125,6 +133,18 @@ namespace RenegadeWizard.Entities
             }
 
         }
+
+        public virtual void ApplyConditionEffects()
+        {
+            foreach (var con in Conditions)
+            {
+                con.ApplyEffect(this);
+            }
+            Conditions.RemoveAll(x => x.Duration <= 0);
+        }
+
+        #endregion
+
         public virtual void SelfDestruct()
         {
             Console.Write($"{Name} has been destroyed | ");

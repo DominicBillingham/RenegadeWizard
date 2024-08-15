@@ -10,9 +10,21 @@ namespace RenegadeWizard.Conditions
         }
         public override void ApplyEffect(Entity entity)
         {
-            entity.Attributes.Strength = 20;
+            entity.Attributes.Strength += 10;
             Duration -= 1;
+
+            if (Duration <= 0)
+            {
+                EndEffect(entity);
+            }
+
         }
+
+        public void EndEffect(Entity entity)
+        {
+            entity.Attributes.Strength = -10;
+        }
+
 
     }
 }

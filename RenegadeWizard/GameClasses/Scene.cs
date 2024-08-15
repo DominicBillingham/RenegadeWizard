@@ -88,19 +88,11 @@ namespace RenegadeWizard.GameClasses
 
         public static void ApplyConditionEffects()
         {
-
             foreach (var entity in Entities)
             {
-                foreach (var con in entity.Conditions)
-                {
-                    con.ApplyEffect(entity);
-                }
-                entity.Conditions.RemoveAll(con => con.Duration <= 0);
+                entity.ApplyConditionEffects();
             }
-
             Entities.RemoveAll(ent => ent.Health <= 0);
-
-            Console.WriteLine();
         }
 
         public static void EngageHyperArtificialIntelligence()
