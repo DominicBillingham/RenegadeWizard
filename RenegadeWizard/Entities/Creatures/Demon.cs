@@ -19,6 +19,7 @@ namespace RenegadeWizard.Entities.Creatures
             Weight = 15;
             Actions = new Actions(this);
             Attributes = new Attributes(12, 12, 12);
+            ConditionImmunities.Add(new Burning(3));
             Conditions.Add(new Burning(999));
             Faction = Factions.Demon;
         }

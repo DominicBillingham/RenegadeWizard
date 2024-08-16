@@ -31,7 +31,7 @@ namespace RenegadeWizard.Entities.Creatures
             var creatures = Scene.GetCreatures();
             foreach (var creature in creatures)
             {
-                creature.ApplyCondition(new Madness(2), $"kicking {Name}");
+                creature.ApplyCondition(new Madness(2), $"{kicker.Name} kicking {Name}");
             }
             return 1;
         }

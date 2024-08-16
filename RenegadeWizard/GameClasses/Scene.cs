@@ -14,7 +14,7 @@ namespace RenegadeWizard.GameClasses
         {
             Entities.Add(new Player("NotHarry"));
             Entities.Add(new Goblin("Goblin"));
-            Entities.Add(new Toady("Toady"));
+            Entities.Add(new Demon("Demon"));
             Entities.Add(new Chandelier());
 
             AddBarItems();
@@ -51,6 +51,13 @@ namespace RenegadeWizard.GameClasses
         public static Entity GetRandomItem()
         {
             var items = Scene.GetItems();
+            var random = new Random();
+            return items[random.Next(items.Count())];
+        }
+
+        public static Entity GetRandomEdibleItem()
+        {
+            var items = Scene.GetItems().Where(item => item is Drink).ToArray();
             var random = new Random();
             return items[random.Next(items.Count())];
         }
@@ -99,20 +106,23 @@ namespace RenegadeWizard.GameClasses
             foreach (var NPC in GetNPCs())
             {
                 var rand = new Random();
-                var randomItem = GetItems()[rand.Next(GetItems().Count)];
-                var enemy = GetRandomHostileCreature(NPC.Faction);
                 var chosenAction = rand.Next(3);
 
                 if (chosenAction == 2)
                 {
+                    var randomItem = GetItems()[rand.Next(GetItems().Count())];
+                    var enemy = GetRandomHostileCreature(NPC.Faction);
+
                     NPC.Actions?.ActionThrow(randomItem, enemy);
                 }
                 else if (chosenAction == 1)
                 {
+                    var enemy = GetRandomHostileCreature(NPC.Faction);
                     NPC.Actions?.ActionKick(enemy);
                 }
                 else
                 {
+                    var randomItem = GetRandomEdibleItem();
                     NPC.Actions?.ActionConsume(randomItem);
                 }
 

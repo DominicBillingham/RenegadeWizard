@@ -15,6 +15,7 @@ namespace RenegadeWizard.Entities
         public Factions Faction { get; set; } = Factions.None;
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Condition> Conditions { get; set; } = new List<Condition>();
+        public List<Condition> ConditionImmunities { get; set; } = new List<Condition>();
 
         // Composition Stuff
         public Actions? Actions { get; set; }
@@ -138,6 +139,12 @@ namespace RenegadeWizard.Entities
         {
             foreach (var con in Conditions)
             {
+
+                if  ( ConditionImmunities.Any(conImmune => conImmune.GetType() == con.GetType() ) )
+                {
+                    continue;
+                }
+
                 con.ApplyEffect(this);
             }
             Conditions.RemoveAll(x => x.Duration <= 0);
