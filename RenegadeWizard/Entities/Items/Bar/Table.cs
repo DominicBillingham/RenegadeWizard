@@ -26,7 +26,7 @@ namespace RenegadeWizard.Entities.Items
             }
             else
             {
-                Console.Write($"{thrower.Name} tries to throw {Name} but is not strong enough!");
+                Console.Write($" {Narrator.GetContrastWord()} {thrower.Name} is not strong enough!");
                 return 0;
             }
         }

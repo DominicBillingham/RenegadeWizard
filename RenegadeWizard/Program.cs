@@ -84,22 +84,22 @@ while (Scene.GetPlayer() != null)
             Scene.AddBarItems();
         }
 
-        if (currentRound % 3 == 0) {
+        //if (currentRound % 3 == 0) {
 
-            Console.WriteLine(" # Some more goblins have shown up!");
+        //    Console.WriteLine(" # Some more goblins have shown up!");
 
-            string[] goblinNames = { "Grubnak", "Snaggletooth", "Ruknuk", "Zigzag", "Bogrot", "Nibbles", "Grizzle", "Muckmire", "Skreech", "Wartnose", "Dribble", "Snizzle", "Grubfoot", "Gnash", "Sludge", "Grogmar", "Spitfire", "Blister", "Crackle", "Fungus" };
+        //    string[] goblinNames = { "Grubnak", "Snaggletooth", "Ruknuk", "Zigzag", "Bogrot", "Nibbles", "Grizzle", "Muckmire", "Skreech", "Wartnose", "Dribble", "Snizzle", "Grubfoot", "Gnash", "Sludge", "Grogmar", "Spitfire", "Blister", "Crackle", "Fungus" };
 
-            var rand = new Random();
-            var nextGoblinName = goblinNames[rand.Next(20)];
-            Scene.Entities.Add(new Goblin(nextGoblinName));
+        //    var rand = new Random();
+        //    var nextGoblinName = goblinNames[rand.Next(20)];
+        //    Scene.Entities.Add(new Goblin(nextGoblinName));
 
-            rand = new Random();
-            nextGoblinName = goblinNames[rand.Next(20)];
-            Scene.Entities.Add(new Goblin(nextGoblinName));
+        //    rand = new Random();
+        //    nextGoblinName = goblinNames[rand.Next(20)];
+        //    Scene.Entities.Add(new Goblin(nextGoblinName));
             
 
-        }
+        //}
 
         Narrator.ContinuePrompt();
 

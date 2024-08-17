@@ -13,10 +13,10 @@ namespace RenegadeWizard.GameClasses
         static Scene()
         {
             Entities.Add(new Player("NotHarry"));
-            Entities.Add(new ShieldGoblin("JoeShield"));
+
             Entities.Add(new ShieldGoblin("JeffShield"));
-            Entities.Add(new ShieldGoblin("JillShield"));
-            Entities.Add(new StickOfButter());
+            Entities.Add(new Goblin("Joe"));
+            Entities.Add(new Goblin("Jill"));
 
             AddBarItems();
         }
@@ -60,6 +60,8 @@ namespace RenegadeWizard.GameClasses
         public static Entity GetRandomItem()
         {
             var items = Scene.GetItems();
+            if (items.Count() < 3 ) { AddBarItems(); }
+
             var random = new Random();
             return items[random.Next(items.Count())];
         }
@@ -67,6 +69,8 @@ namespace RenegadeWizard.GameClasses
         public static Entity GetRandomEdibleItem()
         {
             var items = Scene.GetItems().Where(item => item is Drink).ToArray();
+            if (items.Count() < 3) { AddBarItems(); }
+
             var random = new Random();
             return items[random.Next(items.Count())];
         }

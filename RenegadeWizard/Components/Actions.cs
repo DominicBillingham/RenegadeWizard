@@ -43,7 +43,7 @@ namespace RenegadeWizard.Components
         }
         public int ActionConsume(Entity edibleItem) 
         {
-            Console.Write($" # {Invoker.Name} consumes {edibleItem.Name}");
+            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} consumes {edibleItem.Name}");
 
             int actionCost = edibleItem.WhenConsumed(Invoker);
 
@@ -73,7 +73,7 @@ namespace RenegadeWizard.Components
 
             int actionCost = target.WhenGrabbed(Invoker);
 
-            Console.WriteLine();
+            Console.WriteLine("\n");
             return actionCost;
         }
         public int ActionKick(Entity target)

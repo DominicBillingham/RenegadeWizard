@@ -16,19 +16,19 @@ namespace RenegadeWizard.Entities.Creatures
         public ShieldGoblin(string name)
         {
             Name = name;
-            Description = "A weak, silly and clumsy goblin";
+            Description = "As strong as they are dumb";
             Health = 5;
             Weight = 12;
-            Actions = new GoblinActions(this);
-            Attributes = new Attributes(5, 5, 5);
+            Actions = new ShieldGoblinActions(this);
+            Attributes = new Attributes(12, 3, 3);
             Faction = Factions.Goblin;
         }
 
     }
 
-    public class GoblinActions : Actions
+    public class ShieldGoblinActions : Actions
     {
-        public GoblinActions(Entity invoker) : base(invoker)
+        public ShieldGoblinActions(Entity invoker) : base(invoker)
         {
 
         }
@@ -52,14 +52,11 @@ namespace RenegadeWizard.Entities.Creatures
         public void ShieldAllies()
         {
             var ally = Scene.GetRandomAlly(Invoker.Faction);
-            ally.ApplyCondition(new Protected(2));
+            ally.ApplyCondition(new Protected(2), $"{Invoker.Name}");
             Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} valiantly protects {ally.Name}");
             Console.WriteLine("\n");
 
         }
-
-
-
 
     }
 

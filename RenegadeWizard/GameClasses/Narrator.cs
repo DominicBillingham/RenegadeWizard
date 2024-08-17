@@ -20,7 +20,7 @@ namespace RenegadeWizard.GameClasses
 
             foreach (var creature in Scene.GetCreatures())
             {
-                Console.Write($" - [{creature.Name}] ({creature.GetType().Name}) has {creature.Health}hp ");
+                Console.Write($" - [{creature.Name}] the {creature.GetType().Name} has {creature.Health}hp ");
                 if (creature.DamageTakenLastRound > 0) {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write( $"(-{creature.DamageTakenLastRound})" );
@@ -46,7 +46,7 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
             Console.WriteLine(" - - - - - - - ?  Help  ? - - - - - - - ");
             Console.WriteLine("This is a 1st person, text combat system. Type any sentence that includes one of the commands:");
-            Console.WriteLine("'Throw' 'Inspect' 'Consume' 'Kick' ");
+            Console.WriteLine("'Throw' 'Inspect' 'Consume' 'Kick' 'Grab' ");
             Console.WriteLine("EXAMPLE 'I throw beer at the goblin'");
             Console.WriteLine();
             Console.WriteLine("When you enter a command, it then searches for creature/item names. Anything in [ ] is a valid name.");

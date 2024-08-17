@@ -86,6 +86,8 @@ namespace RenegadeWizard.Entities
                 HeldObject.Health -= damage;
                 HeldObject.BattleLog += $" -{damage}hp from {source} protecting {Name} |";
 
+                Console.Write($" {Narrator.GetContrastWord()} {HeldObject.Name} blocks the blow!");
+
                 if ( HeldObject.IsDestroyed )
                 {
                     HeldObject.SelfDestruct();
@@ -140,8 +142,19 @@ namespace RenegadeWizard.Entities
         {
             if (IsDestroyed == false)
             {
-                BattleLog += $" gained {condition.Name} from {source} |";
-                Conditions.Add(condition);
+                var existingCon = Conditions.FirstOrDefault(con => con.GetType() == condition.GetType() );
+
+                if (existingCon != null)
+                {
+                    existingCon.Duration += condition.Duration;
+                } 
+                else
+                {
+                    Conditions.Add(condition);
+                }
+
+                BattleLog += $" gained {condition.Name}({condition.Duration}) from {source} |";
+
             }
 
         }

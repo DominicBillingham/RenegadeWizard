@@ -60,12 +60,16 @@ namespace RenegadeWizard.Entities.Creatures
 
             if (kicker.Attributes?.Strength > Attributes?.Strength)
             {
+                var item = Scene.GetRandomItem();
+
+                Console.Write($" causing {Name} to crash into {item.Name}");
+
                 ApplyDamage(2, $"being kicked by {kicker.Name}");
-                Scene.GetRandomItem().ApplyDamage(2, $"{Name} crashing into it");
+                item.ApplyDamage(2, $"{Name} crashing into it");
             }
             else
             {
-                Console.Write($" {Narrator.GetContrastWord()} they are too strong!");
+                Console.Write($" {Narrator.GetContrastWord()} {Name} is too strong!");
             }
 
             return 1;
