@@ -7,7 +7,12 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-//Narrator.ShowIntro();
+//Narrator.ShowIntro
+//
+Console.Clear();
+Console.BackgroundColor = ConsoleColor.DarkBlue;
+Console.ForegroundColor = ConsoleColor.White;
+setbackground();
 
 bool hasPlayerWon = false;
 int currentRound = 1;
@@ -96,7 +101,10 @@ while (Scene.GetPlayer() != null)
         }
 
         Narrator.ContinuePrompt();
+
         Console.Clear();
+        setbackground();
+
         Narrator.ShowRoundInfo(currentRound);
     }
 
@@ -105,3 +113,42 @@ while (Scene.GetPlayer() != null)
 Console.Clear();
 Console.WriteLine("You've lost you silly goose");
 Narrator.ContinuePrompt();
+
+ void setbackground()
+{
+    //Some nice console art to act as background made by gpt
+
+
+    // Get the current console dimensions
+    int width = Console.WindowWidth;
+    int height = Console.WindowHeight;
+
+    char[] glitchChars = new char[]
+    {
+        '.', '*', '+', 'o', 'x'
+    };
+
+    // Fill the console with spaces to apply the background color
+
+    var rand = new Random();
+
+    Console.Clear();
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            var ranInt = rand.Next(200);
+
+            if (ranInt < 1) // 5% chance to place a glitch character
+            {
+                Console.Write(glitchChars[rand.Next(glitchChars.Length)]);
+            }
+            else
+            {
+                Console.Write(' ');
+            }
+        }
+    }
+    // Reset the cursor position to the top-left corner
+    Console.SetCursorPosition(0, 0);
+}
