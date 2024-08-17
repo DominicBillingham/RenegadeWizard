@@ -35,7 +35,7 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public override void SelfDestruct()
         {
             base.SelfDestruct();
-            Console.Write("A demon has been released! | ");
+            Console.Write($" releasing a Demon!");
             Scene.Entities.Add(new Demon("Demon"));
         }
 

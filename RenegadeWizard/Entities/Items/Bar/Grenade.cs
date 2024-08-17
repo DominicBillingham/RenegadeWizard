@@ -18,7 +18,7 @@ namespace RenegadeWizard.Entities.Items
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-
+            Console.Write(" causing shrapnel to fly everywhere!");
             target.ApplyDamage(2, $"{Name} thrown by {thrower.Name}");
             foreach (var creature in Scene.GetCreatures())
             {
