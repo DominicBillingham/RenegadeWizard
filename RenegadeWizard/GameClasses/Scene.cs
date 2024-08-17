@@ -13,9 +13,10 @@ namespace RenegadeWizard.GameClasses
         static Scene()
         {
             Entities.Add(new Player("NotHarry"));
-            Entities.Add(new Goblin("Goblin"));
-            Entities.Add(new Demon("Demon"));
-            Entities.Add(new Chandelier());
+            Entities.Add(new ShieldGoblin("JoeShield"));
+            Entities.Add(new ShieldGoblin("JeffShield"));
+            Entities.Add(new ShieldGoblin("JillShield"));
+            Entities.Add(new StickOfButter());
 
             AddBarItems();
         }
@@ -38,9 +39,17 @@ namespace RenegadeWizard.GameClasses
             }
         }
 
+        #region GetMethods
+
         public static Entity GetPlayer()
         {
             return Entities.FirstOrDefault(x => x is Player);
+        }
+
+        public static Entity GetRandomEntity()
+        {
+            var random = new Random();
+            return Scene.Entities[random.Next(Scene.Entities.Count())];
         }
 
         public static List<Entity> GetItems()
@@ -62,12 +71,6 @@ namespace RenegadeWizard.GameClasses
             return items[random.Next(items.Count())];
         }
 
-        public static Entity GetRandomEntity()
-        {
-            var random = new Random();
-            return Scene.Entities[random.Next(Scene.Entities.Count())];
-        }
-
         public static List<Entity> GetNPCs()
         {
             return Entities.Where(ent => ent is Creature && ent is not Player).ToList();
@@ -85,12 +88,21 @@ namespace RenegadeWizard.GameClasses
             return creatures[random.Next(creatures.Count())];
         }
 
-        public static Entity GetRandomHostileCreature(Factions faction)
+        public static Entity GetRandomHostile(Factions faction)
         {
             var hostiles = Scene.GetCreatures().Where(creature => creature.Faction != faction).ToList();
             var random = new Random();
             return hostiles[random.Next(hostiles.Count())];
         }
+
+        public static Entity GetRandomAlly(Factions faction)
+        {
+            var allies = Scene.GetCreatures().Where(creature => creature.Faction == faction).ToList();
+            var random = new Random();
+            return allies[random.Next(allies.Count())];
+        }
+
+        #endregion
 
         public static void ApplyConditionEffects()
         {
@@ -105,26 +117,31 @@ namespace RenegadeWizard.GameClasses
         {
             foreach (var NPC in GetNPCs())
             {
-                var rand = new Random();
-                var chosenAction = rand.Next(3);
 
-                if (chosenAction == 2)
-                {
-                    var randomItem = GetItems()[rand.Next(GetItems().Count())];
-                    var enemy = GetRandomHostileCreature(NPC.Faction);
+                NPC.Actions?.TakeTurn();
 
-                    NPC.Actions?.ActionThrow(randomItem, enemy);
-                }
-                else if (chosenAction == 1)
-                {
-                    var enemy = GetRandomHostileCreature(NPC.Faction);
-                    NPC.Actions?.ActionKick(enemy);
-                }
-                else
-                {
-                    var randomItem = GetRandomEdibleItem();
-                    NPC.Actions?.ActionConsume(randomItem);
-                }
+
+
+                //var rand = new Random();
+                //var chosenAction = rand.Next(3);
+
+                //if (chosenAction == 2)
+                //{
+                //    var randomItem = GetItems()[rand.Next(GetItems().Count())];
+                //    var enemy = GetRandomHostileCreature(NPC.Faction);
+
+                //    NPC.Actions?.ActionThrow(randomItem, enemy);
+                //}
+                //else if (chosenAction == 1)
+                //{
+                //    var enemy = GetRandomHostileCreature(NPC.Faction);
+                //    NPC.Actions?.ActionKick(enemy);
+                //}
+                //else
+                //{
+                //    var randomItem = GetRandomEdibleItem();
+                //    NPC.Actions?.ActionConsume(randomItem);
+                //}
 
             }
 

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq.Expressions;
+using System.Text;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -19,7 +20,12 @@ namespace RenegadeWizard.GameClasses
 
             foreach (var creature in Scene.GetCreatures())
             {
-                Console.Write($" - [{creature.Name}] has {creature.Health}hp");
+                Console.Write($" - [{creature.Name}] has {creature.Health}hp ");
+                if (creature.DamageTakenLastRound > 0) {  
+                    Console.Write( $"(-{creature.DamageTakenLastRound})" ); 
+                }
+
+                creature.DamageTakenLastRound = 0;
 
                 if (creature.Conditions.Any())
                 {
@@ -33,6 +39,45 @@ namespace RenegadeWizard.GameClasses
             }
 
         }
+
+        public static string GetConnector()
+        {
+            string[] connectors = new string[]
+            {
+                "AND",
+                "BUT THEN",
+                "ALL OF A SUDDEN",
+                "HOWEVER",
+                "THEN",
+                "SUDDENLY",
+                "MEANWHILE",
+                "INSTANTLY",
+                "OUT OF NOWHERE",
+                "JUST AS",
+                "IN THE BLINK OF AN EYE",
+                "WITHOUT WARNING",
+                "MOMENTS LATER",
+                "UNEXPECTEDLY",
+                "AS IF BY MAGIC",
+                "NEVERTHELESS",
+                "AS QUICK AS A FLASH",
+                "BEFORE YOU KNOW IT",
+                "IN A SPLIT SECOND",
+                "RIGHT AFTER THAT",
+                "BY SURPRISE",
+                "IN THE NICK OF TIME",
+                "WITHOUT HESITATION",
+                "IN NO TIME",
+                "WITH A SUDDEN JOLT"
+            };
+
+            Random rnd = new Random();
+            int r = rnd.Next(connectors.Count());
+            return connectors[r];
+
+        }
+
+    
         public static string GetConfusedNarrator()
         {
             var Expressions = new List<string>();
@@ -45,7 +90,7 @@ namespace RenegadeWizard.GameClasses
             Expressions.Add("Did the goblins hit your head?");
 
             Random rnd = new Random();
-            int r = rnd.Next(Expressions.Count);
+            int r = rnd.Next(Expressions.Count());
             return Expressions[r];
 
         }

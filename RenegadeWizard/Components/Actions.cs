@@ -11,11 +11,17 @@ namespace RenegadeWizard.Components
 {
     public class Actions
     {
-        private Entity Invoker { get; set; }
+        protected Entity Invoker { get; set; }
         public Actions(Entity invoker) 
         { 
             Invoker = invoker;
         }
+
+        public virtual void TakeTurn()
+        {
+            Console.WriteLine($" # {Invoker.Name} is unable to do anything!");
+        }
+
         public int ActionThrow(Entity item, Entity target)
         {
             Console.Write(" # ");
@@ -88,7 +94,7 @@ namespace RenegadeWizard.Components
         }
         public int ActionKick(Entity target)
         {
-            Console.Write(" # ");
+            Console.Write($" # {Narrator.GetConnector()} {Invoker.Name} kicks {target.Name} ");
 
             if (Invoker.Conditions.Any(con => con is Madness))
             {

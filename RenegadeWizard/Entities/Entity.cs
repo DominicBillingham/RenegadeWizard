@@ -12,6 +12,8 @@ namespace RenegadeWizard.Entities
         public int Health { get; set; }
         public int Weight { get; set; }
         public string Description { get; set; } = string.Empty;
+        public string BattleLog { get; set; } = string.Empty;
+        public int DamageTakenLastRound { get; set; } = 0;
         public Factions Faction { get; set; } = Factions.None;
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Condition> Conditions { get; set; } = new List<Condition>();
@@ -25,22 +27,22 @@ namespace RenegadeWizard.Entities
         #region WhenAction Methods
         public virtual int WhenThrown(Entity target, Entity thrower)
         {
-            Console.Write($"{thrower.Name} tries to throw {Name}, but it fails | ");
+            Console.Write($" but it fails | ");
             return 0;
         }
         public virtual int WhenConsumed(Entity consumer)
         {
-            Console.Write($"{consumer.Name} tries to consume {Name}, but it fails | ");
+            Console.Write($" but it fails | ");
             return 0;
         }
         public virtual int WhenGrabbed(Entity grabber)
         {
-            Console.Write($"{grabber.Name} tries to grab {Name}, but it fails | ");
+            Console.Write($" but it fails | ");
             return 0;
         }
         public virtual int WhenKicked(Entity kicker)
         {
-            Console.Write($"{kicker.Name} tries to kick {Name}, but it fails | ");
+            Console.Write($" but it fails | ");
             return 0;
         }
         public virtual int WhenInspected()
@@ -66,6 +68,10 @@ namespace RenegadeWizard.Entities
                 return;
             }
 
+            if (Conditions.Any(con => con is Protected)) {
+                damage = 1;
+            }
+
             if (HeldObject != null && HeldObject.IsDestroyed == false)
             {
                 HeldObject.Health -= damage;
@@ -84,6 +90,7 @@ namespace RenegadeWizard.Entities
 
             if (IsDestroyed == false)
             {
+                DamageTakenLastRound += damage;
                 Health -= damage;
                 Console.Write($"{Name} takes -{damage}hp from {source} | ");
                 if(IsDestroyed)
@@ -104,7 +111,6 @@ namespace RenegadeWizard.Entities
         #endregion
 
         #region Condition Methods
-
         public virtual void ApplyConditionDamage(int damage, string? source = null)
         {
             if (Conditions.Any(con => con is Immortal))
@@ -116,6 +122,7 @@ namespace RenegadeWizard.Entities
             // idea: Check for damage immunitiess
             if (IsDestroyed == false)
             {
+                DamageTakenLastRound += damage;
                 Health -= damage;
                 //Console.Write($"{Name} takes -{damage}hp from {source} | ");
                 if (IsDestroyed)
@@ -129,7 +136,7 @@ namespace RenegadeWizard.Entities
         {
             if (IsDestroyed == false)
             {
-                Console.Write($"{Name} gained {condition.Name} from {source} | ");
+                //Console.Write($"{Name} gained {condition.Name} from {source} | ");
                 Conditions.Add(condition);
             }
 

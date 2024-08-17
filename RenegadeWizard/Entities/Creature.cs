@@ -70,7 +70,7 @@ namespace RenegadeWizard.Entities
                 Scene.GetRandomItem().ApplyDamage(2, $"{Name} crashing into it");
             } else
             {
-                Console.Write($"{kicker.Name} tries to kick {Name} but is too weak!");
+                Console.Write($" but is too weak!");
             }
 
             return 1;

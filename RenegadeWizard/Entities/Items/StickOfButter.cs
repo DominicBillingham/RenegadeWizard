@@ -19,7 +19,7 @@ namespace RenegadeWizard.Entities.Items
         }
         public override int WhenThrown(Entity target, Entity thrower)
         {
-            target.ApplyDamage(1, $"{Name} thrown by {thrower.Name}");
+            target.ApplyDamage(4, $"{Name} thrown by {thrower.Name}");
             target.ApplyCondition(new Slippery(3), Name);
             Scene.Entities.Remove(this);
             return 1;
