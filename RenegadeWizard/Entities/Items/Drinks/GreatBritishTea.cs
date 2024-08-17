@@ -24,6 +24,7 @@ namespace RenegadeWizard.Entities.Items.Drinks
         }
         public override int WhenConsumed(Entity consumer)
         {
+            Console.Write($" making {consumer} immortal");
             consumer.ApplyCondition(new Immortal(1), $"consuming {Name}");
             Scene.Entities.Remove(this);
             return 1;

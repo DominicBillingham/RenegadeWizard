@@ -42,7 +42,7 @@ namespace RenegadeWizard.Components
         }
         public int ActionConsume(Entity edibleItem) 
         {
-            Console.Write(" # ");
+            Console.Write($" # {Invoker.Name} consumes {edibleItem.Name}");
 
             if (Invoker.Conditions.Any(con => con is Madness))
             {

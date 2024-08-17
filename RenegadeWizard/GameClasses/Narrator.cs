@@ -21,8 +21,10 @@ namespace RenegadeWizard.GameClasses
             foreach (var creature in Scene.GetCreatures())
             {
                 Console.Write($" - [{creature.Name}] has {creature.Health}hp ");
-                if (creature.DamageTakenLastRound > 0) {  
-                    Console.Write( $"(-{creature.DamageTakenLastRound})" ); 
+                if (creature.DamageTakenLastRound > 0) {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write( $"(-{creature.DamageTakenLastRound})" );
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
                 creature.DamageTakenLastRound = 0;

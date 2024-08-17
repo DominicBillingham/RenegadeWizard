@@ -68,7 +68,6 @@ while (Scene.GetPlayer() != null)
 
     if (actionCost > 0)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
         Scene.EngageHyperArtificialIntelligence();
 
         Scene.ApplyConditionEffects();
