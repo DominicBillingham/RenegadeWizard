@@ -22,35 +22,28 @@ namespace RenegadeWizard.Components
             Console.WriteLine($" # {Invoker.Name} is unable to do anything!");
         }
 
+        //if (Invoker.Conditions.Any(con => con is Madness))
+        //{
+        //    item = Scene.GetRandomEntity();
+        //    target = Scene.GetRandomEntity();
+        //    item.WhenThrown(target, Invoker);
+        //    Console.WriteLine();
+        //    return 1;
+        //}
+
         public int ActionThrow(Entity item, Entity target)
         {
-            Console.Write(" # ");
-
-            if (Invoker.Conditions.Any(con => con is Madness))
-            {
-                item = Scene.GetRandomEntity();
-                target = Scene.GetRandomEntity();
-                item.WhenThrown(target, Invoker);
-                Console.WriteLine();
-                return 1;
-            }
+            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} throws {item.Name} at {target.Name}");
 
             int actionCost = item.WhenThrown(target, Invoker);
-            Console.WriteLine();
+
+            Console.WriteLine("\n");
             return actionCost;
 
         }
         public int ActionConsume(Entity edibleItem) 
         {
             Console.Write($" # {Invoker.Name} consumes {edibleItem.Name}");
-
-            if (Invoker.Conditions.Any(con => con is Madness))
-            {
-                edibleItem = Scene.GetRandomEntity();
-                edibleItem.WhenConsumed(Invoker);
-                Console.WriteLine();
-                return 1;
-            }
 
             int actionCost = edibleItem.WhenConsumed(Invoker);
 
@@ -59,12 +52,11 @@ namespace RenegadeWizard.Components
                 Console.Write(Narrator.GetConfusedNarrator());
             }
 
-            Console.WriteLine();
+            Console.WriteLine("\n");
             return actionCost;
         }
         public int ActionInspect(Entity entity)
         {
-            Console.Write(" # ");
 
             if (Invoker.Conditions.Any(con => con is Madness))
             {
@@ -72,40 +64,25 @@ namespace RenegadeWizard.Components
             }
 
             int actionCost = entity.WhenInspected();
-            Console.WriteLine();
+            Console.WriteLine("\n");
             return actionCost;
         }
         public int ActionGrab(Entity target)
         {
-
-            Console.Write(" # ");
-
-            if (Invoker.Conditions.Any(con => con is Madness))
-            {
-                target = Scene.GetRandomEntity();
-                target.WhenGrabbed(Invoker);
-                Console.WriteLine();
-                return 1;
-            }
+            Console.Write($" # {Invoker.Name} grapples {target.Name}");
 
             int actionCost = target.WhenGrabbed(Invoker);
+
             Console.WriteLine();
             return actionCost;
         }
         public int ActionKick(Entity target)
         {
-            Console.Write($" # {Narrator.GetConnector()} {Invoker.Name} kicks {target.Name} ");
-
-            if (Invoker.Conditions.Any(con => con is Madness))
-            {
-                target = Scene.GetRandomEntity();
-                target.WhenKicked(Invoker);
-                Console.WriteLine();
-                return 1;
-            }
+            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} kicks {target.Name}");
 
             int actionCost = target.WhenKicked(Invoker);
-            Console.WriteLine();
+
+            Console.WriteLine("\n");
             return actionCost;
         }
 

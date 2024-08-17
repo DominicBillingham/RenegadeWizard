@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenegadeWizard.Entities
+namespace RenegadeWizard.Entities.Creatures
 {
     public class Creature : Entity
     {
@@ -15,29 +15,23 @@ namespace RenegadeWizard.Entities
         {
             if (Conditions.Any(con => con is Slippery))
             {
-                Console.Write($"{Name} is too slippery to be grabbed! | ");
-                return 0;
+                Console.Write($" {Narrator.GetContrastWord()} {Name} is too slippery.");
+                return 1;
             }
 
             if (grabber.Attributes?.Strength < Attributes?.Agility)
             {
-                Console.Write($"{Name} is too fast to be grabbed! | ");
-                return 0;
+                Console.Write($" {Narrator.GetContrastWord()} {Name} is too fast.");
+                return 1;
             }
 
             if (grabber.Attributes?.Strength < Weight)
             {
-                Console.Write($"{Name} is too heavy to be grabbed! | ");
-                return 0;
-            }
-
-            if (Conditions.Any(con => con is Burning))
-            {
-                grabber.ApplyCondition(new Burning(3), $"trying to grab Burning {Name} | ");
+                Console.Write($" {Narrator.GetContrastWord()} {Name} is too heavy.");
+                return 1;
             }
 
             grabber.HeldObject = this;
-            Console.Write($"{Name} is being used as a shield by {grabber.Name} | ");
             return 1;
         }
 
@@ -45,11 +39,11 @@ namespace RenegadeWizard.Entities
         {
             if (consumer.Attributes?.Strength < Weight)
             {
-                Console.Write($"{Name} is too large to be eaten! | ");
-                return 0;
+                Console.Write($" {Narrator.GetContrastWord()} {Name} is too large to be eaten!");
+                return 1;
             }
 
-            Console.Write($"{Name} is devoured by {consumer.Name}! | ");
+            Console.Write($" {Name} is devoured by {consumer.Name}!");
             SelfDestruct();
             return 1;
 
@@ -68,9 +62,10 @@ namespace RenegadeWizard.Entities
             {
                 ApplyDamage(2, $"being kicked by {kicker.Name}");
                 Scene.GetRandomItem().ApplyDamage(2, $"{Name} crashing into it");
-            } else
+            }
+            else
             {
-                Console.Write($" but is too weak!");
+                Console.Write($" {Narrator.GetContrastWord()} they are too strong!");
             }
 
             return 1;
@@ -78,7 +73,7 @@ namespace RenegadeWizard.Entities
 
         public override void SelfDestruct()
         {
-            Console.Write($"{Name} has died | ");
+            Console.Write($" {Name} has died!");
             Scene.Entities.Remove(this);
         }
 

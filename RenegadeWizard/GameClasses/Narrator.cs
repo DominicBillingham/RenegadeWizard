@@ -20,7 +20,7 @@ namespace RenegadeWizard.GameClasses
 
             foreach (var creature in Scene.GetCreatures())
             {
-                Console.Write($" - [{creature.Name}] has {creature.Health}hp ");
+                Console.Write($" - [{creature.Name}] ({creature.GetType().Name}) has {creature.Health}hp ");
                 if (creature.DamageTakenLastRound > 0) {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write( $"(-{creature.DamageTakenLastRound})" );
@@ -39,61 +39,6 @@ namespace RenegadeWizard.GameClasses
                 Console.WriteLine();
 
             }
-
-        }
-
-        public static string GetConnector()
-        {
-            string[] connectors = new string[]
-            {
-                "AND",
-                "BUT THEN",
-                "ALL OF A SUDDEN",
-                "HOWEVER",
-                "THEN",
-                "SUDDENLY",
-                "MEANWHILE",
-                "INSTANTLY",
-                "OUT OF NOWHERE",
-                "JUST AS",
-                "IN THE BLINK OF AN EYE",
-                "WITHOUT WARNING",
-                "MOMENTS LATER",
-                "UNEXPECTEDLY",
-                "AS IF BY MAGIC",
-                "NEVERTHELESS",
-                "AS QUICK AS A FLASH",
-                "BEFORE YOU KNOW IT",
-                "IN A SPLIT SECOND",
-                "RIGHT AFTER THAT",
-                "BY SURPRISE",
-                "IN THE NICK OF TIME",
-                "WITHOUT HESITATION",
-                "IN NO TIME",
-                "WITH A SUDDEN JOLT"
-            };
-
-            Random rnd = new Random();
-            int r = rnd.Next(connectors.Count());
-            return connectors[r];
-
-        }
-
-    
-        public static string GetConfusedNarrator()
-        {
-            var Expressions = new List<string>();
-            Expressions.Add("What the fuck?");
-            Expressions.Add("!?");
-            Expressions.Add("You do you I guess?");
-            Expressions.Add("Why?");
-            Expressions.Add("Sigh...");
-            Expressions.Add("Is intelligence your dump stat?");
-            Expressions.Add("Did the goblins hit your head?");
-
-            Random rnd = new Random();
-            int r = rnd.Next(Expressions.Count());
-            return Expressions[r];
 
         }
         public static void ShowHelp()
@@ -133,6 +78,58 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
         }
+
+        private static readonly string[] connectors = new string[] { "AND", "BUT THEN", "ALL OF A SUDDEN", "HOWEVER", "THEN", "SUDDENLY", "MEANWHILE", "INSTANTLY", "OUT OF NOWHERE", "JUST AS", "IN THE BLINK OF AN EYE", "WITHOUT WARNING", "MOMENTS LATER", "UNEXPECTEDLY", "AS IF BY MAGIC", "NEVERTHELESS", "AS QUICK AS A FLASH", "BEFORE YOU KNOW IT", "IN A SPLIT SECOND", "RIGHT AFTER THAT", "BY SURPRISE", "IN THE NICK OF TIME", "WITHOUT HESITATION", "IN NO TIME", "WITH A SUDDEN JOLT" };
+
+        private static readonly string[] contrasts = new string[] { "BUT", "HOWEVER", "IT TURNS OUT", "YET", "ALTHOUGH" };
+
+        private static readonly string[] attemptWords = new string[] { "tries", "attempts", "strives", "endeavors", "aims", "seeks", "undertakes", "ventures", "pursues", "experiments", "tests", "explores" };
+
+        public static string GetConnectorWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(connectors.Count());
+            return connectors[r];
+        }
+
+        public static string GetContrastWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(contrasts.Count());
+            return contrasts[r];
+        }
+
+        public static string GetAttemptWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(attemptWords.Count());
+            return attemptWords[r];
+        }
+
+
+
+
+
+
+
+
+        public static string GetConfusedNarrator()
+        {
+            var Expressions = new List<string>();
+            Expressions.Add("What the fuck?");
+            Expressions.Add("!?");
+            Expressions.Add("You do you I guess?");
+            Expressions.Add("Why?");
+            Expressions.Add("Sigh...");
+            Expressions.Add("Is intelligence your dump stat?");
+            Expressions.Add("Did the goblins hit your head?");
+
+            Random rnd = new Random();
+            int r = rnd.Next(Expressions.Count());
+            return Expressions[r];
+
+        }
+
 
     }
 }

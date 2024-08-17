@@ -52,8 +52,10 @@ namespace RenegadeWizard.Entities.Creatures
         public void ShieldAllies()
         {
             var ally = Scene.GetRandomAlly(Invoker.Faction);
-            Console.WriteLine($" # {Narrator.GetConnector()} {Invoker.Name} valiantly protects {ally.Name}");
             ally.ApplyCondition(new Protected(2));
+            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} valiantly protects {ally.Name}");
+            Console.WriteLine("\n");
+
         }
 
 

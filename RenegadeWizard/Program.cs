@@ -10,7 +10,7 @@ using System.Reflection;
 //Narrator.ShowIntro
 //
 Console.Clear();
-Console.BackgroundColor = ConsoleColor.DarkBlue;
+Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 setbackground();
 
@@ -69,6 +69,7 @@ while (Scene.GetPlayer() != null)
     }
 
     // Perform Round Actions
+    Console.WriteLine();
     int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().Actions, actionParameters.ToArray());
 
     if (actionCost > 0)
@@ -118,7 +119,6 @@ Narrator.ContinuePrompt();
 {
     //Some nice console art to act as background made by gpt
 
-
     // Get the current console dimensions
     int width = Console.WindowWidth;
     int height = Console.WindowHeight;
@@ -149,6 +149,10 @@ Narrator.ContinuePrompt();
             }
         }
     }
+
+    Console.SetCursorPosition(100, height - 10);
+    Console.Write("\n         _.._\r\n       .' .-'`\r\n      /  /\r\n      |  |\r\n      \\  \\\r\n       '._'-._\r\n          ```");
+
     // Reset the cursor position to the top-left corner
     Console.SetCursorPosition(0, 0);
 }

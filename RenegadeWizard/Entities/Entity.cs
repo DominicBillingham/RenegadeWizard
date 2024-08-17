@@ -27,33 +27,42 @@ namespace RenegadeWizard.Entities
         #region WhenAction Methods
         public virtual int WhenThrown(Entity target, Entity thrower)
         {
-            Console.Write($" but it fails | ");
+            Console.Write($" {Narrator.GetContrastWord()} it fails!");
             return 0;
         }
         public virtual int WhenConsumed(Entity consumer)
         {
-            Console.Write($" but it fails | ");
+            Console.Write($" {Narrator.GetContrastWord()} but it fails!");
             return 0;
         }
         public virtual int WhenGrabbed(Entity grabber)
         {
-            Console.Write($" but it fails | ");
+            Console.Write($" {Narrator.GetContrastWord()} but it fails!");
             return 0;
         }
         public virtual int WhenKicked(Entity kicker)
         {
-            Console.Write($" but it fails | ");
+            Console.Write($" {Narrator.GetContrastWord()} but it fails!");
             return 0;
         }
         public virtual int WhenInspected()
         {
             // idea: Make intellect requirements to get more details
-            Console.Write($" # {Name} - {Description}");
+            Console.Write($" #");
+
             if ( Attributes != null)
             {
-                Console.Write($" | STR:{Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect}");
+                Console.Write($"STR:{Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
             }
-            Console.WriteLine();
+
+            Console.Write($" {Name} - {Description}");
+
+            if (BattleLog != string.Empty)
+            {
+                Console.WriteLine();
+                Console.Write(BattleLog);
+            }
+
             return 0;
         }
 
@@ -64,7 +73,7 @@ namespace RenegadeWizard.Entities
         {
             if (Conditions.Any(con => con is Immortal))
             {
-                Console.Write($"{Name} is immortal and takes 0 damage from {source} | ");
+                BattleLog += $" -{damage}hp => 0hp from {source} because Immortal |";
                 return;
             }
 
@@ -75,16 +84,14 @@ namespace RenegadeWizard.Entities
             if (HeldObject != null && HeldObject.IsDestroyed == false)
             {
                 HeldObject.Health -= damage;
-                Console.Write($"{HeldObject.Name} takes -{damage}hp from {source} shielding {Name} | ");
+                HeldObject.BattleLog += $" -{damage}hp from {source} protecting {Name} |";
 
                 if ( HeldObject.IsDestroyed )
                 {
                     HeldObject.SelfDestruct();
                 }
 
-                Console.Write($"{Name} drops {HeldObject.Name} | ");
                 HeldObject = null;
-
                 return;
             } 
 
@@ -92,8 +99,8 @@ namespace RenegadeWizard.Entities
             {
                 DamageTakenLastRound += damage;
                 Health -= damage;
-                Console.Write($"{Name} takes -{damage}hp from {source} | ");
-                if(IsDestroyed)
+                BattleLog += $" -{damage}hp from {source} |";
+                if (IsDestroyed)
                 {
                     SelfDestruct();
                 }
@@ -102,10 +109,7 @@ namespace RenegadeWizard.Entities
         public virtual void ApplyHealing(int heal, string? source = null)
         {
             Health += heal;
-
-            Conditions.RemoveAll(con => con is Bleeding);
-
-            Console.Write($"{Name} recovers +{heal}hp from {source} | ");
+            BattleLog = $" +{heal}hp from {source} |";
         }
 
         #endregion
@@ -115,7 +119,7 @@ namespace RenegadeWizard.Entities
         {
             if (Conditions.Any(con => con is Immortal))
             {
-                //Console.Write($"{Name} is immortal and takes 0 damage from {source} | ");
+                BattleLog += $" -{damage}hp => 0hp from {source} because Immortal |";
                 return;
             }
 
@@ -124,7 +128,7 @@ namespace RenegadeWizard.Entities
             {
                 DamageTakenLastRound += damage;
                 Health -= damage;
-                //Console.Write($"{Name} takes -{damage}hp from {source} | ");
+                BattleLog += $" -{damage}hp from {source} |";
                 if (IsDestroyed)
                 {
                     //Console.Write($"{Name} has been destroyed | ");
@@ -136,7 +140,7 @@ namespace RenegadeWizard.Entities
         {
             if (IsDestroyed == false)
             {
-                //Console.Write($"{Name} gained {condition.Name} from {source} | ");
+                BattleLog += $" gained {condition.Name} from {source} |";
                 Conditions.Add(condition);
             }
 
