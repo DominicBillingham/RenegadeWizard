@@ -20,9 +20,14 @@ namespace RenegadeWizard.Entities
         public List<Condition> ConditionImmunities { get; set; } = new List<Condition>();
 
         // Composition Stuff
-        public Actions? CharacterActions { get; set; }
+        public Interaction? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
         public Entity? HeldObject { get; set; }
+
+        public virtual void TakeTurn()
+        {
+
+        }
 
         #region WhenAction Methods
         public virtual int WhenThrown(Entity target, Entity thrower)

@@ -1,9 +1,12 @@
-﻿using RenegadeWizard.Conditions;
+﻿using RenegadeWizard.Components;
+using RenegadeWizard.Conditions;
 using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.Entities.Items;
 using RenegadeWizard.Entities.Items.Drinks;
 using RenegadeWizard.Enums;
+using System;
+using static System.Collections.Specialized.BitVector32;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -14,7 +17,9 @@ namespace RenegadeWizard.GameClasses
         {
             Entities.Add(new Player("NotHarry"));
 
-            //Entities.Add(new ShieldGoblin("JeffShield"));
+            Entities.Add(new ShieldGoblin("JeffShield"));
+            Entities.Add(new ShieldGoblin("JessShield"));
+
             Entities.Add(new Goblin("Joe"));
             Entities.Add(new Goblin("Jill"));
 
@@ -114,30 +119,7 @@ namespace RenegadeWizard.GameClasses
         {
             foreach (var NPC in GetNPCs())
             {
-
-                NPC.CharacterActions.TakeTurn(NPC);
-
-                //var rand = new Random();
-                //var chosenAction = rand.Next(3);
-
-                //if (chosenAction == 2)
-                //{
-                //    var randomItem = GetItems()[rand.Next(GetItems().Count())];
-                //    var enemy = GetRandomHostileCreature(NPC.Faction);
-
-                //    NPC.Actions?.ActionThrow(randomItem, enemy);
-                //}
-                //else if (chosenAction == 1)
-                //{
-                //    var enemy = GetRandomHostileCreature(NPC.Faction);
-                //    NPC.Actions?.ActionKick(enemy);
-                //}
-                //else
-                //{
-                //    var randomItem = GetRandomEdibleItem();
-                //    NPC.Actions?.ActionConsume(randomItem);
-                //}
-
+                NPC.TakeTurn();
             }
 
         }

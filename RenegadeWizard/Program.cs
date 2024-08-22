@@ -37,7 +37,7 @@ while (Scene.GetPlayer() != null)
         continue;
     }
 
-    var possibleActions = typeof(Actions).GetMethods().Where(action => action.Name.Contains("Action"));
+    var possibleActions = typeof(Interaction).GetMethods().Where(action => action.Name.Contains("Action"));
     MethodInfo chosenAction = possibleActions.FirstOrDefault(action => input.Any(word => action.Name.ToLower().Contains(word)));
 
     if (chosenAction == null)
@@ -49,7 +49,6 @@ while (Scene.GetPlayer() != null)
     // Find action paratmers
     List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
     List<Entity> actionParameters = new();
-    actionParameters.Add(Scene.GetPlayer());
 
     foreach (var word in input)
     {
@@ -71,7 +70,12 @@ while (Scene.GetPlayer() != null)
 
     // Perform Round Actions
     Console.WriteLine();
-    int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().CharacterActions, actionParameters.ToArray());
+
+
+    var interaction = new Interaction();
+    interaction.Agent = Scene.GetPlayer();
+    int actionCost = (int)chosenAction.Invoke(interaction, actionParameters.ToArray());
+
 
     if (actionCost > 0)
     {

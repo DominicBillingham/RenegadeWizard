@@ -17,7 +17,7 @@ namespace RenegadeWizard.Entities.Creatures
             Description = "He looks like a FUN GUY";
             Health = 3;
             Weight = 6;
-            CharacterActions = new Actions();
+            CharacterActions = new Interaction();
             Attributes = new Attributes(4, 7, 13);
 
         }
