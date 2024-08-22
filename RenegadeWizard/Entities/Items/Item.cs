@@ -21,10 +21,7 @@ namespace RenegadeWizard.Entities
             grabber.HeldObject = this;
             return 1;
         }
-        public override void SelfDestruct()
-        {
-            Scene.Entities.Remove(this);
-        }
+
         public override int WhenKicked(Entity kicker)
         {
             ApplyDamage(2, $"kicked by {kicker.Name}");

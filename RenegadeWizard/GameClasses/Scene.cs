@@ -14,7 +14,7 @@ namespace RenegadeWizard.GameClasses
         {
             Entities.Add(new Player("NotHarry"));
 
-            Entities.Add(new ShieldGoblin("JeffShield"));
+            //Entities.Add(new ShieldGoblin("JeffShield"));
             Entities.Add(new Goblin("Joe"));
             Entities.Add(new Goblin("Jill"));
 
@@ -30,8 +30,7 @@ namespace RenegadeWizard.GameClasses
 
             for (int i = 0; i < 5; i++)
             {
-                var random = new Random();
-                var item = items[random.Next(items.Count())];
+                var item = items[Random.Shared.Next(items.Count())];
 
                 Item instance = (Item)Activator.CreateInstance(item);
                 Entities.Add(instance);
@@ -48,8 +47,7 @@ namespace RenegadeWizard.GameClasses
 
         public static Entity GetRandomEntity()
         {
-            var random = new Random();
-            return Scene.Entities[random.Next(Scene.Entities.Count())];
+            return Scene.Entities[Random.Shared.Next(Scene.Entities.Count())];
         }
 
         public static List<Entity> GetItems()
@@ -62,8 +60,7 @@ namespace RenegadeWizard.GameClasses
             var items = Scene.GetItems();
             if (items.Count() < 3 ) { AddBarItems(); }
 
-            var random = new Random();
-            return items[random.Next(items.Count())];
+            return items[Random.Shared.Next(items.Count())];
         }
 
         public static Entity GetRandomEdibleItem()
@@ -71,8 +68,7 @@ namespace RenegadeWizard.GameClasses
             var items = Scene.GetItems().Where(item => item is Drink).ToArray();
             if (items.Count() < 3) { AddBarItems(); }
 
-            var random = new Random();
-            return items[random.Next(items.Count())];
+            return items[Random.Shared.Next(items.Count())];
         }
 
         public static List<Entity> GetNPCs()
@@ -88,22 +84,19 @@ namespace RenegadeWizard.GameClasses
         public static Entity GetRandomCreature()
         {
             var creatures = Scene.GetCreatures();
-            var random = new Random();
-            return creatures[random.Next(creatures.Count())];
+            return creatures[Random.Shared.Next(creatures.Count())];
         }
 
         public static Entity GetRandomHostile(Factions faction)
         {
             var hostiles = Scene.GetCreatures().Where(creature => creature.Faction != faction).ToList();
-            var random = new Random();
-            return hostiles[random.Next(hostiles.Count())];
+            return hostiles[Random.Shared.Next(hostiles.Count())];
         }
 
         public static Entity GetRandomAlly(Factions faction)
         {
             var allies = Scene.GetCreatures().Where(creature => creature.Faction == faction).ToList();
-            var random = new Random();
-            return allies[random.Next(allies.Count())];
+            return allies[Random.Shared.Next(allies.Count())];
         }
 
         #endregion
@@ -122,9 +115,7 @@ namespace RenegadeWizard.GameClasses
             foreach (var NPC in GetNPCs())
             {
 
-                NPC.Actions?.TakeTurn();
-
-
+                NPC.CharacterActions.TakeTurn(NPC);
 
                 //var rand = new Random();
                 //var chosenAction = rand.Next(3);

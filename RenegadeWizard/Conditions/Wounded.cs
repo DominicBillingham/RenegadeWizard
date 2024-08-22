@@ -2,15 +2,14 @@
 
 namespace RenegadeWizard.Conditions
 {
-    class Burning : Condition
+    class Wounded : Condition
     {
-        public Burning(int duration) : base(duration)
+        public Wounded(int duration) : base(duration)
         {
-            Name = "Burning";
+            Name = "Wounded";
         }
         public override void ApplyEffect(Entity entity)
         {
-            entity.ApplyDamage(2, Name, true);
             Duration -= 1;
         }
 

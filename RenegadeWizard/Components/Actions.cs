@@ -11,43 +11,24 @@ namespace RenegadeWizard.Components
 {
     public class Actions
     {
-        protected Entity Invoker { get; set; }
-        public Actions(Entity invoker) 
-        { 
-            Invoker = invoker;
-        }
 
-        public virtual void TakeTurn()
+        public int ActionThrow(Entity thrower, Entity item, Entity target)
         {
-            Console.WriteLine($" # {Invoker.Name} is unable to do anything!");
-        }
+            Console.Write($" # {Narrator.GetConnectorWord()} {thrower.Name} throws {item.Name} at {target.Name}");
 
-        //if (Invoker.Conditions.Any(con => con is Madness))
-        //{
-        //    item = Scene.GetRandomEntity();
-        //    target = Scene.GetRandomEntity();
-        //    item.WhenThrown(target, Invoker);
-        //    Console.WriteLine();
-        //    return 1;
-        //}
-
-        public int ActionThrow(Entity item, Entity target)
-        {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} throws {item.Name} at {target.Name}");
-
-            int actionCost = item.WhenThrown(target, Invoker);
+            int actionCost = item.WhenThrown(target, thrower);
 
             Console.WriteLine("\n");
             return actionCost;
 
         }
-        public int ActionConsume(Entity edibleItem) 
+        public int ActionConsume(Entity consumer, Entity edibleItem) 
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} consumes {edibleItem.Name}");
+            Console.Write($" # {Narrator.GetConnectorWord()} {consumer.Name} consumes {edibleItem.Name}");
 
-            int actionCost = edibleItem.WhenConsumed(Invoker);
+            int actionCost = edibleItem.WhenConsumed(consumer);
 
-            if (Invoker == edibleItem)
+            if (consumer == edibleItem)
             {
                 Console.Write(Narrator.GetConfusedNarrator());
             }
@@ -55,10 +36,10 @@ namespace RenegadeWizard.Components
             Console.WriteLine("\n");
             return actionCost;
         }
-        public int ActionInspect(Entity entity)
+        public int ActionInspect(Entity inspector, Entity entity)
         {
 
-            if (Invoker.Conditions.Any(con => con is Madness))
+            if (inspector.Conditions.Any(con => con is Madness))
             {
                 // idea: write some custom lines for inspecting while mad
             }
@@ -67,44 +48,56 @@ namespace RenegadeWizard.Components
             Console.WriteLine("\n");
             return actionCost;
         }
-        public int ActionGrab(Entity target)
+        public int ActionGrab(Entity grabber, Entity target)
         {
-            Console.Write($" # {Invoker.Name} grapples {target.Name}");
+            Console.Write($" # {grabber.Name} grapples {target.Name}");
 
-            int actionCost = target.WhenGrabbed(Invoker);
+            int actionCost = target.WhenGrabbed(grabber);
 
             Console.WriteLine("\n");
             return actionCost;
         }
-        public int ActionKick(Entity target)
+        public int ActionKick(Entity kicker, Entity target)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} kicks {target.Name}");
+            Console.Write($" # {Narrator.GetConnectorWord()} {kicker.Name} kicks {target.Name}");
 
-            int actionCost = target.WhenKicked(Invoker);
+            int actionCost = target.WhenKicked(kicker);
 
             Console.WriteLine("\n");
             return actionCost;
         }
 
         #region Synonyms
-        public int ActionDrink(Entity edibleItem)
+        public int ActionDrink(Entity consumer, Entity edibleItem)
         {
-            return ActionConsume(edibleItem);
+            return ActionConsume(consumer, edibleItem);
         }
-        public int ActionEat(Entity edibleItem)
+        public int ActionEat(Entity consumer, Entity edibleItem)
         {
-            return ActionConsume(edibleItem);
+            return ActionConsume(consumer, edibleItem);
         }
-        public int ActionShove(Entity target)
+        public int ActionShove(Entity shover, Entity target)
         {
-            return ActionKick(target);
+            return ActionKick(shover, target);
         }
-        public int ActionToss(Entity item, Entity target)
+        public int ActionToss(Entity tosser, Entity item, Entity target)
         {
-            return ActionThrow(item, target);
+            return ActionThrow(tosser, item, target);
         }
+        public int ActionInfo(Entity inspector, Entity entity)
+        {
+            return ActionInspect(inspector, entity);
+        }
+
         #endregion
+
+        public virtual void TakeTurn(Entity entity)
+        {
+
+        }
 
 
     }
+
+
 }

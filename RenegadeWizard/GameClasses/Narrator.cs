@@ -21,6 +21,7 @@ namespace RenegadeWizard.GameClasses
             foreach (var creature in Scene.GetCreatures())
             {
                 Console.Write($" - [{creature.Name}] the {creature.GetType().Name} has {creature.Health}hp ");
+
                 if (creature.DamageTakenLastRound > 0) {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write( $"(-{creature.DamageTakenLastRound})" );
@@ -75,7 +76,7 @@ namespace RenegadeWizard.GameClasses
         public static void ContinuePrompt()
         {
             Console.WriteLine();
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine(" - Press any key to continue...");
             Console.ReadKey(true);
         }
 

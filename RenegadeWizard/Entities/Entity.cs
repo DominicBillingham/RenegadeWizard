@@ -20,7 +20,7 @@ namespace RenegadeWizard.Entities
         public List<Condition> ConditionImmunities { get; set; } = new List<Condition>();
 
         // Composition Stuff
-        public Actions? Actions { get; set; }
+        public Actions? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
         public Entity? HeldObject { get; set; }
 
@@ -52,7 +52,7 @@ namespace RenegadeWizard.Entities
 
             if ( Attributes != null)
             {
-                Console.Write($"STR:{Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
+                Console.Write($" STR:{Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
             }
 
             Console.Write($" {Name} - {Description}");
@@ -60,7 +60,7 @@ namespace RenegadeWizard.Entities
             if (BattleLog != string.Empty)
             {
                 Console.WriteLine();
-                Console.Write(BattleLog);
+                Console.Write(" #" + BattleLog);
             }
 
             return 0;
@@ -69,7 +69,7 @@ namespace RenegadeWizard.Entities
         #endregion
 
         #region Health Methods
-        public virtual void ApplyDamage(int damage, string? source = null)
+        public virtual void ApplyDamage(int damage, string source, bool ignoreArmour = false)
         {
             if (Conditions.Any(con => con is Immortal))
             {
@@ -78,10 +78,15 @@ namespace RenegadeWizard.Entities
             }
 
             if (Conditions.Any(con => con is Protected)) {
-                damage = 1;
+                damage -= 1;
             }
 
-            if (HeldObject != null && HeldObject.IsDestroyed == false)
+            if (Conditions.Any(con => con is Wounded))
+            {
+                damage += 1;
+            }
+
+            if (HeldObject != null && HeldObject.IsDestroyed == false && ignoreArmour == false)
             {
                 HeldObject.Health -= damage;
                 HeldObject.BattleLog += $" -{damage}hp from {source} protecting {Name} |";
@@ -102,12 +107,21 @@ namespace RenegadeWizard.Entities
                 DamageTakenLastRound += damage;
                 Health -= damage;
                 BattleLog += $" -{damage}hp from {source} |";
+
+                WhenDamaged();
+
                 if (IsDestroyed)
                 {
                     SelfDestruct();
                 }
             }
         }
+
+        public virtual void WhenDamaged()
+        {
+
+        }
+
         public virtual void ApplyHealing(int heal, string? source = null)
         {
             Health += heal;
@@ -117,26 +131,6 @@ namespace RenegadeWizard.Entities
         #endregion
 
         #region Condition Methods
-        public virtual void ApplyConditionDamage(int damage, string? source = null)
-        {
-            if (Conditions.Any(con => con is Immortal))
-            {
-                BattleLog += $" -{damage}hp => 0hp from {source} because Immortal |";
-                return;
-            }
-
-            // idea: Check for damage immunitiess
-            if (IsDestroyed == false)
-            {
-                DamageTakenLastRound += damage;
-                Health -= damage;
-                BattleLog += $" -{damage}hp from {source} |";
-                if (IsDestroyed)
-                {
-                    //Console.Write($"{Name} has been destroyed | ");
-                }
-            }
-        }
 
         public virtual void ApplyCondition(Condition condition, string? source = null)
         {
@@ -176,10 +170,10 @@ namespace RenegadeWizard.Entities
 
         #endregion
 
+
         public virtual void SelfDestruct()
         {
             Console.Write($"{Name} has been destroyed | ");
-            Scene.Entities.Remove(this);
         }
 
     }

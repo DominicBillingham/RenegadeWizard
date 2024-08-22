@@ -10,7 +10,7 @@ namespace RenegadeWizard.Conditions
         }
         public override void ApplyEffect(Entity entity)
         {
-            entity.ApplyConditionDamage(1, Name);
+            entity.ApplyDamage(1, Name, true);
             Duration -= 1;
         }
     }

@@ -49,6 +49,7 @@ while (Scene.GetPlayer() != null)
     // Find action paratmers
     List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
     List<Entity> actionParameters = new();
+    actionParameters.Add(Scene.GetPlayer());
 
     foreach (var word in input)
     {
@@ -70,7 +71,7 @@ while (Scene.GetPlayer() != null)
 
     // Perform Round Actions
     Console.WriteLine();
-    int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().Actions, actionParameters.ToArray());
+    int actionCost = (int)chosenAction.Invoke(Scene.GetPlayer().CharacterActions, actionParameters.ToArray());
 
     if (actionCost > 0)
     {
@@ -130,18 +131,16 @@ Narrator.ContinuePrompt();
 
     // Fill the console with spaces to apply the background color
 
-    var rand = new Random();
-
     Console.Clear();
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            var ranInt = rand.Next(200);
+            var ranInt = Random.Shared.Next(200);
 
             if (ranInt < 1) // 5% chance to place a glitch character
             {
-                Console.Write(glitchChars[rand.Next(glitchChars.Length)]);
+                Console.Write(glitchChars[Random.Shared.Next(glitchChars.Length)]);
             }
             else
             {

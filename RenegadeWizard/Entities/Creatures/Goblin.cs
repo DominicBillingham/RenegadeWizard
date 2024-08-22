@@ -19,47 +19,35 @@ namespace RenegadeWizard.Entities.Creatures
             Description = "A weak, silly and clumsy goblin - but they are crafty...";
             Health = 5;
             Weight = 12;
-            Actions = new GoblinActions(this);
+            CharacterActions = new GoblinActions();
             Attributes = new Attributes(5, 5, 5);
             Faction = Factions.Goblin;
         }
+
+
+
 
     }
 
     public class GoblinActions : Actions
     {
-        public GoblinActions(Entity invoker) : base(invoker)
-        {
-
-        }
-
-        public override void TakeTurn()
+        public override void TakeTurn(Entity entity)
         {
             var rand = new Random();
 
             if (rand.Next(2) == 0)
             {
                 var drink = Scene.GetRandomEdibleItem();
-                ActionConsume(drink);
+                ActionConsume(entity, drink);
             }
             else
             {
                 var item = Scene.GetRandomItem();
-                var enemy = Scene.GetRandomHostile(Invoker.Faction);
-                ActionThrow(item, enemy);
+                var enemy = Scene.GetRandomHostile(entity.Faction);
+                ActionThrow(entity, item, enemy);
             }
 
         }
-
-        public void ShieldAllies()
-        {
-            var ally = Scene.GetRandomAlly(Invoker.Faction);
-            ally.ApplyCondition(new Protected(2), $"{Invoker.Name}");
-            Console.Write($" # {Narrator.GetConnectorWord()} {Invoker.Name} valiantly protects {ally.Name}");
-            Console.WriteLine("\n");
-
-        }
-
     }
 
 }

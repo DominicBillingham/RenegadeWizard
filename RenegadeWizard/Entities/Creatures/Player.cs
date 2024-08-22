@@ -16,7 +16,7 @@ namespace RenegadeWizard.Entities.Creatures
             Name = name;
             Health = 7;
             Description = "Admiring yourself I see?";
-            Actions = new Actions(this);
+            CharacterActions = new Actions();
             Attributes = new Attributes(10, 10, 10);
             Faction = Factions.Player;
         }

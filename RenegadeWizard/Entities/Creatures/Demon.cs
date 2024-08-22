@@ -17,7 +17,7 @@ namespace RenegadeWizard.Entities.Creatures
             Description = "A very angry, pissed off demon";
             Health = 7;
             Weight = 15;
-            Actions = new Actions(this);
+            CharacterActions = new Actions();
             Attributes = new Attributes(12, 12, 12);
             ConditionImmunities.Add(new Burning(3));
             Conditions.Add(new Burning(999));

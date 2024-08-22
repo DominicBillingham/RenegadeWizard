@@ -17,7 +17,7 @@ namespace RenegadeWizard.Entities.Creatures
             Name = name;
             Description = "Short gnome";
             Health = 3;
-            Actions = new Actions(this);
+            CharacterActions = new Actions();
             Attributes = new Attributes(2, 8, 2);
         }
         public override int WhenGrabbed(Entity grabber)
