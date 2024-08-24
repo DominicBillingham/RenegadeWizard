@@ -19,6 +19,8 @@ namespace RenegadeWizard.Entities
         public List<Condition> Conditions { get; set; } = new List<Condition>();
         public List<Condition> ConditionImmunities { get; set; } = new List<Condition>();
 
+        public event 
+
         // Composition Stuff
         public Interaction? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
