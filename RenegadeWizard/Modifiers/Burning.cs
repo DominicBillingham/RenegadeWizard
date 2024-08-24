@@ -1,15 +1,15 @@
 ﻿using RenegadeWizard.Entities;
 using RenegadeWizard.GameClasses;
 
-namespace RenegadeWizard.Conditions
+namespace RenegadeWizard.Modifiers
 {
-    class Burning : Condition
+    class Burning : Modifier
     {
         public Burning(int duration) : base(duration)
         {
             Name = "Burning";
         }
-        public override void RoundEndEffect(Entity entity)
+        public override void OnRoundEnd(Entity entity)
         {
             entity.ApplyDamage(2, Name, true);
 
@@ -21,15 +21,6 @@ namespace RenegadeWizard.Conditions
             }
 
             Duration -= 1;
-        }
-        public override void ImmediateEffect(Entity entity)
-        {
-
-        }
-
-        public override void ExpireEffect(Entity entity)
-        {
-
         }
 
     }

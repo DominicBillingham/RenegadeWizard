@@ -1,5 +1,5 @@
 ﻿using RenegadeWizard.Components;
-using RenegadeWizard.Conditions;
+using RenegadeWizard.Modifiers;
 using RenegadeWizard.Enums;
 using RenegadeWizard.GameClasses;
 using static System.Net.Mime.MediaTypeNames;
@@ -16,15 +16,18 @@ namespace RenegadeWizard.Entities
         public int DamageTakenLastRound { get; set; } = 0;
         public Factions Faction { get; set; } = Factions.None;
         public bool IsDestroyed { get { return Health < 1; } }
-        public List<Condition> Conditions { get; set; } = new List<Condition>();
-        public List<Condition> ConditionImmunities { get; set; } = new List<Condition>();
-
-        public event 
+        public List<Modifier> Modifiers { get; set; } = new List<Modifier>();
+        public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();
 
         // Composition Stuff
         public Interaction? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
         public Entity? HeldObject { get; set; }
+
+        public int GetStrength()
+        {
+            return ModifierHelper.GetStrengthAfterMods(this);
+        }
 
         public virtual void TakeTurn()
         {
@@ -59,7 +62,7 @@ namespace RenegadeWizard.Entities
 
             if ( Attributes != null)
             {
-                Console.Write($" STR:{Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
+                Console.Write($" STR:{GetStrength()}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
             }
 
             Console.Write($" {Name} - {Description}");
@@ -78,20 +81,8 @@ namespace RenegadeWizard.Entities
         #region Health Methods
         public virtual void ApplyDamage(int damage, string source, bool ignoreArmour = false)
         {
-            if (Conditions.Any(con => con is Immortal))
-            {
-                BattleLog += $" -{damage}hp => 0hp from {source} because Immortal |";
-                return;
-            }
 
-            if (Conditions.Any(con => con is Protected)) {
-                damage -= 1;
-            }
-
-            if (Conditions.Any(con => con is Wounded))
-            {
-                damage += 1;
-            }
+            damage = ModifierHelper.GetDamageAfterMods(this, damage);
 
             if (HeldObject != null && HeldObject.IsDestroyed == false && ignoreArmour == false)
             {
@@ -139,49 +130,27 @@ namespace RenegadeWizard.Entities
 
         #region Condition Methods
 
-        public virtual void ApplyCondition(Condition condition, string? source = null)
+        public virtual void ApplyCondition(Modifier condition, string? source = null)
         {
             if (IsDestroyed == false)
             {
-                var existingCon = Conditions.FirstOrDefault(con => con.GetType() == condition.GetType() );
+                var existingCon = Modifiers.FirstOrDefault(con => con.GetType() == condition.GetType() );
 
                 if (existingCon != null)
                 {
                     existingCon.Duration += condition.Duration;
-                    existingCon.ImmediateEffect(this);
+                    existingCon.OnApplication(this);
                 } 
                 else
                 {
-                    Conditions.Add(condition);
-                    condition.ImmediateEffect(this);
+                    Modifiers.Add(condition);
+                    condition.OnApplication(this);
                 }
 
                 BattleLog += $" gained {condition.Name}({condition.Duration}) from {source} |";
 
             }
 
-        }
-
-        public virtual void RoundEndConditionEffects()
-        {
-            foreach (var con in Conditions)
-            {
-
-                if  ( ConditionImmunities.Any(conImmune => conImmune.GetType() == con.GetType() ) )
-                {
-                    continue;
-                }
-
-                con.RoundEndEffect(this);
-
-                if ( con.Duration == 0 )
-                {
-                    con.ExpireEffect(this);
-                }
-
-            }
-
-            Conditions.RemoveAll(x => x.Duration <= 0);
         }
 
         #endregion

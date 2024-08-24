@@ -5,27 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenegadeWizard.Conditions
+namespace RenegadeWizard.Modifiers
 {
-    class Madness : Condition
+    class Madness : Modifier
     {
         public Madness(int duration) : base(duration)
         {
             Name = "Madness";
         }
-        public override void RoundEndEffect(Entity entity)
+        public override void OnRoundEnd(Entity entity)
         {
             Duration -= 1;
-        }
-
-        public override void ImmediateEffect(Entity entity)
-        {
-
-        }
-
-        public override void ExpireEffect(Entity entity)
-        {
-
         }
 
     }

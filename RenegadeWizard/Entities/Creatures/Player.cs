@@ -1,5 +1,5 @@
 ﻿using RenegadeWizard.Components;
-using RenegadeWizard.Conditions;
+using RenegadeWizard.Modifiers;
 using RenegadeWizard.Enums;
 using System;
 using System.Collections.Generic;

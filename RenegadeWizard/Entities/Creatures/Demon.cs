@@ -1,5 +1,5 @@
 ﻿using RenegadeWizard.Components;
-using RenegadeWizard.Conditions;
+using RenegadeWizard.Modifiers;
 using RenegadeWizard.Enums;
 using System;
 using System.Collections.Generic;
@@ -19,8 +19,8 @@ namespace RenegadeWizard.Entities.Creatures
             Weight = 15;
             CharacterActions = new Interaction();
             Attributes = new Attributes(12, 12, 12);
-            ConditionImmunities.Add(new Burning(3));
-            Conditions.Add(new Burning(999));
+            ModifierImmunities.Add(new Burning(3));
+            Modifiers.Add(new Burning(999));
             Faction = Factions.Demon;
         }
 

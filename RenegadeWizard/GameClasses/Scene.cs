@@ -1,5 +1,5 @@
 ﻿using RenegadeWizard.Components;
-using RenegadeWizard.Conditions;
+using RenegadeWizard.Modifiers;
 using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.Entities.Items;
@@ -41,6 +41,7 @@ namespace RenegadeWizard.GameClasses
 
         #region GetMethods
 
+        // builder pattern?
         public static Entity GetPlayer()
         {
             return Entities.FirstOrDefault(x => x is Player);
@@ -99,7 +100,7 @@ namespace RenegadeWizard.GameClasses
         public static Entity GetFireSpreadTarget(Entity entity)
         {
             var creatures = Scene.GetCreatures();
-            creatures.RemoveAll(ent => ent.Conditions.Any(con => con is Burning));
+            creatures.RemoveAll(ent => ent.Modifiers.Any(con => con is Burning));
             creatures.Remove(entity);
             return creatures[Random.Shared.Next(creatures.Count())];
 

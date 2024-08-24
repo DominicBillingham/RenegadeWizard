@@ -30,10 +30,10 @@ namespace RenegadeWizard.GameClasses
 
                 creature.DamageTakenLastRound = 0;
 
-                if (creature.Conditions.Any())
+                if (creature.Modifiers.Any())
                 {
 
-                    string conditionStr = string.Join(", ", creature.Conditions.Select(x => x.Name + $"({x.Duration})"));
+                    string conditionStr = string.Join(", ", creature.Modifiers.Select(x => x.Name + $"({x.Duration})"));
                     Console.Write(" | " + conditionStr);
                 }
 

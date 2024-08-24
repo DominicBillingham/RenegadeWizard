@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenegadeWizard.Enums;
-using RenegadeWizard.Conditions;
+using RenegadeWizard.Modifiers;
 using RenegadeWizard.GameClasses;
 
 namespace RenegadeWizard.Entities.Creatures

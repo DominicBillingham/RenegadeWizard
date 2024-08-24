@@ -1,5 +1,5 @@
 ﻿using RenegadeWizard.Components;
-using RenegadeWizard.Conditions;
+using RenegadeWizard.Modifiers;
 using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.GameClasses;
@@ -87,34 +87,16 @@ while (Scene.GetPlayer() != null)
 
         foreach (var entity in Scene.Entities)
         {
-            entity.RoundEndConditionEffects();
+            ModifierHelper.ApplyRoundEndEffects(entity);
+            ModifierHelper.ApplyExpirationEffects(entity);
         }
-        Scene.Entities.RemoveAll(ent => ent.Health <= 0);
 
 
         currentRound++;
 
         if (Scene.GetItems().Count < 3) {
-            Console.WriteLine(" # More items are nearby! ");
             Scene.AddBarItems();
         }
-
-        //if (currentRound % 3 == 0) {
-
-        //    Console.WriteLine(" # Some more goblins have shown up!");
-
-        //    string[] goblinNames = { "Grubnak", "Snaggletooth", "Ruknuk", "Zigzag", "Bogrot", "Nibbles", "Grizzle", "Muckmire", "Skreech", "Wartnose", "Dribble", "Snizzle", "Grubfoot", "Gnash", "Sludge", "Grogmar", "Spitfire", "Blister", "Crackle", "Fungus" };
-
-        //    var rand = new Random();
-        //    var nextGoblinName = goblinNames[rand.Next(20)];
-        //    Scene.Entities.Add(new Goblin(nextGoblinName));
-
-        //    rand = new Random();
-        //    nextGoblinName = goblinNames[rand.Next(20)];
-        //    Scene.Entities.Add(new Goblin(nextGoblinName));
-            
-
-        //}
 
         Narrator.ContinuePrompt();
 

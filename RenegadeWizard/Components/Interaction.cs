@@ -1,4 +1,4 @@
-﻿using RenegadeWizard.Conditions;
+﻿using RenegadeWizard.Modifiers;
 using RenegadeWizard.Entities;
 using RenegadeWizard.GameClasses;
 using System;
@@ -40,7 +40,7 @@ namespace RenegadeWizard.Components
         public int ActionInspect(Entity entity)
         {
 
-            if (Agent.Conditions.Any(con => con is Madness))
+            if (Agent.Modifiers.Any(con => con is Madness))
             {
                 // idea: write some custom lines for inspecting while mad
             }
