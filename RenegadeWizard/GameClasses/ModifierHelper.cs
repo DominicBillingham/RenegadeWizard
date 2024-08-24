@@ -67,6 +67,12 @@ namespace RenegadeWizard.GameClasses
                 strengthAfterModifiers = exhausted.ModifyStrength(strengthAfterModifiers);
             }
 
+            var enlarged = entity.Modifiers.FirstOrDefault(con => con is Enlarged);
+            if (enlarged != null)
+            {
+                strengthAfterModifiers = enlarged.ModifyStrength(strengthAfterModifiers);
+            }
+
             return strengthAfterModifiers;
         }
 
