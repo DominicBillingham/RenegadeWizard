@@ -8,10 +8,22 @@ namespace RenegadeWizard.Conditions
         {
             Name = "Bleeding";
         }
-        public override void ApplyEffect(Entity entity)
+
+        public override void RoundEndEffect(Entity entity)
         {
             entity.ApplyDamage(1, Name, true);
             Duration -= 1;
         }
+
+        public override void ImmediateEffect(Entity entity)
+        {
+
+        }
+
+        public override void ExpireEffect(Entity entity)
+        {
+
+        }
+
     }
 }

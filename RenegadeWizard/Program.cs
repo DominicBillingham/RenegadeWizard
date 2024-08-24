@@ -79,9 +79,19 @@ while (Scene.GetPlayer() != null)
 
     if (actionCost > 0)
     {
-        Scene.EngageHyperArtificialIntelligence();
 
-        Scene.ApplyConditionEffects();
+        foreach (var NPC in Scene.GetNPCs())
+        {
+            NPC.TakeTurn();
+        }
+
+        foreach (var entity in Scene.Entities)
+        {
+            entity.RoundEndConditionEffects();
+        }
+        Scene.Entities.RemoveAll(ent => ent.Health <= 0);
+
+
         currentRound++;
 
         if (Scene.GetItems().Count < 3) {

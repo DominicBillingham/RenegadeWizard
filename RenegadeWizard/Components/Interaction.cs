@@ -23,7 +23,7 @@ namespace RenegadeWizard.Components
             return actionCost;
 
         }
-        public int ActionConsume(Entity edibleItem) 
+        public int ActionConsume(Entity edibleItem)
         {
             Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} consumes {edibleItem.Name}");
 

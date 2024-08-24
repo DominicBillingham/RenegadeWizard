@@ -12,12 +12,6 @@ namespace RenegadeWizard.Entities
     {
         public override int WhenGrabbed(Entity grabber)
         {
-            if (Conditions.Any(con => con is Slippery))
-            {
-                Console.Write($"{Narrator.GetContrastWord} {Name} too slippery!");
-                return 1;
-            }
-
             grabber.HeldObject = this;
             return 1;
         }

@@ -4,25 +4,31 @@ namespace RenegadeWizard.Conditions
 {
     class Enlarged : Condition
     {
+
         public Enlarged(int duration) : base(duration)
         {
             Name = "Enlarged";
         }
-        public override void ApplyEffect(Entity entity)
+
+        public override void RoundEndEffect(Entity entity)
         {
-            entity.Attributes.Strength += 10;
             Duration -= 1;
-
-            if (Duration <= 0)
-            {
-                EndEffect(entity);
-            }
-
         }
 
-        public void EndEffect(Entity entity)
+        public override void ImmediateEffect(Entity entity)
         {
-            entity.Attributes.Strength = -10;
+            if (entity.Attributes != null)
+            {
+                entity.Attributes.Strength = entity.Attributes.Strength * 2;
+            }
+        }
+
+        public override void ExpireEffect(Entity entity)
+        {
+            if (entity.Attributes != null)
+            {
+                entity.Attributes.Strength = entity.Attributes.Strength / 2;
+            }
         }
 
 

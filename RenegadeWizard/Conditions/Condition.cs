@@ -10,7 +10,12 @@ namespace RenegadeWizard.Conditions
         {
             Duration = duration;
         }
-        abstract public void ApplyEffect(Entity entity);
+
+        // Sometimes these methods will be called and do nothing.
+        // I could use composition to fix this but it'd require nullchecks
+        abstract public void ImmediateEffect(Entity entity);
+        abstract public void RoundEndEffect(Entity entity);
+        abstract public void ExpireEffect(Entity entity);
 
     }
 

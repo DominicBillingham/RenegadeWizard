@@ -16,11 +16,7 @@ namespace RenegadeWizard.GameClasses
         static Scene()
         {
             Entities.Add(new Player("NotHarry"));
-
             Entities.Add(new ShieldGoblin("JeffShield"));
-            Entities.Add(new ShieldGoblin("JessShield"));
-
-            Entities.Add(new Goblin("Joe"));
             Entities.Add(new Goblin("Jill"));
 
             AddBarItems();
@@ -33,7 +29,7 @@ namespace RenegadeWizard.GameClasses
                 .Where(type => type.IsSubclassOf(typeof(Item)) && !type.IsAbstract)
                 .ToArray();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var item = items[Random.Shared.Next(items.Count())];
 
@@ -72,6 +68,7 @@ namespace RenegadeWizard.GameClasses
         {
             var items = Scene.GetItems().Where(item => item is Drink).ToArray();
             if (items.Count() < 3) { AddBarItems(); }
+            items = Scene.GetItems().Where(item => item is Drink).ToArray();
 
             return items[Random.Shared.Next(items.Count())];
         }
@@ -92,6 +89,22 @@ namespace RenegadeWizard.GameClasses
             return creatures[Random.Shared.Next(creatures.Count())];
         }
 
+        public static Entity GetRandomCreatureOtherThan(Entity entity)
+        {
+            var creatures = Scene.GetCreatures();
+            creatures.Remove(entity);
+            return creatures[Random.Shared.Next(creatures.Count())];
+        }
+
+        public static Entity GetFireSpreadTarget(Entity entity)
+        {
+            var creatures = Scene.GetCreatures();
+            creatures.RemoveAll(ent => ent.Conditions.Any(con => con is Burning));
+            creatures.Remove(entity);
+            return creatures[Random.Shared.Next(creatures.Count())];
+
+        }
+
         public static Entity GetRandomHostile(Factions faction)
         {
             var hostiles = Scene.GetCreatures().Where(creature => creature.Faction != faction).ToList();
@@ -105,24 +118,6 @@ namespace RenegadeWizard.GameClasses
         }
 
         #endregion
-
-        public static void ApplyConditionEffects()
-        {
-            foreach (var entity in Entities)
-            {
-                entity.ApplyConditionEffects();
-            }
-            Entities.RemoveAll(ent => ent.Health <= 0);
-        }
-
-        public static void EngageHyperArtificialIntelligence()
-        {
-            foreach (var NPC in GetNPCs())
-            {
-                NPC.TakeTurn();
-            }
-
-        }
 
 
     }

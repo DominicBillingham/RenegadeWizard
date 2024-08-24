@@ -13,11 +13,6 @@ namespace RenegadeWizard.Entities.Creatures
     {
         public override int WhenGrabbed(Entity grabber)
         {
-            if (Conditions.Any(con => con is Slippery))
-            {
-                Console.Write($" {Narrator.GetContrastWord()} {Name} is too slippery.");
-                return 1;
-            }
 
             if (grabber.Attributes?.Strength < Attributes?.Agility)
             {

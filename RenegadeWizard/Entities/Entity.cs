@@ -115,7 +115,7 @@ namespace RenegadeWizard.Entities
 
                 WhenDamaged();
 
-                if (IsDestroyed)
+                if (IsDestroyed && ignoreArmour == false)
                 {
                     SelfDestruct();
                 }
@@ -146,10 +146,12 @@ namespace RenegadeWizard.Entities
                 if (existingCon != null)
                 {
                     existingCon.Duration += condition.Duration;
+                    existingCon.ImmediateEffect(this);
                 } 
                 else
                 {
                     Conditions.Add(condition);
+                    condition.ImmediateEffect(this);
                 }
 
                 BattleLog += $" gained {condition.Name}({condition.Duration}) from {source} |";
@@ -158,7 +160,7 @@ namespace RenegadeWizard.Entities
 
         }
 
-        public virtual void ApplyConditionEffects()
+        public virtual void RoundEndConditionEffects()
         {
             foreach (var con in Conditions)
             {
@@ -168,8 +170,15 @@ namespace RenegadeWizard.Entities
                     continue;
                 }
 
-                con.ApplyEffect(this);
+                con.RoundEndEffect(this);
+
+                if ( con.Duration == 0 )
+                {
+                    con.ExpireEffect(this);
+                }
+
             }
+
             Conditions.RemoveAll(x => x.Duration <= 0);
         }
 
