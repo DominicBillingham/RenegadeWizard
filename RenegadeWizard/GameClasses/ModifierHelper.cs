@@ -39,12 +39,12 @@ namespace RenegadeWizard.GameClasses
                 return immortal.ModifyDamageTaken(damage);
             }
 
-            var wounded = entity.Modifiers.FirstOrDefault(con => con is Immortal);
+            var wounded = entity.Modifiers.FirstOrDefault(con => con is Wounded);
             if (wounded != null) {
                 damage = wounded.ModifyDamageTaken(damage);
             }
 
-            var protection = entity.Modifiers.FirstOrDefault(con => con is Immortal);
+            var protection = entity.Modifiers.FirstOrDefault(con => con is Protected);
             if (protection != null) {
                 damage = protection.ModifyDamageTaken(damage);
             }

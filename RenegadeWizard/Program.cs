@@ -79,6 +79,11 @@ while (Scene.GetPlayer() != null)
 
     if (actionCost > 0)
     {
+        foreach (var entity in Scene.Entities)
+        {
+            entity.BattleLog = string.Empty;
+        }
+
 
         foreach (var NPC in Scene.GetNPCs())
         {
