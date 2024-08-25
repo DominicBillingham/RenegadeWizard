@@ -7,6 +7,7 @@ using RenegadeWizard.Entities.Items.Drinks;
 using RenegadeWizard.Enums;
 using System;
 using static System.Collections.Specialized.BitVector32;
+using RenegadeWizard.GameClasses;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -122,4 +123,68 @@ namespace RenegadeWizard.GameClasses
 
 
     }
+}
+
+class EntityBuilder
+{
+    private IQueryable<Entity> Query = Scene.Entities.AsQueryable();
+
+    public void SelectCreatures()
+    {
+        Query = Query.Where(ent => ent is Creature);
+    }
+
+    public void SelectNpcs()
+    {
+        SelectCreatures();
+        Query = Query.Where(ent =>!(ent is Player));
+    }
+
+    public void SelectItems()
+    {
+        Query = Query.Where(ent => ent is Item);
+    }
+
+    public void SelectDrinks()
+    {
+        SelectItems();
+        Query = Query.Where(ent => ent is Item);
+    }
+
+    public void SelectHostiles(Factions faction)
+    {
+        Query = Query.Where(ent => ent.Faction != faction);
+    }
+
+    public void SelectAllies(Factions faction)
+    {
+        Query = Query.Where(ent => ent.Faction == faction);
+    }
+
+    public void SelectNotBurning()
+    {
+        Query = Query.Where(ent => ent.Modifiers.Any(con => con is Burning));
+    }
+
+    public void SelectNotEntity(Entity entity)
+    {
+        Query = Query.Where(ent => ent != entity);
+    }
+
+    public Entity? GetRandomEntity() 
+    {
+        var ent = Query.FirstOrDefault();
+        return ent;
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
