@@ -55,7 +55,7 @@ namespace RenegadeWizard.Entities.Creatures
 
             if (kicker.Attributes?.Strength > Attributes?.Strength)
             {
-                var item = Scene.GetRandomItem();
+                var item = new EntQuery().SelectItems().GetRandom();
 
                 Console.Write($" causing {Name} to crash into {item.Name}");
 

@@ -14,11 +14,11 @@ Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 setbackground();
 
-bool hasPlayerWon = false;
+bool gameEnd = false;
 int currentRound = 1;
 Narrator.ShowRoundInfo(currentRound);
 
-while (Scene.GetPlayer() != null)
+while (gameEnd == false)
 {
     Console.Write(" > ");
     var input = Console.ReadLine().ToLower().Split(" ")
@@ -73,7 +73,7 @@ while (Scene.GetPlayer() != null)
 
 
     var interaction = new Interaction();
-    interaction.Agent = Scene.GetPlayer();
+    interaction.Agent = new EntQuery().SelectPlayers().GetFirst();
     int actionCost = (int)chosenAction.Invoke(interaction, actionParameters.ToArray());
 
 
@@ -84,22 +84,22 @@ while (Scene.GetPlayer() != null)
             entity.BattleLog = string.Empty;
         }
 
-
-        foreach (var NPC in Scene.GetNPCs())
+        var Npcs = new EntQuery().SelectNpcs().GetAll();
+        foreach (var NPC in Npcs)
         {
             NPC.TakeTurn();
         }
 
-        foreach (var entity in Scene.Entities)
+        var Ents = Scene.Entities;
+        foreach (var entity in Ents)
         {
             ModifierHelper.ApplyRoundEndEffects(entity);
             ModifierHelper.ApplyExpirationEffects(entity);
         }
 
-
         currentRound++;
 
-        if (Scene.GetItems().Count < 3) {
+        if (new EntQuery().SelectItems().GetAll().Count < 5) {
             Scene.AddBarItems();
         }
 

@@ -30,13 +30,13 @@ namespace RenegadeWizard.Entities.Creatures
 
             if (Random.Shared.Next(2) == 0)
             {
-                var drink = Scene.GetRandomEdibleItem();
+                var drink = new EntQuery().SelectDrinks().GetRandom();
                 interaction.ActionConsume(drink);
             }
             else
             {
-                var item = Scene.GetRandomItem();
-                var enemy = Scene.GetRandomHostile(Faction);
+                var item = new EntQuery().SelectItems().GetRandom();
+                var enemy = new EntQuery().SelectCreatures().SelectHostiles(Faction).GetRandom();
                 interaction.ActionThrow(item, enemy);
             }
 

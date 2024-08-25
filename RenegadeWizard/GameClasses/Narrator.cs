@@ -12,13 +12,16 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine("0=[]:::::::::>  Round " + round + "  <:::::::::[]=0");
 
             Console.Write(" - Nearby items: ");
-            foreach (var item in Scene.GetItems())
+
+            var items = new EntQuery().SelectItems().GetAll();
+            foreach (var item in items)
             {
                 Console.Write($"[{item.Name}] ");
             }
             Console.WriteLine();
 
-            foreach (var creature in Scene.GetCreatures())
+            var creatures = new EntQuery().SelectCreatures().GetAll();  
+            foreach (var creature in creatures)
             {
                 Console.Write($" - [{creature.Name}] the {creature.GetType().Name} has {creature.Health}hp ");
 

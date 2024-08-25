@@ -31,7 +31,6 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public override void SelfDestruct()
         {
             base.SelfDestruct();
-            Scene.GetRandomCreature().ApplyCondition(new Immortal(1), $"{Name} splashing randomly");
         }
     }
 }

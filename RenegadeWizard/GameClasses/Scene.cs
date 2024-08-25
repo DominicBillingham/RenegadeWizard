@@ -40,151 +40,88 @@ namespace RenegadeWizard.GameClasses
             }
         }
 
-        #region GetMethods
-
-        // builder pattern?
-        public static Entity GetPlayer()
-        {
-            return Entities.FirstOrDefault(x => x is Player);
-        }
-
-        public static Entity GetRandomEntity()
-        {
-            return Scene.Entities[Random.Shared.Next(Scene.Entities.Count())];
-        }
-
-        public static List<Entity> GetItems()
-        {
-            return Entities.Where(ent => ent is Item).ToList();
-        }
-
-        public static Entity GetRandomItem()
-        {
-            var items = Scene.GetItems();
-            if (items.Count() < 3 ) { AddBarItems(); }
-
-            return items[Random.Shared.Next(items.Count())];
-        }
-
-        public static Entity GetRandomEdibleItem()
-        {
-            var items = Scene.GetItems().Where(item => item is Drink).ToArray();
-            if (items.Count() < 3) { AddBarItems(); }
-            items = Scene.GetItems().Where(item => item is Drink).ToArray();
-
-            return items[Random.Shared.Next(items.Count())];
-        }
-
-        public static List<Entity> GetNPCs()
-        {
-            return Entities.Where(ent => ent is Creature && ent is not Player).ToList();
-        }
-
-        public static List<Entity> GetCreatures()
-        {
-            return Entities.Where(ent => ent is Creature).ToList();
-        }
-
-        public static Entity GetRandomCreature()
-        {
-            var creatures = Scene.GetCreatures();
-            return creatures[Random.Shared.Next(creatures.Count())];
-        }
-
-        public static Entity GetRandomCreatureOtherThan(Entity entity)
-        {
-            var creatures = Scene.GetCreatures();
-            creatures.Remove(entity);
-            return creatures[Random.Shared.Next(creatures.Count())];
-        }
-
-        public static Entity GetFireSpreadTarget(Entity entity)
-        {
-            var creatures = Scene.GetCreatures();
-            creatures.RemoveAll(ent => ent.Modifiers.Any(con => con is Burning));
-            creatures.Remove(entity);
-            return creatures[Random.Shared.Next(creatures.Count())];
-
-        }
-
-        public static Entity GetRandomHostile(Factions faction)
-        {
-            var hostiles = Scene.GetCreatures().Where(creature => creature.Faction != faction).ToList();
-            return hostiles[Random.Shared.Next(hostiles.Count())];
-        }
-
-        public static Entity GetRandomAlly(Factions faction)
-        {
-            var allies = Scene.GetCreatures().Where(creature => creature.Faction == faction).ToList();
-            return allies[Random.Shared.Next(allies.Count())];
-        }
-
-        #endregion
-
-
     }
 }
 
-class EntityBuilder
+class EntQuery
 {
     private IQueryable<Entity> Query = Scene.Entities.AsQueryable();
 
-    public void SelectCreatures()
+    public EntQuery SelectCreatures()
     {
         Query = Query.Where(ent => ent is Creature);
+        return this;
     }
 
-    public void SelectNpcs()
+    public EntQuery SelectNpcs()
     {
-        SelectCreatures();
         Query = Query.Where(ent =>!(ent is Player));
+        return this;
     }
 
-    public void SelectItems()
+    public EntQuery SelectPlayers()
+    {
+        Query = Query.Where(ent => ent is Player);
+        return this;
+    }
+
+    public EntQuery SelectItems()
     {
         Query = Query.Where(ent => ent is Item);
+        return this;
     }
 
-    public void SelectDrinks()
+    public EntQuery SelectDrinks()
     {
-        SelectItems();
-        Query = Query.Where(ent => ent is Item);
+        Query = Query.Where(ent => ent is Drink);
+        return this;
     }
 
-    public void SelectHostiles(Factions faction)
+    public EntQuery SelectHostiles(Factions faction)
     {
         Query = Query.Where(ent => ent.Faction != faction);
+        return this;
     }
 
-    public void SelectAllies(Factions faction)
+    public EntQuery SelectAllies(Factions faction)
     {
         Query = Query.Where(ent => ent.Faction == faction);
+        return this;
     }
 
-    public void SelectNotBurning()
+    public EntQuery SelectNotBurning()
     {
         Query = Query.Where(ent => ent.Modifiers.Any(con => con is Burning));
+        return this;
     }
 
-    public void SelectNotEntity(Entity entity)
+    public EntQuery SelectNotEntity(Entity entity)
     {
         Query = Query.Where(ent => ent != entity);
+        return this;
     }
 
-    public Entity? GetRandomEntity() 
+    public Entity? GetFirst() 
     {
-        var ent = Query.FirstOrDefault();
+        return Query.FirstOrDefault(); 
+    }
+
+    public Entity? GetRandom()
+    {
+        var entities = Query.ToList();
+
+        if (entities.Count == 0)
+        {
+            return null;
+        }
+
+        var ent = entities[Random.Shared.Next(entities.Count)];  
         return ent;
     }
 
-
-
-
-
-
-
-
-
-
+    public List<Entity> GetAll() 
+    { 
+        return Query.ToList(); 
+    }
 
 }

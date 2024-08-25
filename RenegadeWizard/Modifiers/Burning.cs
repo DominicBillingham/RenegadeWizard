@@ -15,8 +15,8 @@ namespace RenegadeWizard.Modifiers
 
             if (Random.Shared.Next(2) == 0)
             {
-                var fireTarget = Scene.GetFireSpreadTarget(entity);
-                fireTarget.ApplyCondition(new Burning(2));
+                var target = new EntQuery().SelectNotBurning().SelectCreatures().GetRandom();
+                target.ApplyCondition(new Burning(2));
                 Console.Write($" The fire spreads | ");
             }
 

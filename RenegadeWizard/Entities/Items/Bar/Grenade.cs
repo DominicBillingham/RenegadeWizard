@@ -19,11 +19,14 @@ namespace RenegadeWizard.Entities.Items
         public override int WhenThrown(Entity target, Entity thrower)
         {
             Console.Write(" causing shrapnel to fly everywhere!");
-            target.ApplyDamage(2, $"{Name} thrown by {thrower.Name}");
-            foreach (var creature in Scene.GetCreatures())
+            target.ApplyDamage(3, $"{Name} thrown by {thrower.Name}");
+
+            var creatures = new EntQuery().SelectCreatures().GetAll();
+            foreach (var creature in creatures)
             {
-                creature.ApplyCondition(new Bleeding(2), Name);
+                creature.ApplyDamage(1, Name);
             }
+
             Scene.Entities.Remove(this);
             return 1;
         }

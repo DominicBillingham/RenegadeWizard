@@ -28,7 +28,7 @@ namespace RenegadeWizard.Entities.Creatures
         }
         public override int WhenKicked(Entity kicker)
         {
-            var creatures = Scene.GetCreatures();
+            var creatures = new EntQuery().SelectCreatures().GetAll();
             foreach (var creature in creatures)
             {
                 creature.ApplyCondition(new Madness(2), $"{kicker.Name} kicking {Name}");
