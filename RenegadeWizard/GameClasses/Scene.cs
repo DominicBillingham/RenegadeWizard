@@ -8,6 +8,7 @@ using RenegadeWizard.Enums;
 using System;
 using static System.Collections.Specialized.BitVector32;
 using RenegadeWizard.GameClasses;
+using System.Numerics;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -91,7 +92,7 @@ class EntQuery
 
     public EntQuery SelectNotBurning()
     {
-        Query = Query.Where(ent => ent.Modifiers.Any(con => con is Burning));
+        Query = Query.Where(ent => !ent.Modifiers.Any(con => con is Burning));
         return this;
     }
 

@@ -10,6 +10,7 @@ using System.Reflection;
 //Narrator.ShowIntro
 //
 Console.Clear();
+
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 setbackground();
@@ -117,7 +118,7 @@ Console.Clear();
 Console.WriteLine("You've lost you silly goose");
 Narrator.ContinuePrompt();
 
- void setbackground()
+void setbackground()
 {
     //Some nice console art to act as background made by gpt
 
