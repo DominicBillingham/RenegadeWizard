@@ -10,6 +10,7 @@ using System.Reflection;
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 setbackground();
+Narrator.ShowRoundInfo();
 
 while (true)
 {
@@ -17,7 +18,7 @@ while (true)
     var players = new EntQuery().SelectPlayers().SelectLiving().GetAll();
     foreach (Entity ent in players)
     {
-        ent.TakeTurn();
+        PlayerTurn(ent);
     }
 
     var npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
@@ -26,171 +27,78 @@ while (true)
         ent.TakeTurn();
     }
 
+    var ents = Scene.Entities;
+    foreach (var ent in ents)
+    {
+        ent.BattleLog = string.Empty;
+        ModifierHelper.ApplyRoundEndEffects(ent);
+        ModifierHelper.ApplyExpirationEffects(ent);
+    }
 
+    Narrator.ContinuePrompt();
 
+    Console.Clear();
+    setbackground();
 
-
-
-
-
-
-
-
+    Narrator.ShowRoundInfo();
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////Narrator.ShowIntro
-////
-//Console.Clear();
-
-//Console.BackgroundColor = ConsoleColor.Blue;
-//Console.ForegroundColor = ConsoleColor.White;
-//setbackground();
-
-//bool gameEnd = false;
-//int currentRound = 1;
-//Narrator.ShowRoundInfo(currentRound);
-
-//while (gameEnd == false)
-//{
-//    Console.Write(" > ");
-//    var input = Console.ReadLine().ToLower().Split(" ")
-//        .Where(x => x.Length > 2)
-//        .ToArray();
-
-//    if (input.Count() == 0)
-//    {
-//        Console.WriteLine(" ! No words found");
-//        continue;
-//    }
-
-//    if (input.Any(x => x.Contains("help")))
-//    {
-//        Narrator.ShowHelp();
-//        continue;
-//    }
-
-//    var possibleActions = typeof(Interaction).GetMethods().Where(action => action.Name.Contains("Action"));
-//    MethodInfo chosenAction = possibleActions.FirstOrDefault(action => input.Any(word => action.Name.ToLower().Contains(word)));
-
-//    if (chosenAction == null)
-//    {
-//        Console.WriteLine(" ! No valid action was found");
-//        continue;
-//    }
-
-//    // Find action paratmers
-//    List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
-//    List<Entity> actionParameters = new();
-
-//    foreach (var word in input)
-//    {
-//        var paramerter = sceneEntities.FirstOrDefault(x => x.Name.ToLower().Contains(word));
-//        if (paramerter != null)
-//        {
-//            actionParameters.Add(paramerter);
-//            sceneEntities.Remove(paramerter);
-//        }
-//    }
-
-//    // Validation
-//    int paramsNeeded = chosenAction.GetParameters().Count();
-//    if (actionParameters.Count() != paramsNeeded)
-//    {
-//        Console.WriteLine($" ! '{chosenAction.Name.Substring(6)}' requires {paramsNeeded} name(s) to be provided");
-//        continue;
-//    }
-
-//    // Perform Round Actions
-//    Console.WriteLine();
-
-
-//    var interaction = new Interaction();
-//    interaction.Agent = new EntQuery().SelectPlayers().GetFirst();
-//    int actionCost = (int)chosenAction.Invoke(interaction, actionParameters.ToArray());
-
-
-//    if (actionCost > 0)
-//    {
-//        foreach (var entity in Scene.Entities)
-//        {
-//            entity.BattleLog = string.Empty;
-//        }
-
-//        var Npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
-//        foreach (var NPC in Npcs)
-//        {
-//            NPC.TakeTurn();
-//        }
-
-//        var Ents = Scene.Entities;
-//        foreach (var entity in Ents)
-//        {
-//            ModifierHelper.ApplyRoundEndEffects(entity);
-//            ModifierHelper.ApplyExpirationEffects(entity);
-//        }
-
-//        currentRound++;
-
-//        if (new EntQuery().SelectItems().GetAll().Count < 5) {
-//            Scene.AddBarItems();
-//        }
-
-//        Narrator.ContinuePrompt();
-
-//        Console.Clear();
-//        setbackground();
-
-//        Narrator.ShowRoundInfo(currentRound);
-//    }
-
-// }
-
-//Console.Clear();
-//Console.WriteLine("You've lost you silly goose");
-//Narrator.ContinuePrompt();
+void PlayerTurn(Entity player)
+{
+    int actionCost = 0;
+
+    while (actionCost == 0)
+    {
+        Console.Write(" > ");
+        var input = Console.ReadLine().ToLower().Split(" ")
+            .Where(x => x.Length > 2)
+            .ToArray();
+
+        if (input == null)
+        {
+            Console.WriteLine(" ! No words were found");
+            continue;
+        }
+
+        var possibleActions = typeof(AgentActions).GetMethods().Where(m => m.Name.StartsWith("Action"));
+        MethodInfo? chosenAction = possibleActions.FirstOrDefault(action => input.Any(word => action.Name.ToLower().Contains(word)));
+
+        if (chosenAction == null)
+        {
+            Console.WriteLine(" ! No valid action was found");
+            continue;
+        }
+
+        List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
+        List<Entity> actionParameters = new();
+
+        foreach (var word in input)
+        {
+            var paramerter = sceneEntities.FirstOrDefault(x => x.Name.ToLower().Contains(word));
+            if (paramerter != null)
+            {
+                actionParameters.Add(paramerter);
+                sceneEntities.Remove(paramerter);
+            }
+        }
+
+        // Validation
+        int paramsNeeded = chosenAction.GetParameters().Count();
+        if (actionParameters.Count() != paramsNeeded)
+        {
+            Console.WriteLine($" ! '{chosenAction.Name.Substring(6)}' requires {paramsNeeded} name(s) to be provided");
+            continue;
+        }
+
+        Console.WriteLine();
+
+        var interaction = new AgentActions();
+        interaction.Agent = player;
+        actionCost = (int)chosenAction.Invoke(interaction, actionParameters.ToArray());
+    }
+
+}
 
 void setbackground()
 {

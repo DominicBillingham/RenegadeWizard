@@ -25,7 +25,7 @@ namespace RenegadeWizard.Entities.Creatures
 
         public override void TakeTurn()
         {
-            var interaction = new Interaction();
+            var interaction = new AgentActions();
             interaction.Agent = this;
 
             if (Random.Shared.Next(2) == 0)

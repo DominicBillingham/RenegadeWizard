@@ -12,7 +12,7 @@ using RenegadeWizard.Enums;
 
 namespace RenegadeWizard.Components
 {
-    public class Interaction
+    public class AgentActions
     {
         public Entity Agent { get; set; }
 

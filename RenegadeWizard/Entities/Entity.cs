@@ -3,6 +3,9 @@ using RenegadeWizard.Modifiers;
 using RenegadeWizard.Enums;
 using RenegadeWizard.GameClasses;
 using static System.Net.Mime.MediaTypeNames;
+using RenegadeWizard.Entities.Creatures;
+using Microsoft.VisualBasic;
+using System.Reflection;
 
 namespace RenegadeWizard.Entities
 {
@@ -27,7 +30,7 @@ namespace RenegadeWizard.Entities
         public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();
 
         // Composition Stuff
-        public Interaction? CharacterActions { get; set; }
+        public AgentActions? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
         public Entity? HeldObject { get; set; }
 

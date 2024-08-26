@@ -20,7 +20,6 @@ namespace RenegadeWizard.GameClasses
             Entities.Add(new Player("NotHarry"));
             Entities.Add(new ShieldGoblin("JeffShield"));
             Entities.Add(new Goblin("Jill"));
-            Entities.Add(new Beserker("James"));
 
             AddBarItems();
         }

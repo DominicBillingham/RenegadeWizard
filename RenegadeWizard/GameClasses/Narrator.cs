@@ -5,11 +5,11 @@ namespace RenegadeWizard.GameClasses
 {
     internal static class Narrator
     {
-        public static void ShowRoundInfo(int round)
+        public static void ShowRoundInfo()
         {
 
             Console.WriteLine();
-            Console.WriteLine("0=[]:::::::::>  Round " + round + "  <:::::::::[]=0");
+            Console.WriteLine("0=[]:::::::::>  Fight!  <:::::::::[]=0");
 
             Console.Write(" - Nearby items: ");
 

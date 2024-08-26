@@ -36,7 +36,7 @@ namespace RenegadeWizard.Entities.Items.Drinks
         {
             base.SelfDestruct();
             Console.Write($" releasing a Demon!");
-            Scene.Entities.Add(new Demon("Demon"));
+            //Scene.Entities.Add(new Demon("Demon"));
         }
 
     }

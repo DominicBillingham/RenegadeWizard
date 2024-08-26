@@ -40,7 +40,7 @@ namespace RenegadeWizard.Entities.Creatures
 
     }
 
-    public class ShieldGoblinActions : Interaction
+    public class ShieldGoblinActions : AgentActions
     {
         public int ActionShieldAllies(Entity ally)
         {
