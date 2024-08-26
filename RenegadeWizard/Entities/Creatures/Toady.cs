@@ -23,7 +23,7 @@ namespace RenegadeWizard.Entities.Creatures
         }
         public override int WhenConsumed(Entity consumer)
         {
-            consumer.ApplyCondition(new Madness(3));
+            consumer.ApplyCondition(new Madness(3), "eating a toad");
             return 1;
         }
         public override int WhenKicked(Entity kicker)

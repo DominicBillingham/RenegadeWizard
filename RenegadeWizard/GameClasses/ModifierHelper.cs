@@ -76,14 +76,16 @@ namespace RenegadeWizard.GameClasses
             return strengthAfterModifiers;
         }
 
-        public static Factions GetFactionAfterMods(Entity entity)
+        public static Factions? GetFactionAfterMods(Entity entity)
         {
-            var charmed = entity.Modifiers.FirstOrDefault(con => con is Charmed);
-            if (charmed != null)
+            var changedFaction = entity.Modifiers.FirstOrDefault(con => con is ChangedFaction);
+
+            if (changedFaction != null)
             {
-                return charmed.OverwriteFaction();
+                return changedFaction.OverwriteFaction();
             }
-            return entity.Faction;
+
+            return null;
 
         }
 

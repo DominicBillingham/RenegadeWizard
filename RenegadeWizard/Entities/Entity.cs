@@ -14,7 +14,11 @@ namespace RenegadeWizard.Entities
         public string Description { get; set; } = string.Empty;
         public string BattleLog { get; set; } = string.Empty;
         public int DamageTakenLastRound { get; set; } = 0;
-        public Factions Faction { get; set; } = Factions.None;
+        private Factions faction;
+        public Factions Faction { 
+            get { return ModifierHelper.GetFactionAfterMods(this) ?? faction; } 
+            set { faction = value; }
+        } 
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Modifier> Modifiers { get; set; } = new List<Modifier>();
         public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();
@@ -28,7 +32,6 @@ namespace RenegadeWizard.Entities
         {
             return ModifierHelper.GetStrengthAfterMods(this);
         }
-
         public virtual void TakeTurn()
         {
 
@@ -130,7 +133,7 @@ namespace RenegadeWizard.Entities
 
         #region Condition Methods
 
-        public virtual void ApplyCondition(Modifier condition, string? source = null)
+        public virtual void ApplyCondition(Modifier condition, string source)
         {
             if (IsDestroyed == false)
             {

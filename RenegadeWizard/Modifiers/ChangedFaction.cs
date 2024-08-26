@@ -3,12 +3,12 @@ using RenegadeWizard.Enums;
 
 namespace RenegadeWizard.Modifiers
 {
-    class Charmed : Modifier
+    class ChangedFaction : Modifier
     {
         private Factions NewFaction;
-        public Charmed(int duration, Factions newFaction) : base(duration)
+        public ChangedFaction(int duration, Factions newFaction) : base(duration)
         {
-            Name = "Charmed";
+            Name = "ChangedFaction";
             NewFaction = newFaction;
         }
 

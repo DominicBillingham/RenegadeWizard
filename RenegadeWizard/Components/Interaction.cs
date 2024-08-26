@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using RenegadeWizard.Entities.Creatures;
+using RenegadeWizard.Enums;
 
 namespace RenegadeWizard.Components
 {
@@ -91,6 +94,164 @@ namespace RenegadeWizard.Components
         }
 
         #endregion
+
+
+
+        public int ActionFireball(Entity target)
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts a");
+
+            var chaotic = Random.Shared.Next(2);
+
+            if (chaotic == 1)
+            {
+                Console.Write(" chaotic fireball");
+                var creatures = new EntQuery().SelectCreatures().GetAll();
+
+                foreach (var creature in creatures)
+                {
+                    creature.ApplyCondition(new Burning(2), "fireball");
+                }
+
+            }
+
+            if (chaotic == 0)
+            {
+                Console.Write(" focused fireball");
+                target.ApplyCondition(new Burning(3), "fireball");
+            }
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+
+        public int ActionFleetingImmortality()
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts fleeting immortality");
+
+            var creatures = new EntQuery().SelectCreatures().GetAll();
+
+            foreach (var creature in creatures)
+            {
+                creature.ApplyCondition(new Immortal(1), "fleeting immortality");
+            }
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+
+        public int ActionConjureFriend() {
+
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} conjures a friendly goblin");
+
+            var joe = new Goblin("JoeTheFriendly");
+            joe.Faction = Enums.Factions.Player;
+            joe.Health = 3;
+            Scene.Entities.Add(joe);
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+        public int ActionCharm(Entity target)
+        {
+
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts charm goblin");
+
+            target.ApplyCondition(new ChangedFaction(3, Agent.Faction), "charm spell");
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+
+        public int ActionEnrage(Entity target) {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts enrage goblin");
+
+            target.ApplyCondition(new ChangedFaction(3, Factions.None), "enrage spell");
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+
+
+        }
+
+
+        public int ActionDisguiseSelf(Entity target)
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} disguises as a goblin");
+
+            Agent.ApplyCondition(new ChangedFaction(3, target.Faction), "disguise spell");
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+
+        public int ActionTransferConds(Entity target)
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} transfers their modifiers!");
+
+            foreach (var mod in Agent.Modifiers)
+            {
+                target.ApplyCondition(mod, "transferCon");
+            }
+
+            Agent.Modifiers.Clear();
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+        }
+
+        public int ActionConvertCons()
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} converts their modifiers!");
+            int healthCount = 0;
+
+            foreach (var mod in Agent.Modifiers)
+            {
+                healthCount++;
+            }
+
+            Agent.Modifiers.Clear();
+
+            Agent.ApplyHealing(healthCount, "conversion");
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+        }
+
+        public int ActionChannelCons(Entity target)
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} converts their modifiers!");
+            int damageCount = 0;
+
+            foreach (var mod in Agent.Modifiers)
+            {
+                damageCount++;
+            }
+
+            Agent.Modifiers.Clear();
+
+            target.ApplyDamage(damageCount, "conversion");
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+
 
 
     }
