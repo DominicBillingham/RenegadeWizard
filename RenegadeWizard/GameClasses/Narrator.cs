@@ -23,11 +23,22 @@ namespace RenegadeWizard.GameClasses
             var creatures = new EntQuery().SelectCreatures().GetAll();  
             foreach (var creature in creatures)
             {
-                Console.Write($" - [{creature.Name}] the {creature.GetType().Name} has {creature.Health}hp ");
+                if (creature.IsDestroyed == false)
+                {
+                    Console.Write($" - [{creature.Name}] the {creature.GetType().Name} has {creature.Health}hp");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($" - [{creature.Name}] the {creature.GetType().Name} is DEAD");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    creature.DamageTakenLastRound = 0;
+                }
+
 
                 if (creature.DamageTakenLastRound > 0) {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write( $"(-{creature.DamageTakenLastRound})" );
+                    Console.Write( $" (-{creature.DamageTakenLastRound})" );
                     Console.ForegroundColor = ConsoleColor.White;
                     creature.DamageTakenLastRound = 0;
                 }
@@ -35,7 +46,7 @@ namespace RenegadeWizard.GameClasses
                 if (creature.HealingLastRound > 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write($"(-{creature.HealingLastRound})");
+                    Console.Write($" (-{creature.HealingLastRound})");
                     Console.ForegroundColor = ConsoleColor.White;
                     creature.HealingLastRound = 0;
                 }
@@ -56,7 +67,8 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
             Console.WriteLine(" - - - - - - - ?  Help  ? - - - - - - - ");
             Console.WriteLine("This is a 1st person, text combat system. Type any sentence that includes one of the commands:");
-            Console.WriteLine("'Throw' 'Inspect' 'Consume' 'Kick' 'Grab' ");
+            Console.WriteLine("'Throw' 'Inspect' 'Consume'");
+            Console.WriteLine(" 'Fireball' 'DiguiseAs' 'CharmMonster' 'ConjureFriend' 'Enrage' 'TitanBrawl' 'Immortality' 'TransferConditions' 'Heal' 'Invisibility' ");
             Console.WriteLine("EXAMPLE 'I throw beer at the goblin'");
             Console.WriteLine();
             Console.WriteLine("When you enter a command, it then searches for creature/item names. Anything in [ ] is a valid name.");

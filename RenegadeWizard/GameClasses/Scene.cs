@@ -20,6 +20,7 @@ namespace RenegadeWizard.GameClasses
             Entities.Add(new Player("NotHarry"));
             Entities.Add(new ShieldGoblin("JeffShield"));
             Entities.Add(new Goblin("Jill"));
+            Entities.Add(new Troll("Jess"));
 
             AddBarItems();
         }
@@ -86,7 +87,7 @@ class EntQuery
 
     public EntQuery SelectHostiles(Factions faction)
     {
-        Query = Query.Where(ent => ent.Faction != faction);
+        Query = Query.Where(ent => ent.Faction != faction || ent.Faction == Factions.None);
         return this;
     }
 

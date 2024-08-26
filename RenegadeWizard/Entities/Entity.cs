@@ -19,12 +19,7 @@ namespace RenegadeWizard.Entities
         public string BattleLog { get; set; } = string.Empty;
         public int DamageTakenLastRound { get; set; } = 0;
         public int HealingLastRound { get; set; } = 0;
-
-        private Factions faction;
-        public Factions Faction { 
-            get { return ModifierHelper.GetFactionAfterMods(this) ?? faction; } 
-            set { faction = value; }
-        } 
+        public Factions Faction { get; set; }
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Modifier> Modifiers { get; set; } = new List<Modifier>();
         public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();
@@ -32,18 +27,48 @@ namespace RenegadeWizard.Entities
         // Composition Stuff
         public AgentActions? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
-        public Entity? HeldObject { get; set; }
 
-        public int GetStrength()
+        public Entity AfterMods()
         {
-            return ModifierHelper.GetStrengthAfterMods(this);
+            Entity ent = new();
+
+            ent.Faction = ModHelper.ModFaction(this);
+            if (Attributes != null)
+            {
+                ent.Attributes = new Attributes(0,0,0);
+                ent.Attributes.Strength = ModHelper.ModStrength(this);
+                ent.Attributes.Agility = ModHelper.ModAgility(this);
+                ent.Attributes.Intellect = ModHelper.ModIntellect(this);
+            }
+
+            return ent;
         }
+
+        #region WhenMethods
+
+        public virtual Entity GetTarget()
+        {
+            var target = ModHelper.ModTarget(this);
+            return target;
+        }
+
+
+
+        public virtual void WhenDamaged()
+        {
+
+        }
+
+        public virtual void WhenHealed()
+        {
+
+        }
+
         public virtual void TakeTurn()
         {
 
         }
 
-        #region WhenAction Methods
         public virtual int WhenThrown(Entity target, Entity thrower)
         {
             Console.Write($" {Narrator.GetContrastWord()} it fails!");
@@ -61,7 +86,7 @@ namespace RenegadeWizard.Entities
 
             if ( Attributes != null)
             {
-                Console.Write($" STR:{GetStrength()}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
+                Console.Write($" STR:{ AfterMods().Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
             }
 
             Console.Write($" {Name} - {Description}");
@@ -81,47 +106,15 @@ namespace RenegadeWizard.Entities
         public virtual void ApplyDamage(int damage, string source, bool ignoreArmour = false)
         {
 
-            damage = ModifierHelper.GetDamageAfterMods(this, damage);
-
-            if (HeldObject != null && HeldObject.IsDestroyed == false && ignoreArmour == false)
-            {
-                HeldObject.Health -= damage;
-                HeldObject.BattleLog += $" -{damage}hp from {source} protecting {Name} |";
-
-                Console.Write($" {Narrator.GetContrastWord()} {HeldObject.Name} blocks the blow!");
-
-                if ( HeldObject.IsDestroyed )
-                {
-                    HeldObject.SelfDestruct();
-                }
-
-                HeldObject = null;
-                return;
-            } 
+            damage = ModHelper.ModDamage(this, damage);
 
             if (IsDestroyed == false)
             {
                 DamageTakenLastRound += damage;
                 Health -= damage;
                 BattleLog += $" -{damage}hp from {source} |";
-
                 WhenDamaged();
-
-                if (IsDestroyed && ignoreArmour == false)
-                {
-                    SelfDestruct();
-                }
             }
-        }
-
-        public virtual void WhenDamaged()
-        {
-
-        }
-
-        public virtual void WhenHealed()
-        {
-
         }
 
         public virtual void ApplyHealing(int heal, string? source = null)
@@ -160,7 +153,6 @@ namespace RenegadeWizard.Entities
         }
 
         #endregion
-
 
         public virtual void SelfDestruct()
         {

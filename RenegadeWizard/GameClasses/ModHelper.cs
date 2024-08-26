@@ -9,7 +9,7 @@ using RenegadeWizard.Enums;
 
 namespace RenegadeWizard.GameClasses
 {
-    public static class ModifierHelper
+    public static class ModHelper
     {
         // The modifier classes contain the effects of a modifier
         // The modifier helper applies the effects, and sets an order of operations if needed e.g DamageModifiers
@@ -32,7 +32,7 @@ namespace RenegadeWizard.GameClasses
             entity.Modifiers.RemoveAll(con => con.Duration == 0);
         }
 
-        public static int GetDamageAfterMods(Entity entity, int damage)
+        public static int ModDamage(Entity entity, int damage)
         {
             var immortal = entity.Modifiers.FirstOrDefault(con => con is Immortal);
             if (immortal != null) {
@@ -52,7 +52,7 @@ namespace RenegadeWizard.GameClasses
             return damage;
 
         }
-        public static int GetStrengthAfterMods(Entity entity) {
+        public static int ModStrength(Entity entity) {
 
             if (entity.Attributes == null)
             {
@@ -76,7 +76,45 @@ namespace RenegadeWizard.GameClasses
             return strengthAfterModifiers;
         }
 
-        public static Factions? GetFactionAfterMods(Entity entity)
+        public static int ModAgility(Entity entity)
+        {
+
+            if (entity.Attributes == null)
+            {
+                return 0;
+            }
+
+            int agilityAfterModifiers = entity.Attributes.Agility;
+
+            var exhausted = entity.Modifiers.FirstOrDefault(con => con is Exhausted);
+            if (exhausted != null)
+            {
+                agilityAfterModifiers = exhausted.ModifyIntellect(agilityAfterModifiers);
+            }
+
+            return agilityAfterModifiers;
+        }
+
+        public static int ModIntellect(Entity entity)
+        {
+
+            if (entity.Attributes == null)
+            {
+                return 0;
+            }
+
+            int intellectAfterModifiers = entity.Attributes.Intellect;
+
+            var exhausted = entity.Modifiers.FirstOrDefault(con => con is Exhausted);
+            if (exhausted != null)
+            {
+                intellectAfterModifiers = exhausted.ModifyIntellect(intellectAfterModifiers);
+            }
+
+            return intellectAfterModifiers;
+        }
+
+        public static Factions ModFaction(Entity entity)
         {
             var changedFaction = entity.Modifiers.FirstOrDefault(con => con is ChangedFaction);
 
@@ -85,7 +123,21 @@ namespace RenegadeWizard.GameClasses
                 return changedFaction.OverwriteFaction();
             }
 
-            return null;
+            return entity.Faction;
+
+        }
+
+        public static Entity ModTarget(Entity initialTarget)
+        {
+
+            var hidden = initialTarget.Modifiers.FirstOrDefault(con => con is Hidden);
+
+            if (hidden != null)
+            {
+                return hidden.ModifyTarget(initialTarget);
+            }
+
+            return initialTarget;
 
         }
 

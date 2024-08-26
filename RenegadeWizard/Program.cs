@@ -30,16 +30,14 @@ while (true)
     var ents = Scene.Entities;
     foreach (var ent in ents)
     {
-        ent.BattleLog = string.Empty;
-        ModifierHelper.ApplyRoundEndEffects(ent);
-        ModifierHelper.ApplyExpirationEffects(ent);
+        ModHelper.ApplyRoundEndEffects(ent);
+        ModHelper.ApplyExpirationEffects(ent);
     }
 
     Narrator.ContinuePrompt();
 
     Console.Clear();
     setbackground();
-
     Narrator.ShowRoundInfo();
 
 }
@@ -61,6 +59,12 @@ void PlayerTurn(Entity player)
             continue;
         }
 
+        if (input[0] == "help")
+        {
+            Narrator.ShowHelp();
+            continue;
+        }
+
         var possibleActions = typeof(AgentActions).GetMethods().Where(m => m.Name.StartsWith("Action"));
         MethodInfo? chosenAction = possibleActions.FirstOrDefault(action => input.Any(word => action.Name.ToLower().Contains(word)));
 
@@ -72,6 +76,7 @@ void PlayerTurn(Entity player)
 
         List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
         List<Entity> actionParameters = new();
+        actionParameters.Add(player);
 
         foreach (var word in input)
         {
@@ -87,14 +92,14 @@ void PlayerTurn(Entity player)
         int paramsNeeded = chosenAction.GetParameters().Count();
         if (actionParameters.Count() != paramsNeeded)
         {
-            Console.WriteLine($" ! '{chosenAction.Name.Substring(6)}' requires {paramsNeeded} name(s) to be provided");
+            Console.WriteLine($" ! '{chosenAction.Name.Substring(6)}' requires {paramsNeeded-1} name(s) to be provided");
             continue;
         }
 
         Console.WriteLine();
 
         var interaction = new AgentActions();
-        interaction.Agent = player;
+
         actionCost = (int)chosenAction.Invoke(interaction, actionParameters.ToArray());
     }
 

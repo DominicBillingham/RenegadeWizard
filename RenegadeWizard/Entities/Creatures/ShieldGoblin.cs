@@ -26,15 +26,9 @@ namespace RenegadeWizard.Entities.Creatures
         public override void TakeTurn()
         {
 
-            var interaction = new ShieldGoblinActions();
-            interaction.Agent = this;
-
-            if (Random.Shared.Next(2) == 0)
-            {
-                var ally = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Faction).GetRandom();
-                interaction.ActionShieldAllies(ally);
-
-            }
+            var shieldActions = new ShieldGoblinActions();
+            var ally = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Faction).GetRandom();
+            shieldActions.ActionShieldAllies(this, ally);
 
         }
 
@@ -42,10 +36,10 @@ namespace RenegadeWizard.Entities.Creatures
 
     public class ShieldGoblinActions : AgentActions
     {
-        public int ActionShieldAllies(Entity ally)
+        public int ActionShieldAllies(Entity agent, Entity ally)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} valiantly protects {ally.Name}");
-            ally.ApplyCondition(new Protected(2), $"{Agent.Name}");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} valiantly protects {ally.Name}");
+            ally.ApplyCondition(new Protected(2), $"{agent.Name}");
             Console.WriteLine("\n");
             return 1;
         }

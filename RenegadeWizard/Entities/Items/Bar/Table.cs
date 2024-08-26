@@ -18,7 +18,7 @@ namespace RenegadeWizard.Entities.Items
         public override int WhenThrown(Entity target, Entity thrower)
         {
 
-            if (thrower.GetStrength() > 10)
+            if (thrower.AfterMods().Attributes.Strength > 10)
             {
                 target.ApplyDamage(4, $"{Name} thrown by {thrower.Name}");
                 Scene.Entities.Remove(this);

@@ -14,25 +14,35 @@ namespace RenegadeWizard.Components
 {
     public class AgentActions
     {
-        public Entity Agent { get; set; }
-
-        public int ActionThrow(Entity item, Entity target)
+        public int ActionThrow(Entity agent, Entity item, Entity target)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} throws {item.Name} at {target.Name}");
+            if (item == null || target == null)
+            {
+                Console.WriteLine($" # {Narrator.GetConnectorWord()} {agent.Name} has nothing to throw!");
+                return 0;
+            }
 
-            int actionCost = item.WhenThrown(target, Agent);
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} throws {item.Name} at {target.Name}");
+
+            int actionCost = item.WhenThrown(target, agent);
 
             Console.WriteLine("\n");
             return actionCost;
 
         }
-        public int ActionConsume(Entity edibleItem)
+        public int ActionConsume(Entity agent, Entity edibleItem)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} consumes {edibleItem.Name}");
+            if (edibleItem == null)
+            {
+                Console.WriteLine($" # {Narrator.GetConnectorWord()} {agent.Name} is hungry but there's no food!");
+                return 0;
+            }
 
-            int actionCost = edibleItem.WhenConsumed(Agent);
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} consumes {edibleItem.Name}");
 
-            if (Agent == edibleItem)
+            int actionCost = edibleItem.WhenConsumed(agent);
+
+            if (agent == edibleItem)
             {
                 Console.Write(Narrator.GetConfusedNarrator());
             }
@@ -40,64 +50,47 @@ namespace RenegadeWizard.Components
             Console.WriteLine("\n");
             return actionCost;
         }
-        public int ActionInspect(Entity entity)
+        public int ActionInspect(Entity agent, Entity entity)
         {
-
-            if (Agent.Modifiers.Any(con => con is Madness))
-            {
-                // idea: write some custom lines for inspecting while mad
-            }
-
             int actionCost = entity.WhenInspected();
             Console.WriteLine("\n");
             return actionCost;
         }
 
         #region Synonyms
-        public int ActionDrink(Entity edibleItem)
+        public int ActionDrink(Entity agent, Entity edibleItem)
         {
-            return ActionConsume(edibleItem);
+            return ActionConsume(agent, edibleItem);
         }
-        public int ActionEat(Entity edibleItem)
+        public int ActionInfo(Entity agent, Entity entity)
         {
-            return ActionConsume(edibleItem);
-        }
-        public int ActionToss(Entity item, Entity target)
-        {
-            return ActionThrow(item, target);
-        }
-        public int ActionInfo(Entity entity)
-        {
-            return ActionInspect(entity);
+            return ActionInspect(agent, entity);
         }
 
         #endregion
 
-
-
-        public int ActionFireball(Entity target)
+        public int ActionCharmMonster(Entity agent, Entity target)
         {
 
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts a");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} casts charm monster");
 
-            var chaotic = Random.Shared.Next(2);
+            target.ApplyCondition(new ChangedFaction(3, agent.Faction), "Charm");
 
-            if (chaotic == 1)
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+
+        public int ActionTitanBrawl(Entity agent)
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} casts titan brawl");
+
+            var creatures = new EntQuery().SelectCreatures().GetAll();
+
+            foreach (var creature in creatures)
             {
-                Console.Write(" chaotic fireball");
-                var creatures = new EntQuery().SelectCreatures().GetAll();
-
-                foreach (var creature in creatures)
-                {
-                    creature.ApplyCondition(new Burning(2), "fireball");
-                }
-
-            }
-
-            if (chaotic == 0)
-            {
-                Console.Write(" focused fireball");
-                target.ApplyCondition(new Burning(3), "fireball");
+                creature.ApplyCondition(new Enlarged(3), "Titan Brawl");
             }
 
             int actionCost = 1;
@@ -106,9 +99,27 @@ namespace RenegadeWizard.Components
 
         }
 
-        public int ActionFleetingImmortality()
+        public int ActionFireball(Entity agent, Entity target)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts fleeting immortality");
+
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} casts a chaotic fireball");
+
+            var creatures = new EntQuery().SelectCreatures().GetAll();
+
+            foreach (var creature in creatures)
+            {
+                creature.ApplyCondition(new Burning(2), "fireball");
+            }
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+
+        }
+
+        public int ActionFleetingImmortality(Entity agent)
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} casts fleeting immortality");
 
             var creatures = new EntQuery().SelectCreatures().GetAll();
 
@@ -123,11 +134,12 @@ namespace RenegadeWizard.Components
 
         }
 
-        public int ActionConjureFriend() {
+        public int ActionConjureFriend(Entity agent)
+        {
 
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} conjures a friendly goblin");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} conjures a friendly goblin");
 
-            var joe = new Goblin("JoeTheFriendly");
+            var joe = new Goblin("FriendlyJimmy");
             joe.Faction = Enums.Factions.Player;
             joe.Health = 3;
             Scene.Entities.Add(joe);
@@ -137,21 +149,10 @@ namespace RenegadeWizard.Components
             return actionCost;
 
         }
-        public int ActionCharm(Entity target)
+
+        public int ActionEnrage(Entity agent, Entity target)
         {
-
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts charm goblin");
-
-            target.ApplyCondition(new ChangedFaction(3, Agent.Faction), "charm spell");
-
-            int actionCost = 1;
-            Console.WriteLine("\n");
-            return actionCost;
-
-        }
-
-        public int ActionEnrage(Entity target) {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts enrage goblin");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} casts enrage goblin");
 
             target.ApplyCondition(new ChangedFaction(3, Factions.None), "enrage spell");
 
@@ -159,16 +160,14 @@ namespace RenegadeWizard.Components
             Console.WriteLine("\n");
             return actionCost;
 
-
-
         }
 
 
-        public int ActionDisguiseSelf(Entity target)
+        public int ActionDisguiseAs(Entity agent, Entity target)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} disguises as a goblin");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} disguises as a goblin");
 
-            Agent.ApplyCondition(new ChangedFaction(3, target.Faction), "disguise spell");
+            agent.ApplyCondition(new ChangedFaction(3, target.Faction), "disguise spell");
 
             int actionCost = 1;
             Console.WriteLine("\n");
@@ -176,52 +175,52 @@ namespace RenegadeWizard.Components
 
         }
 
-        public int ActionTransferConds(Entity target)
+        public int ActionTransferConditions(Entity agent, Entity target)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} transfers their modifiers!");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} transfers their modifiers!");
 
-            foreach (var mod in Agent.Modifiers)
+            foreach (var mod in agent.Modifiers)
             {
                 target.ApplyCondition(mod, "transferCon");
             }
 
-            Agent.Modifiers.Clear();
+            agent.Modifiers.Clear();
 
             int actionCost = 1;
             Console.WriteLine("\n");
             return actionCost;
         }
 
-        public int ActionConvertCons()
+        public int ActionConvertCons(Entity agent)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} converts their modifiers!");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} converts their modifiers!");
             int healthCount = 0;
 
-            foreach (var mod in Agent.Modifiers)
+            foreach (var mod in agent.Modifiers)
             {
                 healthCount++;
             }
 
-            Agent.Modifiers.Clear();
+            agent.Modifiers.Clear();
 
-            Agent.ApplyHealing(healthCount, "conversion");
+            agent.ApplyHealing(healthCount, "conversion");
 
             int actionCost = 1;
             Console.WriteLine("\n");
             return actionCost;
         }
 
-        public int ActionChannelCons(Entity target)
+        public int ActionChannelCons(Entity agent, Entity target)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} converts their modifiers!");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} converts their modifiers!");
             int damageCount = 0;
 
-            foreach (var mod in Agent.Modifiers)
+            foreach (var mod in agent.Modifiers)
             {
                 damageCount++;
             }
 
-            Agent.Modifiers.Clear();
+            agent.Modifiers.Clear();
 
             target.ApplyDamage(damageCount, "conversion");
 
@@ -232,9 +231,9 @@ namespace RenegadeWizard.Components
 
         }
 
-        public int ActionInvis()
+        public int ActionInvisibility(Entity agent)
         {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts invis");
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} casts invis");
 
             var creatures = new EntQuery().SelectCreatures().GetAll();
 
@@ -249,22 +248,22 @@ namespace RenegadeWizard.Components
         }
 
 
-        //public int ActionHeal()
-        //{
-        //    foreach (var mod in Agent.Modifiers)
-        //    {
-        //        damageCount++;
-        //    }
+        public int ActionHeal(Entity agent)
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {agent.Name} casts mass heal");
 
-        //    Agent.Modifiers.Clear();
+            var creatures = new EntQuery().SelectCreatures().GetAll();
 
-        //    target.ApplyDamage(damageCount, "conversion");
+            foreach (var creature in creatures)
+            {
+                creature.ApplyHealing(4);
+            }
 
-        //    int actionCost = 1;
-        //    Console.WriteLine("\n");
-        //    return actionCost;
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
 
-        //}
+        }
 
 
 

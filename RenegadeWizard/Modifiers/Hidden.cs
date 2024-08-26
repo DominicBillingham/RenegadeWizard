@@ -1,4 +1,5 @@
 ﻿using RenegadeWizard.Entities;
+using RenegadeWizard.GameClasses;
 
 namespace RenegadeWizard.Modifiers
 {
@@ -17,6 +18,7 @@ namespace RenegadeWizard.Modifiers
         public override Entity? ModifyTarget(Entity entity) 
         {
             var random = new EntQuery().SelectCreatures().SelectNotEntity(entity).GetRandom();
+            Console.Write($" {Narrator.GetContrastWord()} {entity.Name} is hidden, and the attack goes wide!");
             return random;
         }
 
