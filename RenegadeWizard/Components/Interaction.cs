@@ -99,6 +99,7 @@ namespace RenegadeWizard.Components
 
         public int ActionFireball(Entity target)
         {
+
             Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts a");
 
             var chaotic = Random.Shared.Next(2);
@@ -250,7 +251,42 @@ namespace RenegadeWizard.Components
             Console.WriteLine("\n");
             return actionCost;
 
+
         }
+
+        public int ActionInvis()
+        {
+            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} casts invis");
+
+            var creatures = new EntQuery().SelectCreatures().GetAll();
+
+            foreach (var creature in creatures)
+            {
+                creature.ApplyCondition(new Hidden(3), "invis spell");
+            }
+
+            int actionCost = 1;
+            Console.WriteLine("\n");
+            return actionCost;
+        }
+
+
+        //public int ActionHeal()
+        //{
+        //    foreach (var mod in Agent.Modifiers)
+        //    {
+        //        damageCount++;
+        //    }
+
+        //    Agent.Modifiers.Clear();
+
+        //    target.ApplyDamage(damageCount, "conversion");
+
+        //    int actionCost = 1;
+        //    Console.WriteLine("\n");
+        //    return actionCost;
+
+        //}
 
 
 

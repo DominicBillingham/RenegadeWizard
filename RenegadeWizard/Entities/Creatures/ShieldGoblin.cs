@@ -31,13 +31,13 @@ namespace RenegadeWizard.Entities.Creatures
 
             if (Random.Shared.Next(2) == 0)
             {
-                var ally = new EntQuery().SelectCreatures().SelectAllies(Faction).GetRandom();
+                var ally = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Faction).GetRandom();
                 interaction.ActionShieldAllies(ally);
 
             }
             else
             {
-                var enemy = new EntQuery().SelectCreatures().SelectHostiles(Faction).GetRandom();
+                var enemy = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Faction).GetRandom();
                 interaction.ActionKick(enemy);
             }
 

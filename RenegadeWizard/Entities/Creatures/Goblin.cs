@@ -36,7 +36,7 @@ namespace RenegadeWizard.Entities.Creatures
             else
             {
                 var item = new EntQuery().SelectItems().GetRandom();
-                var enemy = new EntQuery().SelectCreatures().SelectHostiles(Faction).GetRandom();
+                var enemy = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Faction).GetRandom();
                 interaction.ActionThrow(item, enemy);
             }
 

@@ -29,13 +29,19 @@ namespace RenegadeWizard.GameClasses
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write( $"(-{creature.DamageTakenLastRound})" );
                     Console.ForegroundColor = ConsoleColor.White;
+                    creature.DamageTakenLastRound = 0;
                 }
 
-                creature.DamageTakenLastRound = 0;
+                if (creature.HealingLastRound > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"(-{creature.HealingLastRound})");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    creature.HealingLastRound = 0;
+                }
 
                 if (creature.Modifiers.Any())
                 {
-
                     string conditionStr = string.Join(", ", creature.Modifiers.Select(x => x.Name + $"({x.Duration})"));
                     Console.Write(" | " + conditionStr);
                 }

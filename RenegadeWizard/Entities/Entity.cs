@@ -14,6 +14,8 @@ namespace RenegadeWizard.Entities
         public string Description { get; set; } = string.Empty;
         public string BattleLog { get; set; } = string.Empty;
         public int DamageTakenLastRound { get; set; } = 0;
+        public int HealingLastRound { get; set; } = 0;
+
         private Factions faction;
         public Factions Faction { 
             get { return ModifierHelper.GetFactionAfterMods(this) ?? faction; } 
@@ -123,10 +125,17 @@ namespace RenegadeWizard.Entities
 
         }
 
+        public virtual void WhenHealed()
+        {
+
+        }
+
         public virtual void ApplyHealing(int heal, string? source = null)
         {
             Health += heal;
             BattleLog = $" +{heal}hp from {source} |";
+            HealingLastRound += heal;
+            WhenHealed();
         }
 
         #endregion

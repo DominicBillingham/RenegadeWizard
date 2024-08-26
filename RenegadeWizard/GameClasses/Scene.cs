@@ -20,6 +20,7 @@ namespace RenegadeWizard.GameClasses
             Entities.Add(new Player("NotHarry"));
             Entities.Add(new ShieldGoblin("JeffShield"));
             Entities.Add(new Goblin("Jill"));
+            Entities.Add(new Beserker("James"));
 
             AddBarItems();
         }
@@ -31,7 +32,7 @@ namespace RenegadeWizard.GameClasses
                 .Where(type => type.IsSubclassOf(typeof(Item)) && !type.IsAbstract)
                 .ToArray();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
                 var item = items[Random.Shared.Next(items.Count())];
 
@@ -63,6 +64,12 @@ class EntQuery
     public EntQuery SelectPlayers()
     {
         Query = Query.Where(ent => ent is Player);
+        return this;
+    }
+
+    public EntQuery SelectLiving()
+    {
+        Query = Query.Where(ent => ent.IsDestroyed == false);
         return this;
     }
 

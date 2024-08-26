@@ -85,7 +85,7 @@ while (gameEnd == false)
             entity.BattleLog = string.Empty;
         }
 
-        var Npcs = new EntQuery().SelectNpcs().GetAll();
+        var Npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
         foreach (var NPC in Npcs)
         {
             NPC.TakeTurn();

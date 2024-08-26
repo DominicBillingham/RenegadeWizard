@@ -21,6 +21,7 @@ namespace RenegadeWizard.Modifiers
         virtual public int ModifyStrength(int strength) { return strength; }
         virtual public int ModifyAgility(int agility) { return agility; }
         virtual public int ModifyIntellect(int intellect) { return intellect; }
+        virtual public Entity? ModifyTarget(Entity entity) { return entity; }
         virtual public Factions OverwriteFaction() { return Factions.None; }
 
 
