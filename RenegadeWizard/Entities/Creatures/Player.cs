@@ -19,6 +19,7 @@ namespace RenegadeWizard.Entities.Creatures
             CharacterActions = new Interaction();
             Attributes = new Attributes(10, 10, 10);
             Faction = Factions.Player;
+            IsPlayerControlled = true;
         }
 
     }

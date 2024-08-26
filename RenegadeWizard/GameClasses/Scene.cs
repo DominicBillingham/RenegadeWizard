@@ -57,13 +57,13 @@ class EntQuery
 
     public EntQuery SelectNpcs()
     {
-        Query = Query.Where(ent =>!(ent is Player));
+        Query = Query.Where(ent => ent.IsPlayerControlled == false);
         return this;
     }
 
     public EntQuery SelectPlayers()
     {
-        Query = Query.Where(ent => ent is Player);
+        Query = Query.Where(ent => ent.IsPlayerControlled);
         return this;
     }
 

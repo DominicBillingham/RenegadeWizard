@@ -11,6 +11,7 @@ namespace RenegadeWizard.Entities
         public string Name { get; set; } = string.Empty;
         public int Health { get; set; }
         public int Weight { get; set; }
+        public bool IsPlayerControlled { get; set; } = false;
         public string Description { get; set; } = string.Empty;
         public string BattleLog { get; set; } = string.Empty;
         public int DamageTakenLastRound { get; set; } = 0;
@@ -46,16 +47,6 @@ namespace RenegadeWizard.Entities
             return 0;
         }
         public virtual int WhenConsumed(Entity consumer)
-        {
-            Console.Write($" {Narrator.GetContrastWord()} but it fails!");
-            return 0;
-        }
-        public virtual int WhenGrabbed(Entity grabber)
-        {
-            Console.Write($" {Narrator.GetContrastWord()} but it fails!");
-            return 0;
-        }
-        public virtual int WhenKicked(Entity kicker)
         {
             Console.Write($" {Narrator.GetContrastWord()} but it fails!");
             return 0;

@@ -35,11 +35,6 @@ namespace RenegadeWizard.Entities.Creatures
                 interaction.ActionShieldAllies(ally);
 
             }
-            else
-            {
-                var enemy = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Faction).GetRandom();
-                interaction.ActionKick(enemy);
-            }
 
         }
 

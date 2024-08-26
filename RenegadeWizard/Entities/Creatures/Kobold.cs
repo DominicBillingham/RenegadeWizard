@@ -20,13 +20,6 @@ namespace RenegadeWizard.Entities.Creatures
             CharacterActions = new Interaction();
             Attributes = new Attributes(2, 8, 2);
         }
-        public override int WhenGrabbed(Entity grabber)
-        {
-            base.WhenGrabbed(grabber);
-            grabber.ApplyCondition(new Bleeding(3), $"{Name} biting back");
-
-            return 1;
-        }
 
     }
 

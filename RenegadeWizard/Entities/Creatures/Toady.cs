@@ -26,15 +26,7 @@ namespace RenegadeWizard.Entities.Creatures
             consumer.ApplyCondition(new Madness(3), "eating a toad");
             return 1;
         }
-        public override int WhenKicked(Entity kicker)
-        {
-            var creatures = new EntQuery().SelectCreatures().GetAll();
-            foreach (var creature in creatures)
-            {
-                creature.ApplyCondition(new Madness(2), $"{kicker.Name} kicking {Name}");
-            }
-            return 1;
-        }
+
 
 
     }

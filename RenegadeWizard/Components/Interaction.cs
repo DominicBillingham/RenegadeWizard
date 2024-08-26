@@ -52,24 +52,6 @@ namespace RenegadeWizard.Components
             Console.WriteLine("\n");
             return actionCost;
         }
-        public int ActionGrab(Entity target)
-        {
-            Console.Write($" # {Agent.Name} grapples {target.Name}");
-
-            int actionCost = target.WhenGrabbed(Agent);
-
-            Console.WriteLine("\n");
-            return actionCost;
-        }
-        public int ActionKick(Entity target)
-        {
-            Console.Write($" # {Narrator.GetConnectorWord()} {Agent.Name} kicks {target.Name}");
-
-            int actionCost = target.WhenKicked(Agent);
-
-            Console.WriteLine("\n");
-            return actionCost;
-        }
 
         #region Synonyms
         public int ActionDrink(Entity edibleItem)
@@ -79,10 +61,6 @@ namespace RenegadeWizard.Components
         public int ActionEat(Entity edibleItem)
         {
             return ActionConsume(edibleItem);
-        }
-        public int ActionShove(Entity target)
-        {
-            return ActionKick(target);
         }
         public int ActionToss(Entity item, Entity target)
         {
