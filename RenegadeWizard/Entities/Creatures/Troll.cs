@@ -29,8 +29,8 @@ namespace RenegadeWizard.Entities.Creatures
         {
 
             var trollActions = new TrollActions();
-            var enemy = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(AfterMods().Faction).GetRandom();
 
+            var enemy = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles( AfterMods().Faction ).GetRandom();
 
             trollActions.ActionViolentClaws(this, enemy);
 

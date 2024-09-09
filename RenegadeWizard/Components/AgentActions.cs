@@ -57,6 +57,10 @@ namespace RenegadeWizard.Components
             return actionCost;
         }
 
+
+        public int ActionBegoneNightmares() { return 0; }
+
+
         #region Synonyms
         public int ActionDrink(Entity agent, Entity edibleItem)
         {

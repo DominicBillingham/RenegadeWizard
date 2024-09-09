@@ -46,6 +46,17 @@ void PlayerTurn(Entity player)
 {
     int actionCost = 0;
 
+
+
+    var action = new Interaction(player, "Fireball");
+    action.CheckIntellect(5).SelectAllEnemies().ApplyDamage(2).ApplyCondition(new Burning(2));
+
+
+
+    actionCost = 1;
+
+
+
     while (actionCost == 0)
     {
         Console.Write(" > ");

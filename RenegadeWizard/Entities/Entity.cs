@@ -28,6 +28,7 @@ namespace RenegadeWizard.Entities
         public AgentActions? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
 
+
         public Entity AfterMods()
         {
             Entity ent = new();
@@ -51,8 +52,6 @@ namespace RenegadeWizard.Entities
             var target = ModHelper.ModTarget(this);
             return target;
         }
-
-
 
         public virtual void WhenDamaged()
         {
