@@ -46,16 +46,14 @@ void PlayerTurn(Entity player)
 {
     int actionCost = 0;
 
+    List<Interaction> spells = new();
+    var fireball = new Interaction(player, "Fireball").CheckIntellect(5).SelectAllEnemies().ApplyDamage(2).ApplyCondition(new Burning(2));
+    var daggerstorm = new Interaction(player, "Daggerstorm").CheckIntellect(5).SelectAllEnemies().ApplyDamage(2).ApplyCondition(new Wounded(2));
+    var heal = new Interaction(player, "Heal").CheckIntellect(5).SelectAllEnemies().ApplyHealing(2);
 
-
-    var action = new Interaction(player, "Fireball");
-    action.CheckIntellect(5).SelectAllEnemies().ApplyDamage(2).ApplyCondition(new Burning(2));
-
-
-
-    actionCost = 1;
-
-
+    spells.Add(fireball);
+    spells.Add(heal);
+    spells.Add(daggerstorm);
 
     while (actionCost == 0)
     {
@@ -75,6 +73,21 @@ void PlayerTurn(Entity player)
             Narrator.ShowHelp();
             continue;
         }
+
+
+
+        var spell = spells.FirstOrDefault(spell => input.Any(word => spell.ActionName.ToLower().Contains(word)));
+        if (spell != null)
+        {
+            spell.Execute();
+            actionCost = 1;
+        }
+
+
+
+
+
+
 
         var possibleActions = typeof(AgentActions).GetMethods().Where(m => m.Name.StartsWith("Action"));
         MethodInfo? chosenAction = possibleActions.FirstOrDefault(action => input.Any(word => action.Name.ToLower().Contains(word)));
