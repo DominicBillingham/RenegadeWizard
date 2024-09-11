@@ -45,14 +45,17 @@ void PlayerTurn(Entity player)
 {
     int actionCost = 0;
 
-    List<Interaction> spells = new();
+    List<Interaction> actions = new();
     var fireball = new Interaction(player, "Fireball").CheckIntellect(5).ApplyDamage(2).ApplyCondition(new Burning(2));
     var daggerstorm = new Interaction(player, "Daggerstorm").CheckIntellect(5).ApplyDamage(2).ApplyCondition(new Wounded(2));
     var heal = new Interaction(player, "Heal").CheckIntellect(5).ApplyHealing(2);
+    var inspect = new Interaction(player, "Inspect").Inspect();
 
-    spells.Add(fireball);
-    spells.Add(heal);
-    spells.Add(daggerstorm);
+
+    actions.Add(fireball);
+    actions.Add(heal);
+    actions.Add(daggerstorm);
+    actions.Add(inspect);
 
     while (actionCost == 0)
     {
@@ -74,7 +77,7 @@ void PlayerTurn(Entity player)
         }
 
 
-        var spell = spells.FirstOrDefault(spell => input.Any(word => spell.ActionName.ToLower().Contains(word)));
+        var spell = actions.FirstOrDefault(spell => input.Any(word => spell.ActionName.ToLower().Contains(word)));
 
         List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
         List<Entity> actionParameters = new();

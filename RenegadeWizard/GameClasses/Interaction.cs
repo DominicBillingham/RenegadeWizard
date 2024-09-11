@@ -25,21 +25,6 @@ namespace RenegadeWizard.GameClasses
             ActionName = name;
         }
 
-        public Interaction CheckImmunity(Modifier immunity)
-        {
-            ActionComponents.Add(() => 
-            {
-                foreach (var entity in Targets)
-                {
-                    if (entity.ModifierImmunities.Contains(immunity))
-                    {
-
-                    }
-                }
-            });
-            return this;
-        }
-
         public Interaction SelectRandomEnemy()
         {
             ActionComponents.Add(() => 
@@ -65,14 +50,6 @@ namespace RenegadeWizard.GameClasses
                 Targets = new EntQuery().SelectCreatures().GetAll();
             });
             return this;
-        }
-
-        private Entity GetTarget(Entity entity)
-        {
-            // Sometimes attacks will be redirected due to modifiers like Hidden, or Reflecting
-
-
-            return entity;
         }
 
         public Interaction ApplyDamage(int damage)
@@ -162,26 +139,33 @@ namespace RenegadeWizard.GameClasses
         #region UtilityFunctions
         // 
 
-        public Interaction Inspect(Entity entity)
+        public Interaction Inspect()
         {
 
-
-            Console.Write($" # {entity.Name}");
-
-            if (entity.Attributes != null)
+            ActionComponents.Add(() =>
             {
-                Console.Write($" | STR:{entity.Attributes.Strength}, AGI:{entity.Attributes.Agility}, INT:{entity.Attributes.Intellect} |");
-            }
+                foreach (var entity in Targets)
+                {
+                    Console.Write($" # {entity.Name}");
 
-            Console.Write("{ Description}");
+                    if (entity.Attributes != null)
+                    {
+                        Console.Write($" | STR:{entity.Attributes.Strength}, AGI:{entity.Attributes.Agility}, INT:{entity.Attributes.Intellect} |");
+                    }
 
-            if (entity.BattleLog != string.Empty)
-            {
-                Console.WriteLine();
-                Console.Write(" #" + entity.BattleLog);
-            }
+                    Console.Write($" {entity.Description}");
 
+                    if (entity.BattleLog != string.Empty)
+                    {
+                        Console.WriteLine();
+                        Console.Write(" #" + entity.BattleLog);
+                    }
+
+                }
+
+            });
             return this;
+
         }
 
         #endregion

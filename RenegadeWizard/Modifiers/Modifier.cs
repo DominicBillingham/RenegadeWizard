@@ -14,15 +14,12 @@ namespace RenegadeWizard.Modifiers
 
         // Sometimes these methods will be called and do nothing.
         // I could use composition to fix but then I'd need to have functionality split into components
-        virtual public void OnApplication(Entity entity) { }
         virtual public void OnRoundEnd(Entity entity) { }
         virtual public void OnExpiration(Entity entity) { }
         virtual public int ModifyDamageTaken(int damage) { return damage; }
         virtual public int ModifyStrength(int strength) { return strength; }
         virtual public int ModifyAgility(int agility) { return agility; }
         virtual public int ModifyIntellect(int intellect) { return intellect; }
-        virtual public Entity? ModifyTarget(Entity entity) { return entity; }
-        virtual public Factions OverwriteFaction() { return Factions.None; }
 
 
 
