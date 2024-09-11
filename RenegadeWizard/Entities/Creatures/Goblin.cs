@@ -25,20 +25,7 @@ namespace RenegadeWizard.Entities.Creatures
 
         public override void TakeTurn()
         {
-            var goblinActions = new AgentActions();
 
-            if (Random.Shared.Next(2) == 0)
-            {
-                var drink = new EntQuery().SelectDrinks().GetRandom();
-                goblinActions.ActionConsume(this, drink);
-            }
-            else
-            {
-                var item = new EntQuery().SelectItems().GetRandom();
-                var target = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles( AfterMods().Faction ).GetRandom();
-                target = target.GetTarget();
-                goblinActions.ActionThrow(this, item, target);
-            }
 
         }
 

@@ -30,8 +30,7 @@ while (true)
     var ents = Scene.Entities;
     foreach (var ent in ents)
     {
-        ModHelper.ApplyRoundEndEffects(ent);
-        ModHelper.ApplyExpirationEffects(ent);
+        ent.ApplyRoundEndEffects();
     }
 
     Narrator.ContinuePrompt();
@@ -75,32 +74,10 @@ void PlayerTurn(Entity player)
         }
 
 
-
         var spell = spells.FirstOrDefault(spell => input.Any(word => spell.ActionName.ToLower().Contains(word)));
-        if (spell != null)
-        {
-            spell.Execute();
-            actionCost = 1;
-        }
-
-
-
-
-
-
-
-        var possibleActions = typeof(AgentActions).GetMethods().Where(m => m.Name.StartsWith("Action"));
-        MethodInfo? chosenAction = possibleActions.FirstOrDefault(action => input.Any(word => action.Name.ToLower().Contains(word)));
-
-        if (chosenAction == null)
-        {
-            Console.WriteLine(" ! No valid action was found");
-            continue;
-        }
 
         List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
         List<Entity> actionParameters = new();
-        actionParameters.Add(player);
 
         foreach (var word in input)
         {
@@ -112,19 +89,14 @@ void PlayerTurn(Entity player)
             }
         }
 
-        // Validation
-        int paramsNeeded = chosenAction.GetParameters().Count();
-        if (actionParameters.Count() != paramsNeeded)
+        if (spell != null)
         {
-            Console.WriteLine($" ! '{chosenAction.Name.Substring(6)}' requires {paramsNeeded-1} name(s) to be provided");
-            continue;
+            spell.Targets = actionParameters;
+            spell.Execute();
+            actionCost = 1;
         }
 
-        Console.WriteLine();
 
-        var interaction = new AgentActions();
-
-        actionCost = (int)chosenAction.Invoke(interaction, actionParameters.ToArray());
     }
 
 }

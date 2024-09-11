@@ -23,36 +23,9 @@ namespace RenegadeWizard.Entities
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Modifier> Modifiers { get; set; } = new List<Modifier>();
         public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();
-
-        // Composition Stuff
-        public AgentActions? CharacterActions { get; set; }
         public Attributes? Attributes { get; set; }
 
-
-        public Entity AfterMods()
-        {
-            Entity ent = new();
-
-            ent.Faction = ModHelper.ModFaction(this);
-            if (Attributes != null)
-            {
-                ent.Attributes = new Attributes(0,0,0);
-                ent.Attributes.Strength = ModHelper.ModStrength(this);
-                ent.Attributes.Agility = ModHelper.ModAgility(this);
-                ent.Attributes.Intellect = ModHelper.ModIntellect(this);
-            }
-
-            return ent;
-        }
-
         #region WhenMethods
-
-        public virtual Entity GetTarget()
-        {
-            var target = ModHelper.ModTarget(this);
-            return target;
-        }
-
         public virtual void WhenDamaged()
         {
 
@@ -78,34 +51,12 @@ namespace RenegadeWizard.Entities
             Console.Write($" {Narrator.GetContrastWord()} but it fails!");
             return 0;
         }
-        public virtual int WhenInspected()
-        {
-            // idea: Make intellect requirements to get more details
-            Console.Write($" #");
-
-            if ( Attributes != null)
-            {
-                Console.Write($" STR:{ AfterMods().Attributes.Strength}, AGI:{Attributes.Agility}, INT:{Attributes.Intellect} |");
-            }
-
-            Console.Write($" {Name} - {Description}");
-
-            if (BattleLog != string.Empty)
-            {
-                Console.WriteLine();
-                Console.Write(" #" + BattleLog);
-            }
-
-            return 0;
-        }
 
         #endregion
 
         #region Health Methods
         public virtual void ApplyDamage(int damage, string source, bool ignoreArmour = false)
         {
-
-            damage = ModHelper.ModDamage(this, damage);
 
             if (IsDestroyed == false)
             {
@@ -137,17 +88,33 @@ namespace RenegadeWizard.Entities
                 if (existingCon != null)
                 {
                     existingCon.Duration += condition.Duration;
-                    existingCon.OnApplication(this);
                 } 
                 else
                 {
-                    Modifiers.Add(condition);
-                    condition.OnApplication(this);
+                    Modifiers.Add(condition);                
                 }
 
                 BattleLog += $" gained {condition.Name}({condition.Duration}) from {source} |";
 
             }
+
+        }
+
+        public void ApplyRoundEndEffects()
+        {
+
+            foreach (var con in Modifiers)
+            {
+                con.OnRoundEnd(this);
+            }
+
+            foreach (var con in Modifiers.Where(x => x.Duration == 0))
+            {
+                con.OnExpiration(this);
+            }
+
+            Modifiers.RemoveAll(con => con.Duration == 0);
+
 
         }
 

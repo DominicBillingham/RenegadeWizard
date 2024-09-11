@@ -1,10 +1,12 @@
-﻿using RenegadeWizard.Entities;
+﻿using RenegadeWizard.Components;
+using RenegadeWizard.Entities;
 using RenegadeWizard.Modifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -63,6 +65,14 @@ namespace RenegadeWizard.GameClasses
                 Targets = new EntQuery().SelectCreatures().GetAll();
             });
             return this;
+        }
+
+        private Entity GetTarget(Entity entity)
+        {
+            // Sometimes attacks will be redirected due to modifiers like Hidden, or Reflecting
+
+
+            return entity;
         }
 
         public Interaction ApplyDamage(int damage)
@@ -148,8 +158,38 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
+
+        #region UtilityFunctions
+        // 
+
+        public Interaction Inspect(Entity entity)
+        {
+
+
+            Console.Write($" # {entity.Name}");
+
+            if (entity.Attributes != null)
+            {
+                Console.Write($" | STR:{entity.Attributes.Strength}, AGI:{entity.Attributes.Agility}, INT:{entity.Attributes.Intellect} |");
+            }
+
+            Console.Write("{ Description}");
+
+            if (entity.BattleLog != string.Empty)
+            {
+                Console.WriteLine();
+                Console.Write(" #" + entity.BattleLog);
+            }
+
+            return this;
+        }
+
+        #endregion
+
         public void Execute()
         {
+            // Can check for a valid amount of names here!
+
             if (IsActionPossible)
             {
                 foreach (var action in ActionComponents)

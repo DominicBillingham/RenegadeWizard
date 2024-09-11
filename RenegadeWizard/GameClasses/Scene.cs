@@ -18,9 +18,7 @@ namespace RenegadeWizard.GameClasses
         static Scene()
         {
             Entities.Add(new Player("NotHarry"));
-            Entities.Add(new ShieldGoblin("JeffShield"));
             Entities.Add(new Goblin("Jill"));
-            Entities.Add(new Troll("Jess"));
 
             AddBarItems();
         }

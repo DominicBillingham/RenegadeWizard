@@ -18,17 +18,10 @@ namespace RenegadeWizard.Entities.Items
         public override int WhenThrown(Entity target, Entity thrower)
         {
 
-            if (thrower.AfterMods().Attributes.Strength > 10)
-            {
-                target.ApplyDamage(4, $"{Name} thrown by {thrower.Name}");
-                Scene.Entities.Remove(this);
-                return 1;
-            }
-            else
-            {
-                Console.Write($" {Narrator.GetContrastWord()} {thrower.Name} is not strong enough!");
-                return 0;
-            }
+
+            Console.Write($" {Narrator.GetContrastWord()} {thrower.Name} is not strong enough!");
+            return 0;
+
         }
     }
 }
