@@ -46,9 +46,9 @@ void PlayerTurn(Entity player)
     int actionCost = 0;
 
     List<Interaction> spells = new();
-    var fireball = new Interaction(player, "Fireball").CheckIntellect(5).SelectAllEnemies().ApplyDamage(2).ApplyCondition(new Burning(2));
-    var daggerstorm = new Interaction(player, "Daggerstorm").CheckIntellect(5).SelectAllEnemies().ApplyDamage(2).ApplyCondition(new Wounded(2));
-    var heal = new Interaction(player, "Heal").CheckIntellect(5).SelectAllEnemies().ApplyHealing(2);
+    var fireball = new Interaction(player, "Fireball").CheckIntellect(5).ApplyDamage(2).ApplyCondition(new Burning(2));
+    var daggerstorm = new Interaction(player, "Daggerstorm").CheckIntellect(5).ApplyDamage(2).ApplyCondition(new Wounded(2));
+    var heal = new Interaction(player, "Heal").CheckIntellect(5).ApplyHealing(2);
 
     spells.Add(fireball);
     spells.Add(heal);
