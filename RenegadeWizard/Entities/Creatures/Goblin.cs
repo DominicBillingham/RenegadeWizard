@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using RenegadeWizard.Enums;
 using RenegadeWizard.Modifiers;
 using RenegadeWizard.GameClasses;
+using System.Numerics;
 
 namespace RenegadeWizard.Entities.Creatures
 {
@@ -25,7 +26,17 @@ namespace RenegadeWizard.Entities.Creatures
 
         public override void TakeTurn()
         {
+            var bite = new Interaction(this, "Bite").SelectRandomEnemy().ApplyDamage(3);
+            var claws = new Interaction(this, "Claws").SelectRandomEnemy().ApplyDamage(1).ApplyCondition(new Bleeding(4));
 
+            if (Random.Shared.Next(2) == 0)
+            {
+                bite.Execute();
+            }
+            else
+            {
+                claws.Execute();
+            }
 
         }
 
