@@ -14,6 +14,6 @@ namespace RenegadeWizard.Enums
         Goblin,
         Zombie,
         Slime,
-
+        Geese,
     }
 }

@@ -11,14 +11,14 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
             Console.WriteLine("0=[]:::::::::>  Fight!  <:::::::::[]=0");
 
-            Console.Write(" - Nearby items: ");
+            //Console.Write(" - Nearby items: ");
 
-            var items = new EntQuery().SelectItems().GetAll();
-            foreach (var item in items)
-            {
-                Console.Write($"[{item.Name}] ");
-            }
-            Console.WriteLine();
+            //var items = new EntQuery().SelectItems().GetAll();
+            //foreach (var item in items)
+            //{
+            //    Console.Write($"[{item.Name}] ");
+            //}
+            //Console.WriteLine();
 
 
             Console.Write($" - Grim's Spells: ");
@@ -26,7 +26,7 @@ namespace RenegadeWizard.GameClasses
             {
                 Console.Write($"[{action.Action}] ");
             }
-            Console.Write($"{GetGrimVoiceline()}");
+            //Console.Write($"{GetGrimVoiceline()}");
             Console.WriteLine();
 
 

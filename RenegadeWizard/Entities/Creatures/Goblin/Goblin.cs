@@ -1,5 +1,4 @@
 ﻿using RenegadeWizard.Components;
-using RenegadeWizard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ using RenegadeWizard.Modifiers;
 using RenegadeWizard.GameClasses;
 using System.Numerics;
 
-namespace RenegadeWizard.Entities.Creatures
+namespace RenegadeWizard.Entities.Creatures.Goblin
 {
     public class Goblin : Creature
     {
@@ -26,24 +25,18 @@ namespace RenegadeWizard.Entities.Creatures
 
         public override void TakeTurn()
         {
-            //var bite = new Interaction(this, "Bite").SelectRandomEnemy().ApplyDamage(3);
-            //var claws = new Interaction(this, "Claws").SelectRandomEnemy().ApplyDamage(1).ApplyCondition(new Bleeding(4));
-
-            //if (Random.Shared.Next(2) == 0)
-            //{
-            //    bite.Execute();
-            //}
-            //else
-            //{
-            //    claws.Execute();
-            //}
-
-        }
-
-        public override void WhenDamaged()
-        {
             var bite = new Interaction(this, "Bite").SelectRandomEnemy().ApplyDamage(3);
-            bite.Execute();
+            var claws = new Interaction(this, "Claws").SelectRandomEnemy().ApplyDamage(2).ApplyCondition(new Bleeding(2));
+
+            if (Random.Shared.Next(2) == 0)
+            {
+                bite.Execute();
+            }
+            else
+            {
+                claws.Execute();
+            }
+
         }
 
     }

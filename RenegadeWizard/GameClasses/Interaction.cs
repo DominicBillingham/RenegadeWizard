@@ -1,5 +1,7 @@
 ﻿using RenegadeWizard.Components;
 using RenegadeWizard.Entities;
+using RenegadeWizard.Entities.Creatures;
+using RenegadeWizard.Enums;
 using RenegadeWizard.Modifiers;
 using System;
 using System.Collections.Generic;
@@ -99,9 +101,6 @@ namespace RenegadeWizard.GameClasses
 
         #endregion 
 
-
-
-
         public Interaction DamageSelf(int damage)
         {
             ActionComponents.Add(() =>
@@ -175,6 +174,28 @@ namespace RenegadeWizard.GameClasses
             });
             return this;
         }
+
+        public Interaction ConjureGoblin(Factions faction, string name = "JoeTheFriend")
+        {
+            ActionComponents.Add(() =>
+            {
+                var gobbo = new Demon(name);
+                gobbo.Faction = faction;
+                Scene.Entities.Add(gobbo);
+            });
+            return this;
+        }
+
+        public Interaction ConjureDemon(string name = "GlorbTheDemon")
+        {
+            ActionComponents.Add(() =>
+            {
+                var demon = new Demon(name);
+                Scene.Entities.Add(demon);
+            });
+            return this;
+        }
+
 
 
         private int RollDice(int dice, int diceSize, int advantage = 0, int disadvantage = 0)

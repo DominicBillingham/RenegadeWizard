@@ -9,6 +9,9 @@ using System;
 using static System.Collections.Specialized.BitVector32;
 using RenegadeWizard.GameClasses;
 using System.Numerics;
+using RenegadeWizard.Entities.Creatures.Misc;
+using RenegadeWizard.Entities.Creatures.Goblin;
+using RenegadeWizard.Entities.Creatures.Geese;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -18,9 +21,8 @@ namespace RenegadeWizard.GameClasses
         static Scene()
         {
             Entities.Add(new Player("NotHarry"));
-            Entities.Add(new Goblin("Jill"));
 
-            AddBarItems();
+            //AddBarItems();
         }
 
         public static void AddBarItems()
@@ -39,6 +41,32 @@ namespace RenegadeWizard.GameClasses
 
             }
         }
+
+        public static void Round(int round)
+        {
+
+            if (round == 0)
+            {
+                Entities.Add(new Gooseling("this is a required param that should be optional"));
+            }
+
+            if (round == 1)
+            {
+                Console.Write(" # More geese are attacking!");
+                Entities.Add(new Gooseling("this is a required param that should be optional"));
+                Entities.Add(new Gooseling("this is a required param that should be optional"));
+                Entities.Add(new Gooseling("this is a required param that should be optional"));
+            }
+
+            if (round == 3)
+            {
+                Console.Write(" # More geese are attacking!");
+                Entities.Add(new Goose("this is a required param that should be optional"));
+                Entities.Add(new Goose("this is a required param that should be optional"));
+            }
+
+        }
+
 
     }
 }

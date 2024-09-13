@@ -13,7 +13,12 @@ List<Interaction> actions = PopulateActions();
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 setbackground();
+
+int round = 0;
+Scene.Round(round);
+
 Narrator.ShowRoundInfo(actions);
+
 
 while (true)
 {
@@ -27,8 +32,9 @@ while (true)
     var npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
     foreach (Entity ent in npcs)
     {
-        Console.WriteLine($" #");
+        Console.Write($" #");
         ent.TakeTurn();
+        Console.WriteLine("\n");
     }
 
     var ents = Scene.Entities;
@@ -36,6 +42,9 @@ while (true)
     {
         ent.ApplyRoundEndEffects();
     }
+
+    round++;
+    Scene.Round(round);
 
     Narrator.ContinuePrompt();
 
@@ -108,10 +117,9 @@ List<Interaction> PopulateActions()
     var player = new EntQuery().SelectPlayers().SelectLiving().GetFirst();
     List<Interaction> actions = new();
 
-
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(7); 
+        var spellCount = Random.Shared.Next(10); 
 
         if (spellCount == 0)
         {
@@ -160,7 +168,7 @@ List<Interaction> PopulateActions()
         if (spellCount == 6)
         {
             var divineWard = new Interaction(player, "DivineWard").SelectSelf().ApplyCondition(new Protected(3));
-            divineWard.Description = $"{player.Name} conjures {Narrator.GetPowerfulWord()} barried to protect themselves!";
+            divineWard.Description = $"{player.Name} conjures {Narrator.GetPowerfulWord()} barrier to protect themselves!";
             actions.Add(divineWard);
         }
 
@@ -173,12 +181,12 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 8)
         {
-
+            var conjureFriend = new Interaction(player, "ConjureFriend").ConjureGoblin(player.Faction);
         }
 
         if (spellCount == 9)
         {
-
+            var summonDemon = new Interaction(player, "SummonDemon").ConjureDemon();
         }
 
     }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenegadeWizard.Entities.Creatures
+namespace RenegadeWizard.Entities.Creatures.Misc
 {
     public class Player : Creature
     {
