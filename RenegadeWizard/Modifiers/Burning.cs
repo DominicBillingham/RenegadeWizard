@@ -19,7 +19,6 @@ namespace RenegadeWizard.Modifiers
                 if (target != null)
                 {
                     target.ApplyCondition(new Burning(2), "spreading fire");
-                    Console.Write($" The fire spreads | ");
                 }
             }
 

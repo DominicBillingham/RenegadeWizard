@@ -55,7 +55,7 @@ class EntQuery
 
     public EntQuery SelectNpcs()
     {
-        Query = Query.Where(ent => ent.IsPlayerControlled == false);
+        Query = Query.Where(ent => ent.IsPlayerControlled == false && ent is Creature);
         return this;
     }
 

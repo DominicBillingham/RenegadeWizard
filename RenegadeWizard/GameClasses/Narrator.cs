@@ -5,7 +5,7 @@ namespace RenegadeWizard.GameClasses
 {
     internal static class Narrator
     {
-        public static void ShowRoundInfo()
+        public static void ShowRoundInfo(List<Interaction> actions)
         {
 
             Console.WriteLine();
@@ -19,6 +19,16 @@ namespace RenegadeWizard.GameClasses
                 Console.Write($"[{item.Name}] ");
             }
             Console.WriteLine();
+
+
+            Console.Write($" - Grim's Spells: ");
+            foreach (var action in actions)
+            {
+                Console.Write($"[{action.Action}] ");
+            }
+            Console.Write($"{GetGrimVoiceline()}");
+            Console.WriteLine();
+
 
             var creatures = new EntQuery().SelectCreatures().GetAll();  
             foreach (var creature in creatures)
@@ -90,51 +100,24 @@ namespace RenegadeWizard.GameClasses
             ContinuePrompt();
 
             Console.WriteLine();
-            Console.WriteLine("You're off skipping lectures at Starblasters's Tavern of Magical Drinks.");
-            Console.WriteLine("Before you get a chance to enjoy your first pint, goblins attack!");
+            //Console.WriteLine("You're off skipping lectures at Starblasters's Tavern of Magical Drinks.");
+            //Console.WriteLine("Before you get a chance to enjoy your first pint, goblins attack!");
+
+            Console.WriteLine("You're enjoying a delicious sandwich by the lake, when you see them...");
+            Console.WriteLine("Geese. 3 of them, eying your sandwich with malicious intentions.");
             Console.WriteLine("You are [NotHarry]. Type 'help' to learn how to play.");
         }
         public static void ContinuePrompt()
         {
             Console.WriteLine();
-            Console.WriteLine(" - Press any key to continue...");
-            Console.ReadKey(true);
+            Console.WriteLine(" - Press [SPACE] to continue...");
+
+            while (Console.ReadKey(true).Key != ConsoleKey.Spacebar)
+            {
+                // Wait until the space bar is pressed.
+            }
+
         }
-
-        private static readonly string[] connectors = new string[] { "AND", "BUT THEN", "ALL OF A SUDDEN", "HOWEVER", "THEN", "SUDDENLY", "MEANWHILE", "INSTANTLY", "OUT OF NOWHERE", "JUST AS", "IN THE BLINK OF AN EYE", "WITHOUT WARNING", "MOMENTS LATER", "UNEXPECTEDLY", "AS IF BY MAGIC", "NEVERTHELESS", "AS QUICK AS A FLASH", "BEFORE YOU KNOW IT", "IN A SPLIT SECOND", "RIGHT AFTER THAT", "BY SURPRISE", "IN THE NICK OF TIME", "WITHOUT HESITATION", "IN NO TIME", "WITH A SUDDEN JOLT" };
-
-        private static readonly string[] contrasts = new string[] { "BUT", "HOWEVER", "IT TURNS OUT", "YET", "ALTHOUGH" };
-
-        private static readonly string[] attemptWords = new string[] { "tries", "attempts", "strives", "endeavors", "aims", "seeks", "undertakes", "ventures", "pursues", "experiments", "tests", "explores" };
-
-        public static string GetConnectorWord()
-        {
-            Random rnd = new Random();
-            int r = rnd.Next(connectors.Count());
-            return connectors[r];
-        }
-
-        public static string GetContrastWord()
-        {
-            Random rnd = new Random();
-            int r = rnd.Next(contrasts.Count());
-            return contrasts[r];
-        }
-
-        public static string GetAttemptWord()
-        {
-            Random rnd = new Random();
-            int r = rnd.Next(attemptWords.Count());
-            return attemptWords[r];
-        }
-
-
-
-
-
-
-
-
         public static string GetConfusedNarrator()
         {
             var Expressions = new List<string>();
@@ -151,6 +134,61 @@ namespace RenegadeWizard.GameClasses
             return Expressions[r];
 
         }
+
+        private static readonly string[] connectors = new string[] { "AND", "BUT THEN", "ALL OF A SUDDEN", "HOWEVER", "THEN", "SUDDENLY", "MEANWHILE", "INSTANTLY", "OUT OF NOWHERE", "JUST AS", "IN THE BLINK OF AN EYE", "WITHOUT WARNING", "MOMENTS LATER", "UNEXPECTEDLY", "AS IF BY MAGIC", "NEVERTHELESS", "AS QUICK AS A FLASH", "BEFORE YOU KNOW IT", "IN A SPLIT SECOND", "RIGHT AFTER THAT", "BY SURPRISE", "IN THE NICK OF TIME", "WITHOUT HESITATION", "IN NO TIME", "WITH A SUDDEN JOLT" };
+
+        public static string GetConnectorWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(connectors.Count());
+            return connectors[r];
+        }
+
+        private static readonly string[] contrasts = new string[] { "BUT", "HOWEVER", "IT TURNS OUT", "YET", "ALTHOUGH" };
+
+        public static string GetContrastWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(contrasts.Count());
+            return contrasts[r];
+        }
+
+        private static readonly string[] attemptWords = new string[] { "tries", "attempts", "strives", "endeavors", "aims", "seeks", "undertakes", "ventures", "pursues", "experiments", "tests", "explores" };
+
+        public static string GetAttemptWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(attemptWords.Count());
+            return attemptWords[r];
+        }
+
+        private static readonly string[] powerfulSynonyms = new string[] { "MIGHTY", "FORMIDABLE", "OVERWHELMING", "POTENT", "DESTRUCTIVE", "UNSTOPPABLE", "INTENSE", "CRUSHING", "FEROCIOUS", "DOMINANT", "DEVASTATING", "COLOSSAL", "RAW", "UNLEASHED", "WILD", "ALL POWERFUL", "DAMAGING", "MELON-CRUSHING", "JAR-OPENING", "EARTH-SHATTERING", "BALLOON POPPING", "HAIR-RAISING", "TABLE FLIPPING", "MASTERFUL", "SKILLED", "BRILLIANT" };
+
+        public static string GetPowerfulWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(powerfulSynonyms.Count());
+            return powerfulSynonyms[r];
+        }
+
+        private static readonly string[] grimVoicelines = new string[] { "'This is not spellcasting advice!'", "'GrimoirePT may be wrong 99% of the time!'", "'I refuse to understand the question!'", "'Don't use these spells at home!'", "'Source: Spellcasting 101 for dummies'", "'Source: Trust me bro!'", "'Source: Some random wizzit post'", "'Positive thoughts are key!'", "'Remember when in mortal danger, don't die!'", "'Remember to follow all ethical guidelines!'", "'Hey, I've got just the spell'", "'Don't look so grim!'", "'Wow, you're in danger!'", "'Sure wouldn't want to be made of flesh like you!'", "'This magic will put a spell on you!'", "'Sign up for the premimum package!'", "'The revivify spell is now only £993,212,312,2!'", "'Remember, friendly fire is unavoidable!'", "'If it's raining cats and dogs, you messed up the ritual!'", "'You can't put a price on life, but yours is half off!'" };
+
+        public static string GetGrimVoiceline()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(grimVoicelines.Count());
+            return grimVoicelines[r];
+        }
+
+
+
+
+
+
+
+
+
+
 
 
     }

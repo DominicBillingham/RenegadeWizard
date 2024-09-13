@@ -6,24 +6,28 @@ using RenegadeWizard.GameClasses;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Numerics;
+
+List<Interaction> actions = PopulateActions();
 
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 setbackground();
-Narrator.ShowRoundInfo();
+Narrator.ShowRoundInfo(actions);
 
 while (true)
 {
-
     var players = new EntQuery().SelectPlayers().SelectLiving().GetAll();
     foreach (Entity ent in players)
     {
         PlayerTurn(ent);
+        Console.WriteLine();
     }
 
     var npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
     foreach (Entity ent in npcs)
     {
+        Console.WriteLine($" #");
         ent.TakeTurn();
     }
 
@@ -37,25 +41,13 @@ while (true)
 
     Console.Clear();
     setbackground();
-    Narrator.ShowRoundInfo();
+    Narrator.ShowRoundInfo(actions);
 
 }
 
 void PlayerTurn(Entity player)
 {
     int actionCost = 0;
-
-    List<Interaction> actions = new();
-    var fireball = new Interaction(player, "Fireball").CheckIntellect(5).ApplyDamage(2).ApplyCondition(new Burning(2));
-    var daggerstorm = new Interaction(player, "Daggerstorm").CheckIntellect(5).ApplyDamage(2).ApplyCondition(new Wounded(2));
-    var heal = new Interaction(player, "Heal").CheckIntellect(5).ApplyHealing(2);
-    var inspect = new Interaction(player, "Inspect").Inspect();
-
-
-    actions.Add(fireball);
-    actions.Add(heal);
-    actions.Add(daggerstorm);
-    actions.Add(inspect);
 
     while (actionCost == 0)
     {
@@ -77,7 +69,7 @@ void PlayerTurn(Entity player)
         }
 
 
-        var spell = actions.FirstOrDefault(spell => input.Any(word => spell.ActionName.ToLower().Contains(word)));
+        var spell = actions.FirstOrDefault(spell => input.Any(word => spell.Action.ToLower().Contains(word)));
 
         List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
         List<Entity> actionParameters = new();
@@ -94,15 +86,109 @@ void PlayerTurn(Entity player)
 
         if (spell != null)
         {
+            Console.WriteLine();
+            Console.Write($" # ");
+
             spell.Targets = actionParameters;
             spell.Execute();
             actionCost = 1;
+
+            Console.WriteLine();
+
+            actions = PopulateActions();
         }
 
 
     }
 
 }
+
+List<Interaction> PopulateActions()
+{
+    var player = new EntQuery().SelectPlayers().SelectLiving().GetFirst();
+    List<Interaction> actions = new();
+
+
+    for (int i = 0; i < 4; i++)
+    {
+        var spellCount = Random.Shared.Next(7); 
+
+        if (spellCount == 0)
+        {
+            var fireball = new Interaction(player, "Fireball").SelectAllEnemies().ApplyCondition(new Burning(2));
+            fireball.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} fireball, setting all enemies on fire!";
+            actions.Add(fireball);
+        }
+
+        if (spellCount == 1)
+        {
+            var thunderstorm = new Interaction(player, "ThunderStorm").SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3);
+            thunderstorm.Description = $"{player.Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, they strike randomly!";
+            actions.Add(thunderstorm);
+
+        }
+
+        if (spellCount == 2)
+        {
+            var heal = new Interaction(player, "HealingBurst").SelectAll().ApplyHealing(3);
+            heal.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} healing nova restoring everyone's health!";
+            actions.Add(heal);
+        }
+
+        if (spellCount == 3)
+        {
+            var leech = new Interaction(player, "Lifesteal").SelectAllEnemies().ApplyDamage(1).Lifesteal();
+            leech.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} lifestealing nova!";
+            actions.Add(leech);
+        }
+
+        if (spellCount == 4)
+        {
+            var magicMissle = new Interaction(player, "ArcaneMissle").ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
+            magicMissle.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} set of magical missles!";
+            actions.Add(magicMissle);
+
+        }
+
+        if (spellCount == 5)
+        {
+            var daggerSpray = new Interaction(player, "DaggerSpray").SelectAllEnemies().ApplyDamage(1).ApplyCondition(new Wounded(3));
+            daggerSpray.Description = $"{player.Name} conjures a fan of {Narrator.GetPowerfulWord()} daggers!";
+            actions.Add(daggerSpray);
+        }
+
+        if (spellCount == 6)
+        {
+            var divineWard = new Interaction(player, "DivineWard").SelectSelf().ApplyCondition(new Protected(3));
+            divineWard.Description = $"{player.Name} conjures {Narrator.GetPowerfulWord()} barried to protect themselves!";
+            actions.Add(divineWard);
+        }
+
+        if (spellCount == 7)
+        {
+            var thunderBall = new Interaction(player, "ThunderNova").SelectAllEnemies().ApplyDamage(3);
+            thunderBall.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} thunder nova!";
+            actions.Add(thunderBall);
+        }
+
+        if (spellCount == 8)
+        {
+
+        }
+
+        if (spellCount == 9)
+        {
+
+        }
+
+    }
+
+    var inspect = new Interaction(player, "Inspect").Inspect();
+    actions.Add(inspect);
+
+    return actions;
+}
+
 
 void setbackground()
 {

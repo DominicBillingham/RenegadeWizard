@@ -16,6 +16,14 @@ namespace RenegadeWizard.Modifiers
         // I could use composition to fix but then I'd need to have functionality split into components
         virtual public void OnRoundEnd(Entity entity) { }
         virtual public void OnExpiration(Entity entity) { }
+
+        virtual public void OnAttackedBy(Entity entity) { }
+
+
+
+
+
+
         virtual public int ModifyDamageTaken(int damage) { return damage; }
         virtual public int ModifyStrength(int strength) { return strength; }
         virtual public int ModifyAgility(int agility) { return agility; }

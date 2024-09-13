@@ -63,16 +63,17 @@ namespace RenegadeWizard.Entities
                 DamageTakenLastRound += damage;
                 Health -= damage;
                 BattleLog += $" -{damage}hp from {source} |";
-                WhenDamaged();
             }
         }
 
         public virtual void ApplyHealing(int heal, string? source = null)
         {
-            Health += heal;
-            BattleLog = $" +{heal}hp from {source} |";
-            HealingLastRound += heal;
-            WhenHealed();
+            if (IsDestroyed == false)
+            {
+                Health += heal;
+                BattleLog = $" +{heal}hp from {source} |";
+                HealingLastRound += heal;
+            }
         }
 
         #endregion
