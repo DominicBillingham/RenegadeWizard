@@ -65,7 +65,7 @@ void PlayerTurn(Entity player)
             .Where(x => x.Length > 2)
             .ToArray();
 
-        if (input == null)
+        if (input.Length == 0)
         {
             Console.WriteLine(" ! No words were found");
             continue;
@@ -78,6 +78,12 @@ void PlayerTurn(Entity player)
         }
 
         var spell = actions.FirstOrDefault(spell => input.Any(word => spell.Name.ToLower().Contains(word)));
+
+        if (spell == null)
+        {
+            Console.WriteLine(" ! No matching actions were found");
+            continue;
+        }
 
         List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
         List<Entity> actionParameters = new();
@@ -197,7 +203,7 @@ void setbackground()
 
     // Get the current console dimensions
     int width = Console.WindowWidth;
-    int height = 400;
+    int height = Console.WindowHeight;
 
     char[] glitchChars = new char[]
     {
