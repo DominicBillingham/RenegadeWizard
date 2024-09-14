@@ -26,14 +26,14 @@ namespace RenegadeWizard.Entities.Creatures.Geese
         public override void TakeTurn()
         {
             var peck = new Interaction(this, "Bite").SelectRandomEnemy().ApplyDamage(2);
-            peck.Description = " This one bites, and it stings like a bitch.";
+            peck.Description = $"{Name} bites you, and it stings like a bitch.";
             peck.Execute();
         }
 
         public override void WhenDamaged()
         {
             var peck = new Interaction(this, "Retalitory Peck").SelectRandomEnemy().ApplyDamage(1);
-            peck.Description = $" {Name} bites back!";
+            peck.Description = $"{Name} bites back!";
             peck.Execute();
         }
 

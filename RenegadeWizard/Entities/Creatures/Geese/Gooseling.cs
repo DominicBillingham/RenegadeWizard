@@ -26,7 +26,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
         public override void TakeTurn()
         {
             var peck = new Interaction(this, "Peck").SelectRandomEnemy().ApplyDamage(1);
-            peck.Description = $" {Name} pecks at your knees";
+            peck.Description = $"{Name} pecks at your knees";
             peck.Execute();
         }
 

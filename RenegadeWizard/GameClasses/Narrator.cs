@@ -24,7 +24,7 @@ namespace RenegadeWizard.GameClasses
             Console.Write($" - Grim's Spells: ");
             foreach (var action in actions)
             {
-                Console.Write($"[{action.Action}] ");
+                Console.Write($"[{action.Name}] ");
             }
             //Console.Write($"{GetGrimVoiceline()}");
             Console.WriteLine();
@@ -70,6 +70,8 @@ namespace RenegadeWizard.GameClasses
                 Console.WriteLine();
 
             }
+
+            Console.WriteLine();
 
         }
         public static void ShowHelp()

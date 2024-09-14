@@ -14,7 +14,7 @@ namespace RenegadeWizard.GameClasses
 {
     public class Interaction
     {
-        public string Action { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public Entity Agent { get; set; }
         public List<Entity> Targets { get; set; }
@@ -24,17 +24,19 @@ namespace RenegadeWizard.GameClasses
 
         private List<Action> ActionComponents = new();
 
+        private List<Action> TargetComponents = new();
+
         public Interaction(Entity agent, string name)
         {
             Agent = agent;
-            Action = name;
+            Name = name;
         }
 
         #region TargetMethods
 
         public Interaction SelectRandomEnemy()
         {
-            ActionComponents.Add(() => 
+            TargetComponents.Add(() => 
             {
                 Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectHostiles(Agent.Faction).GetRandom() };
             });
@@ -43,7 +45,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectAllEnemies()
         {
-            ActionComponents.Add(() => 
+            TargetComponents.Add(() => 
             {
                 Targets = new EntQuery().SelectCreatures().SelectHostiles(Agent.Faction).GetAll();
             });
@@ -52,7 +54,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectAll()
         {
-            ActionComponents.Add(() => 
+            TargetComponents.Add(() => 
             {
                 Targets = new EntQuery().SelectCreatures().GetAll();
             });
@@ -61,7 +63,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectRandom()
         {
-            ActionComponents.Add(() =>
+            TargetComponents.Add(() =>
             {
                 Targets = new List<Entity>() { new EntQuery().SelectCreatures().GetRandom() };
             });
@@ -70,32 +72,61 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectSelf()
         {
-            ActionComponents.Add(() =>
+            TargetComponents.Add(() =>
             {
                 Targets = new List<Entity>() { Agent };
             });
             return this;
         }
 
-        public Interaction SelectByName(string[] input)
+        public Interaction SelectByName(int namesNeeded)
         {
-            Console.Write("[Enter target name]");
-
-            List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
-            List<Entity> actionParameters = new();
-
-            foreach (var word in input)
+            TargetComponents.Add(() =>
             {
-                var paramerter = sceneEntities.FirstOrDefault(x => x.Name.ToLower().Contains(word));
-                if (paramerter != null)
-                {
-                    actionParameters.Add(paramerter);
-                    sceneEntities.Remove(paramerter);
+
+                while (Targets.Count != namesNeeded) {
+
+                    Console.Write(" # Targets:");
+                    for (int i = 0; i < namesNeeded; i++)
+                    {
+                        Console.Write($" [name{i + 1}]");
+                    }
+                    Console.WriteLine();
+
+                    Console.Write(" > ");
+                    var input = Console.ReadLine().ToLower().Split(" ")
+                        .Where(x => x.Length > 2)
+                        .ToArray();
+
+                    if (input == null)
+                    {
+                        Console.WriteLine(" ! No words were found");
+                        continue;
+                    }
+
+                    List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
+                    List<Entity> actionParameters = new();
+
+                    foreach (var word in input)
+                    {
+                        if (actionParameters.Count == namesNeeded)
+                        {
+                            break;
+                        }
+
+                        var paramerter = sceneEntities.FirstOrDefault(x => x.Name.ToLower().Contains(word));
+                        if (paramerter != null)
+                        {
+                            actionParameters.Add(paramerter);
+                            sceneEntities.Remove(paramerter);
+                        }
+                    }
+
+                    Targets = actionParameters;
+
                 }
-            }
 
-            Targets = actionParameters;
-
+            });
             return this;
         }
 
@@ -115,7 +146,7 @@ namespace RenegadeWizard.GameClasses
                 var immortal = Agent.Modifiers.FirstOrDefault(con => con is Immortal);
                 damage = immortal?.ModifyDamageTaken(damage) ?? damage;
 
-                Agent.ApplyDamage(damage, Action);
+                Agent.ApplyDamage(damage, Name);
                 Agent.WhenDamaged();
                 
             });
@@ -137,7 +168,7 @@ namespace RenegadeWizard.GameClasses
                     var immortal = entity.Modifiers.FirstOrDefault(con => con is Immortal);
                     damage = immortal?.ModifyDamageTaken(damage) ?? damage;
 
-                    entity.ApplyDamage(damage, Action);
+                    entity.ApplyDamage(damage, Name);
                     entity.WhenDamaged();
                     DamageDealt += damage;
                 }
@@ -157,7 +188,7 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var entity in Targets)
                 {
-                    entity.ApplyHealing(healing, Action);
+                    entity.ApplyHealing(healing, Name);
                 }
             });
             return this;
@@ -169,7 +200,7 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var entity in Targets)
                 {
-                    entity.ApplyCondition(modifier, Action);
+                    entity.ApplyCondition(modifier, Name);
                 }
             });
             return this;
@@ -196,8 +227,26 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
+        public Interaction CauseExplosion()
+        {
+            ActionComponents.Add(() =>
+            {
+                foreach (var target in Targets)
+                {
+                    var allEntities = new EntQuery().SelectCreatures().GetAll();
 
+                    foreach (var entity in allEntities)
+                    {
+                        entity.ApplyDamage(target.Health, Name);
+                    }
 
+                }
+
+            });
+            return this;
+        }
+
+        #region  RollFunctions
         private int RollDice(int dice, int diceSize, int advantage = 0, int disadvantage = 0)
         {
             int totalAdv = Math.Abs( advantage - disadvantage);
@@ -245,6 +294,8 @@ namespace RenegadeWizard.GameClasses
             }
             return total;
         }
+
+        #endregion
 
         #region Attributes
 
@@ -327,13 +378,21 @@ namespace RenegadeWizard.GameClasses
 
             if (IsActionPossible)
             {
-                Console.Write(Description);
+
+                foreach (var action in TargetComponents)
+                {
+                    action.Invoke();
+                }
+
+                Console.WriteLine();
+                Console.Write($" # {Description}");
 
                 foreach (var action in ActionComponents)
                 {
-
                     action.Invoke();
                 }
+
+                Console.WriteLine();
             }
         }
     }

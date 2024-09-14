@@ -10,6 +10,9 @@ using System.Numerics;
 
 List<Interaction> actions = PopulateActions();
 
+
+Console.SetBufferSize(300, 400);
+
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 setbackground();
@@ -26,15 +29,12 @@ while (true)
     foreach (Entity ent in players)
     {
         PlayerTurn(ent);
-        Console.WriteLine();
     }
 
     var npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
     foreach (Entity ent in npcs)
     {
-        Console.Write($" #");
         ent.TakeTurn();
-        Console.WriteLine("\n");
     }
 
     var ents = Scene.Entities;
@@ -77,8 +77,7 @@ void PlayerTurn(Entity player)
             continue;
         }
 
-
-        var spell = actions.FirstOrDefault(spell => input.Any(word => spell.Action.ToLower().Contains(word)));
+        var spell = actions.FirstOrDefault(spell => input.Any(word => spell.Name.ToLower().Contains(word)));
 
         List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
         List<Entity> actionParameters = new();
@@ -95,15 +94,9 @@ void PlayerTurn(Entity player)
 
         if (spell != null)
         {
-            Console.WriteLine();
-            Console.Write($" # ");
-
             spell.Targets = actionParameters;
             spell.Execute();
             actionCost = 1;
-
-            Console.WriteLine();
-
             actions = PopulateActions();
         }
 
@@ -119,7 +112,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(10); 
+        var spellCount = Random.Shared.Next(4, 5); 
 
         if (spellCount == 0)
         {
@@ -152,7 +145,7 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 4)
         {
-            var magicMissle = new Interaction(player, "ArcaneMissle").ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
+            var magicMissle = new Interaction(player, "ArcaneMissle").SelectByName(1).ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
             magicMissle.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} set of magical missles!";
             actions.Add(magicMissle);
 
@@ -204,7 +197,7 @@ void setbackground()
 
     // Get the current console dimensions
     int width = Console.WindowWidth;
-    int height = Console.WindowHeight;
+    int height = 400;
 
     char[] glitchChars = new char[]
     {
