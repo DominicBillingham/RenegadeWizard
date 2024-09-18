@@ -53,6 +53,24 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
+        public Interaction SelectRandomAlly()
+        {
+            TargetComponents.Add(() =>
+            {
+                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Agent.Faction).GetRandom() };
+            });
+            return this;
+        }
+
+        public Interaction SelectRandomDeadAlly()
+        {
+            TargetComponents.Add(() =>
+            {
+                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectDead().SelectAllies(Agent.Faction).GetRandom() };
+            });
+            return this;
+        }
+
         public Interaction SelectAllEnemies()
         {
             TargetComponents.Add(() => 
@@ -371,6 +389,23 @@ namespace RenegadeWizard.GameClasses
                 foreach (var target in Targets)
                 {
                     target.Health = 3;
+                }
+
+            });
+            return this;
+        }
+
+        public Interaction Devour()
+        {
+            ActionComponents.Add(() =>
+            {
+                foreach (var target in Targets)
+                {
+                    target.ApplyDamage(3, Name);
+                    if (target.IsDestroyed)
+                    {
+                        Agent.ApplyHealing(3);
+                    }
                 }
 
             });
