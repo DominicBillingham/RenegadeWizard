@@ -1,6 +1,7 @@
 ﻿using RenegadeWizard.Components;
 using RenegadeWizard.Entities;
 using RenegadeWizard.Entities.Creatures;
+using RenegadeWizard.Entities.Creatures.Goblin;
 using RenegadeWizard.Enums;
 using RenegadeWizard.Modifiers;
 using System;
@@ -86,10 +87,10 @@ namespace RenegadeWizard.GameClasses
 
                 while (Targets.Count != namesNeeded) {
 
-                    Console.Write(" # Targets:");
+                    Console.Write($" ! [{Name}] requires");
                     for (int i = 0; i < namesNeeded; i++)
                     {
-                        Console.Write($" [name{i + 1}]");
+                        Console.Write($" [targetName{i + 1}]");
                     }
                     Console.WriteLine();
 
@@ -131,6 +132,20 @@ namespace RenegadeWizard.GameClasses
         }
 
         #endregion 
+
+        public Interaction CalculatePower(int basePower)
+        {
+
+
+
+
+
+
+
+            Power = basePower;
+            return this;
+        }
+
 
         public Interaction DamageSelf(int damage)
         {
@@ -210,7 +225,7 @@ namespace RenegadeWizard.GameClasses
         {
             ActionComponents.Add(() =>
             {
-                var gobbo = new Demon(name);
+                var gobbo = new Goblin(name);
                 gobbo.Faction = faction;
                 Scene.Entities.Add(gobbo);
             });
@@ -227,17 +242,88 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
+        public Interaction RaiseDead()
+        {
+            ActionComponents.Add(() =>
+            {
+                foreach(var entity in Targets)
+                {
+                    if (entity.IsDestroyed)
+                    {
+                        entity.Health = 1;
+                        entity.Faction = Agent.Faction;
+                        entity.Name = $"Zombie{entity.Name}";
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+
+            });
+            return this;
+        }
+
+        public Interaction Polymorph()
+        {
+
+            ActionComponents.Add(() =>
+            {
+                List<Entity> polymorphedEntities = new List<Entity>();
+
+                foreach (var entity in Targets)
+                {
+                    var next = Random.Shared.Next(3);
+
+                    if (next == 0)
+                    {
+                        var newForm = new Sheep("Sheepy");
+                        newForm.Faction = entity.Faction;
+                        newForm.Name = $"{entity.Name}theSheep";
+                        polymorphedEntities.Add(newForm);
+                    }
+
+                    if (next == 1)
+                    {
+                        var newForm = new Goblin("adasdsa");
+                        newForm.Faction = entity.Faction;
+                        newForm.Name = $"{entity.Name}theGoblin";
+                        polymorphedEntities.Add(newForm);
+
+
+                    }
+
+                    if (next == 2)
+                    {
+                        var newForm = new Demon("adasdsa");
+                        newForm.Faction = entity.Faction;
+                        newForm.Name = $"{entity.Name}theDemon";
+                        polymorphedEntities.Add(newForm);
+
+                    }
+
+                }
+
+                Scene.Entities.AddRange(polymorphedEntities);
+                Scene.Entities.RemoveAll(x => Targets.Contains(x));
+
+            });
+            return this;
+        }
+
         public Interaction CauseExplosion()
         {
             ActionComponents.Add(() =>
             {
                 foreach (var target in Targets)
                 {
+                    var totalDamage = target.Health;
                     var allEntities = new EntQuery().SelectCreatures().GetAll();
 
                     foreach (var entity in allEntities)
                     {
-                        entity.ApplyDamage(target.Health, Name);
+                        entity.ApplyDamage(totalDamage, Name);
                     }
 
                 }

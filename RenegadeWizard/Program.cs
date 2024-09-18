@@ -118,7 +118,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(4, 5); 
+        var spellCount = Random.Shared.Next(11, 13); 
 
         if (spellCount == 0)
         {
@@ -181,11 +181,36 @@ List<Interaction> PopulateActions()
         if (spellCount == 8)
         {
             var conjureFriend = new Interaction(player, "ConjureFriend").ConjureGoblin(player.Faction);
+            conjureFriend.Description = $"{player.Name} summons a goblin friend to help them out :D";
+            actions.Add(conjureFriend);
         }
 
         if (spellCount == 9)
         {
             var summonDemon = new Interaction(player, "SummonDemon").ConjureDemon();
+            summonDemon.Description = $"{player.Name} summons a horrific demon for fun";
+            actions.Add(summonDemon);
+        }
+
+        if (spellCount == 10)
+        {
+            var raiseDead = new Interaction(player, "RaiseDead").SelectAll().RaiseDead();
+            raiseDead.Description = $"{player.Name} just because you raised them, doesn't mean they're your friend";
+            actions.Add(raiseDead);
+        }
+
+        if (spellCount == 11)
+        {
+            var polymorph = new Interaction(player, "Polymorph").SelectByName(1).Polymorph();
+            polymorph.Description = $"{player.Name} turns the target into a sheep!";
+            actions.Add(polymorph);
+        }
+
+        if (spellCount == 12)
+        {
+            var explode = new Interaction(player, "Exploderise").SelectByName(1).CauseExplosion();
+            explode.Description = $"{player.Name} turns the target into a bomb?!";
+            actions.Add(explode);
         }
 
     }

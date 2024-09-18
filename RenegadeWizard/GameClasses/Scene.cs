@@ -47,22 +47,22 @@ namespace RenegadeWizard.GameClasses
 
             if (round == 0)
             {
-                Entities.Add(new Gooseling("this is a required param that should be optional"));
+                Entities.Add(new Gooseling());
             }
 
             if (round == 1)
             {
                 Console.Write(" # More geese are attacking!");
-                Entities.Add(new Gooseling("this is a required param that should be optional"));
-                Entities.Add(new Gooseling("this is a required param that should be optional"));
-                Entities.Add(new Gooseling("this is a required param that should be optional"));
+                Entities.Add(new Gooseling());
+                Entities.Add(new Gooseling());
+                Entities.Add(new Gooseling());
             }
 
             if (round == 3)
             {
                 Console.Write(" # More geese are attacking!");
-                Entities.Add(new Goose("this is a required param that should be optional"));
-                Entities.Add(new Goose("this is a required param that should be optional"));
+                Entities.Add(new Goose());
+                Entities.Add(new Goose());
             }
 
         }

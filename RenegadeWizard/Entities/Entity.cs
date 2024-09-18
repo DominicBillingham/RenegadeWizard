@@ -12,7 +12,7 @@ namespace RenegadeWizard.Entities
     public class Entity
     {
         public string Name { get; set; } = string.Empty;
-        public int Health { get; set; }
+        public int Health { get; set; } = 1;
         public int Weight { get; set; }
         public bool IsPlayerControlled { get; set; } = false;
         public string Description { get; set; } = string.Empty;

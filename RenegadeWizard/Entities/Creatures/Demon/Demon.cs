@@ -27,7 +27,10 @@ namespace RenegadeWizard.Entities.Creatures
         public override void TakeTurn()
         {
             var bite = new Interaction(this, "Devour").SelectRandomEnemy().ApplyDamage(4);
+            bite.Description = $"{Name} devours some poor sod";
             var claws = new Interaction(this, "Slash").SelectRandomEnemy().ApplyDamage(3).SelectRandomEnemy().ApplyDamage(3);
+            claws.Description = $"{Name} slashes at two victims";
+
 
             if (Random.Shared.Next(2) == 0)
             {

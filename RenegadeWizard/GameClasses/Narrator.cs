@@ -35,7 +35,17 @@ namespace RenegadeWizard.GameClasses
             {
                 if (creature.IsDestroyed == false)
                 {
-                    Console.Write($" - [{creature.Name}] the {creature.GetType().Name} has {creature.Health}hp");
+
+                    Console.Write($" -");
+                    if (creature.Faction == Enums.Factions.Player)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
+                    Console.Write($" [{creature.Name}]");
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($" the {creature.GetType().Name} has {creature.Health}hp");
+
                 }
                 else
                 {
@@ -56,7 +66,7 @@ namespace RenegadeWizard.GameClasses
                 if (creature.HealingLastRound > 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write($" (-{creature.HealingLastRound})");
+                    Console.Write($" ({creature.HealingLastRound})");
                     Console.ForegroundColor = ConsoleColor.White;
                     creature.HealingLastRound = 0;
                 }

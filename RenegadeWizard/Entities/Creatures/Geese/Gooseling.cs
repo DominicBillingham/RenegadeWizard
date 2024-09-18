@@ -13,7 +13,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
 {
     public class Gooseling : Creature
     {
-        public Gooseling(string name)
+        public Gooseling()
         {
             Name = GetName();
             Description = "Small, tiny, weak but damn is there a lot of them";

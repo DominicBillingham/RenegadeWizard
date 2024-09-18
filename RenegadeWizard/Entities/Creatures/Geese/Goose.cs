@@ -13,7 +13,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
 {
     public class Goose : Creature
     {
-        public Goose(string name)
+        public Goose()
         {
             Name = GetName();
             Description = "HOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNKK";
