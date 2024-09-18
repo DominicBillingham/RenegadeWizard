@@ -33,7 +33,16 @@ namespace RenegadeWizard.GameClasses
             Name = name;
         }
 
+        public Interaction CalculatePower(int basePower)
+        {
+
+            Power = basePower;
+            return this;
+        }
+
         #region TargetMethods
+
+        // These (target) methods is semi-repeating EntQuery functionality, might be worth keeping an eye for a refactor
 
         public Interaction SelectRandomEnemy()
         {
@@ -67,6 +76,15 @@ namespace RenegadeWizard.GameClasses
             TargetComponents.Add(() =>
             {
                 Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().GetRandom() };
+            });
+            return this;
+        }
+
+        public Interaction SelectDeadCreatures()
+        {
+            TargetComponents.Add(() =>
+            {
+                Targets = new EntQuery().SelectCreatures().SelectDead().GetAll();
             });
             return this;
         }
@@ -131,21 +149,9 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
-        #endregion 
+        #endregion
 
-        public Interaction CalculatePower(int basePower)
-        {
-
-
-
-
-
-
-
-            Power = basePower;
-            return this;
-        }
-
+        #region ActionComponents
 
         public Interaction DamageSelf(int damage)
         {
@@ -357,6 +363,8 @@ namespace RenegadeWizard.GameClasses
             });
             return this;
         }
+
+        #endregion 
 
         #region  RollFunctions
         private int RollDice(int dice, int diceSize, int advantage = 0, int disadvantage = 0)

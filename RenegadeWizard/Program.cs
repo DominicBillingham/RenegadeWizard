@@ -144,7 +144,7 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 3)
         {
-            var leech = new Interaction(player, "Lifesteal").SelectAllEnemies().ApplyDamage(1).Lifesteal();
+            var leech = new Interaction(player, "LifeSteal").SelectAllEnemies().ApplyDamage(1).Lifesteal();
             leech.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} lifestealing nova!";
             actions.Add(leech);
         }
@@ -194,7 +194,7 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 10)
         {
-            var raiseDead = new Interaction(player, "RaiseDead").SelectAll().RaiseDead();
+            var raiseDead = new Interaction(player, "RaiseDead").SelectDeadCreatures().RaiseDead();
             raiseDead.Description = $"{player.Name} just because you raised them, doesn't mean they're your friend";
             actions.Add(raiseDead);
         }
