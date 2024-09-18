@@ -18,32 +18,18 @@ namespace RenegadeWizard.GameClasses
     static class Scene
     {
         public static List<Entity> Entities { get; set; } = new();
+        public static List<Entity> Reinforcements { get; set; } = new();
+
         static Scene()
         {
             Entities.Add(new Player("NotHarry"));
-
-            //AddBarItems();
         }
 
-        public static void AddBarItems()
-        {
-
-            var items = typeof(Item).Assembly.GetTypes()
-                .Where(type => type.IsSubclassOf(typeof(Item)) && !type.IsAbstract)
-                .ToArray();
-
-            for (int i = 0; i < 3; i++)
-            {
-                var item = items[Random.Shared.Next(items.Count())];
-
-                Item instance = (Item)Activator.CreateInstance(item);
-                Entities.Add(instance);
-
-            }
-        }
 
         public static void Round(int round)
         {
+
+            AddReinforcements();
 
             if (round == 0)
             {
@@ -67,7 +53,60 @@ namespace RenegadeWizard.GameClasses
 
         }
 
+        public static void AddCreature(Entity entity)
+        {
+            var creatures = new EntQuery().SelectCreatures().GetAll();
 
+            if (creatures.Count < 5)
+            {
+                Entities.Add(entity);
+            }
+            else
+            {
+                var deadCreature = creatures.FirstOrDefault(x => x.IsDestroyed);
+                if (deadCreature != null)
+                {
+                    creatures.Remove(deadCreature);
+                    Entities.Add(entity);
+                }
+                else
+                {
+                    Reinforcements.Add(entity);
+                }
+            }
+
+
+        }
+
+        public static void AddReinforcements()
+        {
+
+            var creatures = new EntQuery().SelectCreatures().GetAll();
+            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().GetAll();
+
+            if (Reinforcements.Count == 0 || livingCreatures.Count > 5)
+            {
+                return;
+            }
+
+            if (creatures.Count < 5)
+            {
+                var ent = Reinforcements.First();
+                Entities.Add(ent);
+                Reinforcements.Remove(ent);
+                AddReinforcements();
+            }
+            else
+            {
+                var dead = creatures.First(x => x.IsDestroyed);
+                Entities.Remove(dead);
+
+                var ent = Reinforcements.First();
+                Entities.Add(ent);
+                Reinforcements.Remove(ent);
+                AddReinforcements();
+            }
+        }
     }
 }
 
@@ -96,6 +135,12 @@ class EntQuery
     public EntQuery SelectLiving()
     {
         Query = Query.Where(ent => ent.IsDestroyed == false);
+        return this;
+    }
+
+    public EntQuery SelectDead()
+    {
+        Query = Query.Where(ent => ent.IsDestroyed == true);
         return this;
     }
 

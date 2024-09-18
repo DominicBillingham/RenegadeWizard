@@ -39,7 +39,7 @@ namespace RenegadeWizard.GameClasses
         {
             TargetComponents.Add(() => 
             {
-                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectHostiles(Agent.Faction).GetRandom() };
+                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Agent.Faction).GetRandom() };
             });
             return this;
         }
@@ -48,7 +48,7 @@ namespace RenegadeWizard.GameClasses
         {
             TargetComponents.Add(() => 
             {
-                Targets = new EntQuery().SelectCreatures().SelectHostiles(Agent.Faction).GetAll();
+                Targets = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Agent.Faction).GetAll();
             });
             return this;
         }
@@ -57,7 +57,7 @@ namespace RenegadeWizard.GameClasses
         {
             TargetComponents.Add(() => 
             {
-                Targets = new EntQuery().SelectCreatures().GetAll();
+                Targets = new EntQuery().SelectCreatures().SelectLiving().GetAll();
             });
             return this;
         }
@@ -66,7 +66,7 @@ namespace RenegadeWizard.GameClasses
         {
             TargetComponents.Add(() =>
             {
-                Targets = new List<Entity>() { new EntQuery().SelectCreatures().GetRandom() };
+                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().GetRandom() };
             });
             return this;
         }
@@ -471,7 +471,12 @@ namespace RenegadeWizard.GameClasses
                 }
 
                 Console.WriteLine();
-                Console.Write($" # {Description}");
+                Console.Write($" # {Description} at");
+                foreach (var target in Targets)
+                {
+                    Console.Write($" {target.Name},");
+                }
+
 
                 foreach (var action in ActionComponents)
                 {
