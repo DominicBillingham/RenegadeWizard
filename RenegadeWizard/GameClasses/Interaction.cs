@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -22,6 +23,7 @@ namespace RenegadeWizard.GameClasses
         public bool IsActionPossible { get; set; } = true;
         private int Power { get; set; } = 0;
         private int DamageDealt { get; set; } = 0;
+        private bool RequiresTargets { get; set; } = false;
 
         private List<Action> ActionComponents = new();
 
@@ -46,6 +48,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectRandomEnemy()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() => 
             {
                 Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Agent.Faction).GetRandom() };
@@ -55,6 +58,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectRandomAlly()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() =>
             {
                 Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Agent.Faction).GetRandom() };
@@ -64,6 +68,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectRandomDeadAlly()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() =>
             {
                 Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectDead().SelectAllies(Agent.Faction).GetRandom() };
@@ -73,6 +78,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectAllEnemies()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() => 
             {
                 Targets = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Agent.Faction).GetAll();
@@ -82,6 +88,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectAll()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() => 
             {
                 Targets = new EntQuery().SelectCreatures().SelectLiving().GetAll();
@@ -91,6 +98,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectRandom()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() =>
             {
                 Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().GetRandom() };
@@ -100,6 +108,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectDeadCreatures()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() =>
             {
                 Targets = new EntQuery().SelectCreatures().SelectDead().GetAll();
@@ -109,6 +118,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectSelf()
         {
+            RequiresTargets = true;
             TargetComponents.Add(() =>
             {
                 Targets = new List<Entity>() { Agent };
@@ -118,6 +128,7 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction SelectByName(int namesNeeded)
         {
+            RequiresTargets = true;
             TargetComponents.Add(() =>
             {
 
@@ -219,7 +230,10 @@ namespace RenegadeWizard.GameClasses
 
         public Interaction Lifesteal()
         {
-            Agent.ApplyHealing(DamageDealt);
+            ActionComponents.Add(() =>
+            {
+                Agent.ApplyHealing(DamageDealt);
+            });
             return this;
         }
 
@@ -553,6 +567,18 @@ namespace RenegadeWizard.GameClasses
                 {
                     action.Invoke();
                 }
+
+                if (RequiresTargets)
+                {
+                    if (Targets == null)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine($" # {Agent.Name} tries to {Name}, but there's no valid targets");
+                        Console.WriteLine();
+                        return;
+                    }
+                }
+
 
                 Console.WriteLine();
                 Console.Write($" # {Description} at");

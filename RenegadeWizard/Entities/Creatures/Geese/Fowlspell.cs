@@ -44,7 +44,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
 
             if (action == 2)
             {
-                var magicMissle = new Interaction(this, "ArcaneMissle").SelectByName(1).ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
+                var magicMissle = new Interaction(this, "ArcaneMissle").SelectRandomEnemy().ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
                 magicMissle.Description = $"{Name} casts a {Narrator.GetPowerfulWord()} set of magical missles!";
                 magicMissle .Execute();
             }
