@@ -118,7 +118,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(0, 13); 
+        var spellCount = Random.Shared.Next(0, 15); 
 
         if (spellCount == 0)
         {
@@ -222,7 +222,7 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 14)
         {
-            var enrageMonster = new Interaction(player, "EnragingSpell").SelectByName(1).Charm();
+            var enrageMonster = new Interaction(player, "EnragingSpell").SelectByName(1).Enrage();
             enrageMonster.Description = $"{player.Name} enrages the enemy!";
             actions.Add(enrageMonster);
         }
