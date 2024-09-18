@@ -208,7 +208,7 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 12)
         {
-            var explode = new Interaction(player, "Exploderise").SelectByName(1).CauseExplosion();
+            var explode = new Interaction(player, "Exploderise").SelectByName(1).Explodify();
             explode.Description = $"{player.Name} turns the target into a bomb?!";
             actions.Add(explode);
         }

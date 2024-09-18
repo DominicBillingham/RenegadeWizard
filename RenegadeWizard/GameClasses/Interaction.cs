@@ -344,7 +344,7 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
-        public Interaction CauseExplosion()
+        public Interaction Explodify()
         {
             ActionComponents.Add(() =>
             {
@@ -358,6 +358,19 @@ namespace RenegadeWizard.GameClasses
                         entity.ApplyDamage(totalDamage, Name);
                     }
 
+                }
+
+            });
+            return this;
+        }
+
+        public Interaction Resurrect()
+        {
+            ActionComponents.Add(() =>
+            {
+                foreach (var target in Targets)
+                {
+                    target.Health = 3;
                 }
 
             });
