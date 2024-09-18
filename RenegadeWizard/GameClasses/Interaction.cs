@@ -51,7 +51,11 @@ namespace RenegadeWizard.GameClasses
             RequiresTargets = true;
             TargetComponents.Add(() => 
             {
-                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Agent.Faction).GetRandom() };
+                var target = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Agent.Faction).GetRandom();
+                if (target != null) 
+                { 
+                    Targets = new List<Entity>() { target };
+                }
             });
             return this;
         }
@@ -61,7 +65,12 @@ namespace RenegadeWizard.GameClasses
             RequiresTargets = true;
             TargetComponents.Add(() =>
             {
-                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Agent.Faction).GetRandom() };
+                var target = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Agent.Faction).GetRandom();
+                if (target != null)
+                {
+                    Targets = new List<Entity>() { target };
+                }
+
             });
             return this;
         }
@@ -71,7 +80,11 @@ namespace RenegadeWizard.GameClasses
             RequiresTargets = true;
             TargetComponents.Add(() =>
             {
-                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectDead().SelectAllies(Agent.Faction).GetRandom() };
+                var target = new EntQuery().SelectCreatures().SelectDead().SelectAllies(Agent.Faction).GetRandom();
+                if (target != null)
+                {
+                    Targets = new List<Entity>() { target };
+                }
             });
             return this;
         }
@@ -101,7 +114,11 @@ namespace RenegadeWizard.GameClasses
             RequiresTargets = true;
             TargetComponents.Add(() =>
             {
-                Targets = new List<Entity>() { new EntQuery().SelectCreatures().SelectLiving().GetRandom() };
+                var target = new EntQuery().SelectCreatures().SelectLiving().GetRandom();
+                if (target != null)
+                {
+                    Targets = new List<Entity>() { target };
+                }
             });
             return this;
         }
@@ -570,7 +587,7 @@ namespace RenegadeWizard.GameClasses
 
                 if (RequiresTargets)
                 {
-                    if (Targets == null)
+                    if (Targets == null || Targets.Count == 0)
                     {
                         Console.WriteLine();
                         Console.WriteLine($" # {Agent.Name} tries to {Name}, but there's no valid targets");
