@@ -39,7 +39,7 @@ namespace RenegadeWizard.GameClasses
                     Console.Write($" -");
                     if (creature.Faction == Enums.Factions.Player)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                     }
                     Console.Write($" [{creature.Name}]");
 

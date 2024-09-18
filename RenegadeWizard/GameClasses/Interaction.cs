@@ -312,6 +312,32 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
+        public Interaction Charm()
+        {
+            ActionComponents.Add(() =>
+            {
+                foreach (var target in Targets)
+                {
+                    target.Faction = Agent.Faction;
+                }
+
+            });
+            return this;
+        }
+
+        public Interaction Enrage()
+        {
+            ActionComponents.Add(() =>
+            {
+                foreach (var target in Targets)
+                {
+                    target.Faction = Factions.None;
+                }
+
+            });
+            return this;
+        }
+
         public Interaction CauseExplosion()
         {
             ActionComponents.Add(() =>
@@ -472,9 +498,10 @@ namespace RenegadeWizard.GameClasses
 
                 Console.WriteLine();
                 Console.Write($" # {Description} at");
+
                 foreach (var target in Targets)
                 {
-                    Console.Write($" {target.Name},");
+                    Console.Write($" {target?.Name},");
                 }
 
 

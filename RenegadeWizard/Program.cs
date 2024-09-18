@@ -118,7 +118,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(11, 13); 
+        var spellCount = Random.Shared.Next(0, 13); 
 
         if (spellCount == 0)
         {
@@ -211,6 +211,20 @@ List<Interaction> PopulateActions()
             var explode = new Interaction(player, "Exploderise").SelectByName(1).CauseExplosion();
             explode.Description = $"{player.Name} turns the target into a bomb?!";
             actions.Add(explode);
+        }
+
+        if (spellCount == 13)
+        {
+            var charmMonster = new Interaction(player, "Charmify").SelectByName(1).Charm();
+            charmMonster.Description = $"{player.Name} charms the enemy onto their side!";
+            actions.Add(charmMonster);
+        }
+
+        if (spellCount == 14)
+        {
+            var enrageMonster = new Interaction(player, "EnragingSpell").SelectByName(1).Charm();
+            enrageMonster.Description = $"{player.Name} enrages the enemy!";
+            actions.Add(enrageMonster);
         }
 
     }
