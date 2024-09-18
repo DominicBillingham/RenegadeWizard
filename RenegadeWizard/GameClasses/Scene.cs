@@ -32,12 +32,6 @@ namespace RenegadeWizard.GameClasses
             if (round == 0)
             {
                 Reinforcements.Add(new Gooseling());
-            }
-
-            if (round == 1)
-            {
-                Console.Write(" # More geese are attacking!");
-                Reinforcements.Add(new Gooseling());
                 Reinforcements.Add(new Gooseling());
                 Reinforcements.Add(new Gooseling());
             }
@@ -47,6 +41,81 @@ namespace RenegadeWizard.GameClasses
                 Console.Write(" # More geese are attacking!");
                 Reinforcements.Add(new Goose());
                 Reinforcements.Add(new Goose());
+            }
+
+            if (round % 3 == 0 && round > 3)
+            {
+                var enemyGroup = Random.Shared.Next(10);
+
+                if (enemyGroup == 0)
+                {
+                    Reinforcements.Add(new Waddlepriest());
+                    Reinforcements.Add(new Goose());
+                    Reinforcements.Add(new Goose());
+                }
+
+                if (enemyGroup == 1)
+                {
+                    Reinforcements.Add(new Grimgooser());
+                    Reinforcements.Add(new Gooseling());
+                    Reinforcements.Add(new Gooseling());
+                    Reinforcements.Add(new Gooseling());
+                }
+
+                if (enemyGroup == 2)
+                {
+                    Reinforcements.Add(new Goozerker());
+                    Reinforcements.Add(new Goose());
+                    Reinforcements.Add(new Goose());
+                }
+
+                if (enemyGroup == 3)
+                {
+                    Reinforcements.Add(new Fowlspell());
+                    Reinforcements.Add(new Gooseling());
+                    Reinforcements.Add(new Gooseling());
+                }
+
+                if (enemyGroup == 4)
+                {
+                    Reinforcements.Add(new Fowlspell());
+                    Reinforcements.Add(new Fowlspell());
+                }
+
+                if (enemyGroup == 5)
+                {
+                    Reinforcements.Add(new Goozerker());
+                    Reinforcements.Add(new Goozerker());
+                }
+
+                if (enemyGroup == 6)
+                {
+                    Reinforcements.Add(new Goozerker());
+                    Reinforcements.Add(new Fowlspell());
+                }
+
+                if (enemyGroup == 7)
+                {
+                    Reinforcements.Add(new Goozerker());
+                    Reinforcements.Add(new Waddlepriest());
+                }
+
+                if (enemyGroup == 8)
+                {
+                    Reinforcements.Add(new Waddlepriest());
+                    Reinforcements.Add(new Fowlspell());
+                }
+
+                if (enemyGroup == 9)
+                {
+                    Reinforcements.Add(new Gooseling());
+                    Reinforcements.Add(new Gooseling());
+                    Reinforcements.Add(new Gooseling());
+                    Reinforcements.Add(new Gooseling());
+                    Reinforcements.Add(new Gooseling());
+
+                }
+
             }
 
             AddReinforcements();

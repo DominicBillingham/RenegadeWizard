@@ -198,6 +198,8 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var entity in Targets)
                 {
+                    if (entity.IsDestroyed) {  continue; }
+
                     var wounded = entity.Modifiers.FirstOrDefault(con => con is Wounded);
                     damage = wounded?.ModifyDamageTaken(damage) ?? damage;
 
