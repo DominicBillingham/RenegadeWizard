@@ -29,52 +29,27 @@ namespace RenegadeWizard.GameClasses
         public static void Round(int round)
         {
 
-            AddReinforcements();
-
             if (round == 0)
             {
-                Entities.Add(new Gooseling());
+                Reinforcements.Add(new Gooseling());
             }
 
             if (round == 1)
             {
                 Console.Write(" # More geese are attacking!");
-                Entities.Add(new Gooseling());
-                Entities.Add(new Gooseling());
-                Entities.Add(new Gooseling());
+                Reinforcements.Add(new Gooseling());
+                Reinforcements.Add(new Gooseling());
+                Reinforcements.Add(new Gooseling());
             }
 
             if (round == 3)
             {
                 Console.Write(" # More geese are attacking!");
-                Entities.Add(new Goose());
-                Entities.Add(new Goose());
+                Reinforcements.Add(new Goose());
+                Reinforcements.Add(new Goose());
             }
 
-        }
-
-        public static void AddCreature(Entity entity)
-        {
-            var creatures = new EntQuery().SelectCreatures().GetAll();
-
-            if (creatures.Count < 5)
-            {
-                Entities.Add(entity);
-            }
-            else
-            {
-                var deadCreature = creatures.FirstOrDefault(x => x.IsDestroyed);
-                if (deadCreature != null)
-                {
-                    creatures.Remove(deadCreature);
-                    Entities.Add(entity);
-                }
-                else
-                {
-                    Reinforcements.Add(entity);
-                }
-            }
-
+            AddReinforcements();
 
         }
 
@@ -84,7 +59,7 @@ namespace RenegadeWizard.GameClasses
             var creatures = new EntQuery().SelectCreatures().GetAll();
             var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().GetAll();
 
-            if (Reinforcements.Count == 0 || livingCreatures.Count > 5)
+            if (Reinforcements.Count == 0 || livingCreatures.Count > 4)
             {
                 return;
             }

@@ -39,7 +39,7 @@ namespace RenegadeWizard.GameClasses
                     Console.Write($" -");
                     if (creature.Faction == Enums.Factions.Player)
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                     }
                     Console.Write($" [{creature.Name}]");
 
@@ -79,6 +79,11 @@ namespace RenegadeWizard.GameClasses
 
                 Console.WriteLine();
 
+            }
+
+            if (Scene.Reinforcements.Count > 0 )
+            {
+                Console.WriteLine($" - +{Scene.Reinforcements.Count} Reinforcements");
             }
 
             Console.WriteLine();
