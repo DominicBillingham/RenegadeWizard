@@ -102,8 +102,24 @@ void PlayerTurn(Entity player)
         {
             spell.Targets = actionParameters;
             spell.Execute();
-            actionCost = 1;
-            actions = PopulateActions();
+
+            if (spell.FreeAction)
+            {
+                actionCost = 0;
+
+                Narrator.ContinuePrompt();
+                Console.Clear();
+                Narrator.ShowRoundInfo(actions);
+
+            }
+            else
+            {
+                actionCost = 1;
+                actions = PopulateActions();
+            }
+
+
+
         }
 
 
@@ -129,7 +145,7 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 1)
         {
-            var thunderstorm = new Interaction(player, "ThunderStorm").SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3);
+            var thunderstorm = new Interaction(player, "ThunderStorm").SelectRandom().SelectRandom().SelectRandom().ApplyDamage(3);
             thunderstorm.Description = $"{player.Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, they strike [targets]!";
             actions.Add(thunderstorm);
 
@@ -230,6 +246,7 @@ List<Interaction> PopulateActions()
     }
 
     var inspect = new Interaction(player, "Inspect").Inspect();
+    inspect.FreeAction = true;
     actions.Add(inspect);
 
     return actions;

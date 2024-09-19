@@ -22,7 +22,8 @@ namespace RenegadeWizard.GameClasses
         public List<Entity> Targets { get; set; } = new();
         private int Power { get; set; } = 0;
         private int DamageDealt { get; set; } = 0;
-        private bool RequiresTargets { get; set; } = false;
+        public bool RequiresTargets { get; set; } = false;
+        public bool FreeAction { get; set; } = false;
 
         private List<Action> ActionComponents = new();
 
@@ -548,7 +549,7 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var entity in Targets)
                 {
-                    Console.Write($" # {entity.Name}");
+                    Console.Write($"{entity.Name}");
 
                     if (entity.Attributes != null)
                     {
@@ -593,7 +594,7 @@ namespace RenegadeWizard.GameClasses
 
             Console.WriteLine();
             string targetString = string.Join(", ", Targets.Select(x => x.Name));
-            Description = Description.Replace("[targets]", targetString);
+            Description = Description?.Replace("[targets]", targetString);
             Console.Write($" # {Description}");
 
             foreach (var action in ActionComponents)

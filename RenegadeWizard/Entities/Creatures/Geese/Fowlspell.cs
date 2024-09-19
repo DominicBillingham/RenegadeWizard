@@ -37,7 +37,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
 
             if (action == 1)
             {
-                var thunderstorm = new Interaction(this, "ThunderStorm").SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3);
+                var thunderstorm = new Interaction(this, "ThunderStorm").SelectRandom().SelectRandom().SelectRandom().ApplyDamage(2);
                 thunderstorm.Description = $"{Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, striking [targets]!";
                 thunderstorm.Execute();
             }
