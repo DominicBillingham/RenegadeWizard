@@ -250,7 +250,7 @@ namespace RenegadeWizard.GameClasses
         {
             ActionComponents.Add(() =>
             {
-                Agent.ApplyHealing(DamageDealt);
+                Agent.ApplyHealing(DamageDealt, Name);
             });
             return this;
         }
@@ -441,7 +441,7 @@ namespace RenegadeWizard.GameClasses
                     target.ApplyDamage(3, Name);
                     if (target.IsDestroyed)
                     {
-                        Agent.ApplyHealing(3);
+                        Agent.ApplyHealing(3, Name);
                     }
                 }
 

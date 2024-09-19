@@ -22,7 +22,7 @@ Scene.NextRound();
 Narrator.ShowRoundInfo(actions);
 
 
-while (true)
+while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed == false) )
 {
     var players = new EntQuery().SelectPlayers().SelectLiving().GetAll();
     foreach (Entity ent in players)
@@ -54,6 +54,12 @@ while (true)
     Narrator.ShowRoundInfo(actions);
 
 }
+
+Console.WriteLine();
+Console.WriteLine();
+Console.WriteLine(" # You've died womp womp");
+Narrator.ShowBoom();
+Narrator.ContinuePrompt();
 
 void PlayerTurn(Entity player)
 {
@@ -116,7 +122,11 @@ void PlayerTurn(Entity player)
             else
             {
                 actionCost = 1;
-                actions = PopulateActions();
+                if (Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed == false))
+                {
+                    actions = PopulateActions();
+                }
+
             }
 
 

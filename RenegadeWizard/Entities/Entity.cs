@@ -66,7 +66,7 @@ namespace RenegadeWizard.Entities
             }
         }
 
-        public virtual void ApplyHealing(int heal, string? source = null)
+        public virtual void ApplyHealing(int heal, string source)
         {
             if (IsDestroyed == false)
             {

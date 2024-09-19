@@ -127,8 +127,8 @@ namespace RenegadeWizard.GameClasses
         public static void AddReinforcements()
         {
 
-            var creatures = new EntQuery().SelectCreatures().GetAll();
-            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().GetAll();
+            var creatures = new EntQuery().SelectHostiles(Factions.Player).SelectCreatures().GetAll();
+            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Factions.Player).GetAll();
 
             if (Reinforcements.Count == 0 || livingCreatures.Count > 4)
             {
