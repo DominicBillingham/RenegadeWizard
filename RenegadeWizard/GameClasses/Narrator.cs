@@ -11,12 +11,24 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
             Console.WriteLine("0=[]:::::::::>  Fight!  <:::::::::[]=0");
 
-            Console.Write($" - Grim's Spells: ");
-            foreach (var action in actions)
+            Console.Write($" - Actions: ");
+            foreach (var action in actions.Where(x => x.IsSpell == false))
             {
                 Console.Write($"[{action.Name}] ");
             }
+
+            Console.WriteLine();
+
+            Console.Write($" - Spells: ");
+            foreach (var action in actions.Where(x => x.IsSpell == true))
+            {
+                Console.Write($"[{action.Name}] ");
+            }
+
+
             //Console.Write($"{GetGrimVoiceline()}");
+
+            Console.WriteLine();
             Console.WriteLine();
 
 
@@ -40,7 +52,16 @@ namespace RenegadeWizard.GameClasses
                 }
                 else
                 {
-                    Console.Write($" - [{creature.Name}] the {creature.GetType().Name} is");
+                    Console.Write($" -");
+                    if (creature.Faction == Enums.Factions.Player)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                    }
+                    Console.Write($" [{creature.Name}]");
+
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.Write($" the {creature.GetType().Name} is");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(" DEAD");
                     Console.ForegroundColor = ConsoleColor.White;

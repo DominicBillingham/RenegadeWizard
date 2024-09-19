@@ -141,6 +141,7 @@ List<Interaction> PopulateActions()
         {
             var fireball = new Interaction(player, "Fireball").SelectAllEnemies().ApplyCondition(new Burning(2));
             fireball.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} fireball, burning [targets]!";
+            fireball.IsSpell = true;
             actions.Add(fireball);
         }
 
@@ -148,6 +149,7 @@ List<Interaction> PopulateActions()
         {
             var thunderstorm = new Interaction(player, "ThunderStorm").SelectRandom().SelectRandom().SelectRandom().ApplyDamage(3);
             thunderstorm.Description = $"{player.Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, they strike [targets]!";
+            thunderstorm.IsSpell = true;
             actions.Add(thunderstorm);
 
         }
@@ -156,6 +158,7 @@ List<Interaction> PopulateActions()
         {
             var heal = new Interaction(player, "HealingBurst").SelectAll().ApplyHealing(3);
             heal.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} healing nova restoring health!";
+            heal.IsSpell = true;
             actions.Add(heal);
         }
 
@@ -163,6 +166,7 @@ List<Interaction> PopulateActions()
         {
             var leech = new Interaction(player, "LifeSteal").SelectAllEnemies().ApplyDamage(1).Lifesteal();
             leech.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} lifestealing nova!";
+            leech.IsSpell = true;
             actions.Add(leech);
         }
 
@@ -170,6 +174,7 @@ List<Interaction> PopulateActions()
         {
             var magicMissle = new Interaction(player, "ArcaneMissle").SelectByName(1).ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
             magicMissle.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} missle barrage at [targets]!";
+            magicMissle.IsSpell = true;
             actions.Add(magicMissle);
 
         }
@@ -178,6 +183,7 @@ List<Interaction> PopulateActions()
         {
             var daggerSpray = new Interaction(player, "DaggerSpray").SelectAllEnemies().ApplyDamage(1).ApplyCondition(new Wounded(3));
             daggerSpray.Description = $"{player.Name} conjures a fan of {Narrator.GetPowerfulWord()} daggers slashing [targets]!";
+            daggerSpray.IsSpell = true;
             actions.Add(daggerSpray);
         }
 
@@ -185,6 +191,7 @@ List<Interaction> PopulateActions()
         {
             var divineWard = new Interaction(player, "DivineWard").SelectSelf().ApplyCondition(new Protected(3));
             divineWard.Description = $"{player.Name} conjures {Narrator.GetPowerfulWord()} barrier to protect themselves!";
+            divineWard.IsSpell = true;
             actions.Add(divineWard);
         }
 
@@ -192,6 +199,7 @@ List<Interaction> PopulateActions()
         {
             var thunderBall = new Interaction(player, "ThunderNova").SelectAllEnemies().ApplyDamage(3);
             thunderBall.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} thunder nova smashing [targets]!";
+            thunderBall.IsSpell = true;
             actions.Add(thunderBall);
         }
 
@@ -199,6 +207,7 @@ List<Interaction> PopulateActions()
         {
             var conjureFriend = new Interaction(player, "ConjureFriend").ConjureGoblin(player.Faction);
             conjureFriend.Description = $"{player.Name} summons a goblin friend to help them out :D";
+            conjureFriend.IsSpell = true;
             actions.Add(conjureFriend);
         }
 
@@ -206,6 +215,7 @@ List<Interaction> PopulateActions()
         {
             var summonDemon = new Interaction(player, "SummonDemon").ConjureDemon();
             summonDemon.Description = $"{player.Name} summons a horrific demon for fun!";
+            summonDemon.IsSpell = true;
             actions.Add(summonDemon);
         }
 
@@ -213,6 +223,7 @@ List<Interaction> PopulateActions()
         {
             var raiseDead = new Interaction(player, "RaiseDead").SelectDeadCreatures().RaiseDead();
             raiseDead.Description = $"{player.Name} brings back the dead for a party!";
+            raiseDead.IsSpell = true;
             actions.Add(raiseDead);
         }
 
@@ -220,6 +231,7 @@ List<Interaction> PopulateActions()
         {
             var polymorph = new Interaction(player, "Polymorph").SelectByName(1).Polymorph();
             polymorph.Description = $"{player.Name} turns [targets] into a sheep!";
+            polymorph.IsSpell = true;
             actions.Add(polymorph);
         }
 
@@ -227,6 +239,7 @@ List<Interaction> PopulateActions()
         {
             var explode = new Interaction(player, "Exploderise").SelectByName(1).Explodify();
             explode.Description = $"{player.Name} turns [targets] into a bomb?!";
+            explode.IsSpell = true;
             actions.Add(explode);
         }
 
@@ -234,6 +247,7 @@ List<Interaction> PopulateActions()
         {
             var charmMonster = new Interaction(player, "Charmify").SelectByName(1).Charm();
             charmMonster.Description = $"{player.Name} charms [targets] onto their side!";
+            charmMonster.IsSpell = true;
             actions.Add(charmMonster);
         }
 
@@ -241,6 +255,7 @@ List<Interaction> PopulateActions()
         {
             var enrageMonster = new Interaction(player, "Enrage").SelectByName(1).Enrage();
             enrageMonster.Description = $"{player.Name} enrages [targets]!";
+            enrageMonster.IsSpell = true;
             actions.Add(enrageMonster);
         }
 

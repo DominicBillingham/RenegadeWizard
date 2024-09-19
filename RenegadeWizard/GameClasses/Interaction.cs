@@ -24,6 +24,7 @@ namespace RenegadeWizard.GameClasses
         private int DamageDealt { get; set; } = 0;
         public bool RequiresTargets { get; set; } = false;
         public bool FreeAction { get; set; } = false;
+        public bool IsSpell { get; set; } = false;
 
         private List<Action> ActionComponents = new();
 
