@@ -45,8 +45,6 @@ while (true)
     Scene.Round++;
     Scene.NextRound();
 
-    Narrator.ShowExplosions();
-
     Narrator.ContinuePrompt();
 
     Console.Clear();

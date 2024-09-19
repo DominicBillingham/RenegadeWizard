@@ -332,7 +332,7 @@ namespace RenegadeWizard.GameClasses
 
                 foreach (var entity in Targets)
                 {
-                    var next = Random.Shared.Next(3);
+                    var next = Random.Shared.Next(2, 3);
 
                     if (next == 0)
                     {
@@ -360,9 +360,7 @@ namespace RenegadeWizard.GameClasses
                         newForm.Name = $"{entity.Name}";
                         newForm.IsPlayerControlled = entity.IsPlayerControlled;
                         polymorphedEntities.Add(newForm);
-
-                        Description = Description + " But the spell goes haywire and turns them into a DEMON instead!";
-
+                        Description += $" But the spell goes wild and turns {entity.Name} into a DEMON!";
                     }
 
                 }
@@ -597,16 +595,15 @@ namespace RenegadeWizard.GameClasses
                 }
             }
 
-            Console.WriteLine();
-            string targetString = string.Join(", ", Targets.Select(x => x.Name));
-            Description = Description?.Replace("[targets]", targetString);
-            Console.Write($" # {Description}");
-
             foreach (var action in ActionComponents)
             {
                 action.Invoke();
             }
 
+            Console.WriteLine();
+            string targetString = string.Join(", ", Targets.Select(x => x.Name));
+            Description = Description?.Replace("[targets]", targetString);
+            Console.Write($" # {Description}");
             Console.WriteLine();
             
         }

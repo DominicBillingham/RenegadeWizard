@@ -237,7 +237,7 @@ namespace RenegadeWizard.GameClasses
 
         public static void ShowExplosions()
         {
-            Thread.Sleep(200);
+            Thread.Sleep(500);
 
             int cursorPosX = Console.CursorLeft;
             int cursorPosY = Console.CursorTop;
