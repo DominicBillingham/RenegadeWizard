@@ -67,7 +67,7 @@ namespace RenegadeWizard.GameClasses
                 if (creature.HealingLastRound > 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write($" ({creature.HealingLastRound})");
+                    Console.Write($" (+{creature.HealingLastRound})");
                     Console.ForegroundColor = ConsoleColor.White;
                     creature.HealingLastRound = 0;
                 }

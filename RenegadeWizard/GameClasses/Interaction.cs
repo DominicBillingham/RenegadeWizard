@@ -272,7 +272,8 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var entity in Targets)
                 {
-                    entity.ApplyCondition(modifier, Name);
+                    Modifier modCopy = modifier.ShallowCopy();
+                    entity.ApplyCondition(modCopy, Name);
                 }
             });
             return this;
@@ -549,7 +550,7 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var entity in Targets)
                 {
-                    Console.Write($"{entity.Name}");
+                    Console.Write($"{entity.Name} ({entity.GetType().Name})");
 
                     if (entity.Attributes != null)
                     {
