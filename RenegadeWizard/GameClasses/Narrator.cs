@@ -20,7 +20,8 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
 
 
-            var creatures = new EntQuery().SelectCreatures().GetAll();
+            var creatures = new EntQuery().SelectCreatures().GetAll().OrderBy(ent => ent.Faction);
+
             foreach (var creature in creatures)
             {
                 if (creature.IsDestroyed == false)

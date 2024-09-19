@@ -38,7 +38,7 @@ namespace RenegadeWizard.Entities
 
         public virtual void TakeTurn()
         {
-
+            if (IsDestroyed) { return; }
         }
 
         public virtual int WhenThrown(Entity target, Entity thrower)

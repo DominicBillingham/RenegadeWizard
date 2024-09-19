@@ -17,7 +17,7 @@ namespace RenegadeWizard.GameClasses
     public class Interaction
     {
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         public Entity Agent { get; set; }
         public List<Entity> Targets { get; set; } = new();
         private int Power { get; set; } = 0;
@@ -552,7 +552,8 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var entity in Targets)
                 {
-                    Console.Write($"{entity.Name} ({entity.GetType().Name})");
+                    Console.WriteLine();
+                    Console.Write($" # {entity.Name} ({entity.GetType().Name})");
 
                     if (entity.Attributes != null)
                     {
@@ -567,6 +568,7 @@ namespace RenegadeWizard.GameClasses
                         Console.Write(" #" + entity.BattleLog);
                     }
 
+                    Console.WriteLine();
                 }
 
             });
@@ -600,11 +602,16 @@ namespace RenegadeWizard.GameClasses
                 action.Invoke();
             }
 
-            Console.WriteLine();
-            string targetString = string.Join(", ", Targets.Select(x => x.Name));
-            Description = Description?.Replace("[targets]", targetString);
-            Console.Write($" # {Description}");
-            Console.WriteLine();
+            if (Description != string.Empty)
+            {
+                Console.WriteLine();
+                string targetString = string.Join(", ", Targets.Select(x => x.Name));
+                Description = Description.Replace("[targets]", targetString);
+                Console.Write($" # {Description}");
+                Console.WriteLine();
+            }
+
+
             
         }
     }

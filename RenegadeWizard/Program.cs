@@ -27,12 +27,14 @@ while (true)
     var players = new EntQuery().SelectPlayers().SelectLiving().GetAll();
     foreach (Entity ent in players)
     {
+        if (ent.IsDestroyed) { continue; }
         PlayerTurn(ent);
     }
 
     var npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
     foreach (Entity ent in npcs)
     {
+        if (ent.IsDestroyed) { continue; }
         ent.TakeTurn();
     }
 
@@ -133,7 +135,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(10, 12); 
+        var spellCount = Random.Shared.Next(0, 15); 
 
         if (spellCount == 0)
         {
