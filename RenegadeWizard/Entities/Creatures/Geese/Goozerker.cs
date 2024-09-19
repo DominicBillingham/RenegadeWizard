@@ -34,14 +34,14 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             if (action == 0)
             {
                 var axeSwing = new Interaction(this, "UltimateAxe").SelectRandomEnemy().ApplyDamage(1 + DamageCount);
-                axeSwing.Description = $"{Name} brings their colossal axe down";
+                axeSwing.Description = $"{Name} brings their colossal axe down on [targets]";
                 axeSwing.Execute();
             }
 
             if (action == 1)
             {
                 var devour = new Interaction(this, "Devour").SelectRandomAlly().Devour();
-                devour.Description = $"{Name} attempts to devour one of their geese friends! ";
+                devour.Description = $"{Name} attempts to devour [targets]! ";
                 devour.Execute();
             }
 

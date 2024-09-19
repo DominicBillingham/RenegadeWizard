@@ -26,9 +26,9 @@ namespace RenegadeWizard.Entities.Creatures.Goblin
         public override void TakeTurn()
         {
             var bite = new Interaction(this, "Bite").SelectRandomEnemy().ApplyDamage(3);
-            bite.Description = $"{Name} bites down hard!";
+            bite.Description = $"{Name} bites [targets] hard!";
             var claws = new Interaction(this, "Claws").SelectRandomEnemy().ApplyDamage(2).ApplyCondition(new Bleeding(2));
-            claws.Description = $"{Name} slashes away with their cute claws!";
+            claws.Description = $"{Name} slashes [targets] with their cute claws!";
 
 
             if (Random.Shared.Next(2) == 0)

@@ -49,8 +49,9 @@ namespace RenegadeWizard.GameClasses
                 }
                 else
                 {
+                    Console.Write($" - [{creature.Name}] the {creature.GetType().Name} is");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($" - [{creature.Name}] the {creature.GetType().Name} is DEAD");
+                    Console.Write(" DEAD");
                     Console.ForegroundColor = ConsoleColor.White;
                     creature.DamageTakenLastRound = 0;
                 }

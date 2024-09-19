@@ -31,21 +31,21 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             if (action == 0)
             {
                 var fireball = new Interaction(this, "Fireball").SelectAllEnemies().ApplyCondition(new Burning(2));
-                fireball.Description = $"{Name} casts a {Narrator.GetPowerfulWord()} fireball, setting all enemies on fire!";
+                fireball.Description = $"{Name} casts a {Narrator.GetPowerfulWord()} fireball, setting [targets] on fire!";
                 fireball.Execute();
             }
 
             if (action == 1)
             {
                 var thunderstorm = new Interaction(this, "ThunderStorm").SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3).SelectRandom().ApplyDamage(3);
-                thunderstorm.Description = $"{Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, they strike randomly!";
+                thunderstorm.Description = $"{Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, striking [targets]!";
                 thunderstorm.Execute();
             }
 
             if (action == 2)
             {
                 var magicMissle = new Interaction(this, "ArcaneMissle").SelectRandomEnemy().ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
-                magicMissle.Description = $"{Name} casts a {Narrator.GetPowerfulWord()} set of magical missles!";
+                magicMissle.Description = $"{Name} casts a {Narrator.GetPowerfulWord()} missle barrage at [targets]!";
                 magicMissle .Execute();
             }
 

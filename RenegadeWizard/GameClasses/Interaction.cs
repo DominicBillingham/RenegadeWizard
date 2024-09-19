@@ -19,8 +19,7 @@ namespace RenegadeWizard.GameClasses
         public string Name { get; set; }
         public string Description { get; set; }
         public Entity Agent { get; set; }
-        public List<Entity> Targets { get; set; }
-        public bool IsActionPossible { get; set; } = true;
+        public List<Entity> Targets { get; set; } = new();
         private int Power { get; set; } = 0;
         private int DamageDealt { get; set; } = 0;
         private bool RequiresTargets { get; set; } = false;
@@ -54,7 +53,7 @@ namespace RenegadeWizard.GameClasses
                 var target = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Agent.Faction).GetRandom();
                 if (target != null) 
                 { 
-                    Targets = new List<Entity>() { target };
+                    Targets.Add(target);
                 }
             });
             return this;
@@ -68,7 +67,7 @@ namespace RenegadeWizard.GameClasses
                 var target = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Agent.Faction).GetRandom();
                 if (target != null)
                 {
-                    Targets = new List<Entity>() { target };
+                    Targets.Add(target);
                 }
 
             });
@@ -83,7 +82,7 @@ namespace RenegadeWizard.GameClasses
                 var target = new EntQuery().SelectCreatures().SelectDead().SelectAllies(Agent.Faction).GetRandom();
                 if (target != null)
                 {
-                    Targets = new List<Entity>() { target };
+                    Targets.Add(target);
                 }
             });
             return this;
@@ -117,7 +116,7 @@ namespace RenegadeWizard.GameClasses
                 var target = new EntQuery().SelectCreatures().SelectLiving().GetRandom();
                 if (target != null)
                 {
-                    Targets = new List<Entity>() { target };
+                    Targets.Add(target);
                 }
             });
             return this;
@@ -138,7 +137,7 @@ namespace RenegadeWizard.GameClasses
             RequiresTargets = true;
             TargetComponents.Add(() =>
             {
-                Targets = new List<Entity>() { Agent };
+                Targets.Add(Agent);
             });
             return this;
         }
@@ -511,7 +510,7 @@ namespace RenegadeWizard.GameClasses
 
                 if (intellect < requirement)
                 {
-                    IsActionPossible = false;
+                    //IsActionPossible = false;
                 }
             });
             return this;
@@ -531,7 +530,7 @@ namespace RenegadeWizard.GameClasses
 
                 if (strength < requirement)
                 {
-                    IsActionPossible = false;
+                    //IsActionPossible = false;
                 }
             });
             return this;
@@ -575,44 +574,35 @@ namespace RenegadeWizard.GameClasses
 
         public void Execute()
         {
-            // Can check for a valid amount of names here!
 
-            if (IsActionPossible)
+            foreach (var action in TargetComponents)
             {
-
-                foreach (var action in TargetComponents)
-                {
-                    action.Invoke();
-                }
-
-                if (RequiresTargets)
-                {
-                    if (Targets == null || Targets.Count == 0)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine($" # {Agent.Name} tries to {Name}, but there's no valid targets");
-                        Console.WriteLine();
-                        return;
-                    }
-                }
-
-
-                Console.WriteLine();
-                Console.Write($" # {Description} at");
-
-                foreach (var target in Targets)
-                {
-                    Console.Write($" {target?.Name},");
-                }
-
-
-                foreach (var action in ActionComponents)
-                {
-                    action.Invoke();
-                }
-
-                Console.WriteLine();
+                action.Invoke();
             }
+
+            if (RequiresTargets)
+            {
+                if (Targets == null || Targets.Count == 0)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($" # {Agent.Name} tries to {Name}, but there's no valid targets");
+                    Console.WriteLine();
+                    return;
+                }
+            }
+
+            Console.WriteLine();
+            string targetString = string.Join(", ", Targets.Select(x => x.Name));
+            Description = Description.Replace("[targets]", targetString);
+            Console.Write($" # {Description}");
+
+            foreach (var action in ActionComponents)
+            {
+                action.Invoke();
+            }
+
+            Console.WriteLine();
+            
         }
     }
 }

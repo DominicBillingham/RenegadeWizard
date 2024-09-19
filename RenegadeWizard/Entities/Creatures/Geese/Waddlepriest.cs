@@ -32,7 +32,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             if (anyDead != null)
             {
                 var revivify = new Interaction(this, "Revivify").SelectRandomDeadAlly().Resurrect();
-                revivify.Description = $"{Name} brings back a goose from the grave";
+                revivify.Description = $"{Name} brings back [targets] from the grave";
                 revivify.Execute();
 
             }
