@@ -11,16 +11,6 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
             Console.WriteLine("0=[]:::::::::>  Fight!  <:::::::::[]=0");
 
-            //Console.Write(" - Nearby items: ");
-
-            //var items = new EntQuery().SelectItems().GetAll();
-            //foreach (var item in items)
-            //{
-            //    Console.Write($"[{item.Name}] ");
-            //}
-            //Console.WriteLine();
-
-
             Console.Write($" - Grim's Spells: ");
             foreach (var action in actions)
             {
@@ -30,7 +20,7 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
 
 
-            var creatures = new EntQuery().SelectCreatures().GetAll();  
+            var creatures = new EntQuery().SelectCreatures().GetAll();
             foreach (var creature in creatures)
             {
                 if (creature.IsDestroyed == false)
@@ -57,9 +47,10 @@ namespace RenegadeWizard.GameClasses
                 }
 
 
-                if (creature.DamageTakenLastRound > 0) {
+                if (creature.DamageTakenLastRound > 0)
+                {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write( $" (-{creature.DamageTakenLastRound})" );
+                    Console.Write($" (-{creature.DamageTakenLastRound})");
                     Console.ForegroundColor = ConsoleColor.White;
                     creature.DamageTakenLastRound = 0;
                 }
@@ -82,7 +73,7 @@ namespace RenegadeWizard.GameClasses
 
             }
 
-            if (Scene.Reinforcements.Count > 0 )
+            if (Scene.Reinforcements.Count > 0)
             {
                 Console.WriteLine($" - +{Scene.Reinforcements.Count} Reinforcements");
             }
@@ -127,6 +118,8 @@ namespace RenegadeWizard.GameClasses
         }
         public static void ContinuePrompt()
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+
             Console.WriteLine();
             Console.WriteLine(" - Press [SPACE] to continue...");
 
@@ -134,6 +127,8 @@ namespace RenegadeWizard.GameClasses
             {
                 // Wait until the space bar is pressed.
             }
+
+            Console.ForegroundColor= ConsoleColor.White;
 
         }
         public static string GetConfusedNarrator()
@@ -198,16 +193,363 @@ namespace RenegadeWizard.GameClasses
             return grimVoicelines[r];
         }
 
+        // Some very entertaining methods made by chatgpt for animations
+
+        public static void Setbackground()
+        {
+            //Some nice console art to act as background made by gpt
+
+            // Get the current console dimensions
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
+
+            char[] glitchChars = new char[]
+            {
+                '.', '*', '+', 'o', 'x'
+            };
+
+            // Fill the console with spaces to apply the background color
+
+            Console.Clear();
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    var ranInt = Random.Shared.Next(200);
+
+                    if (ranInt < 1) // 5% chance to place a glitch character
+                    {
+                        Console.Write(glitchChars[Random.Shared.Next(glitchChars.Length)]);
+                    }
+                    else
+                    {
+                        Console.Write(' ');
+                    }
+                }
+            }
+
+            Console.SetCursorPosition(100, height - 10);
+            Console.Write("\n         _.._\r\n       .' .-'`\r\n      /  /\r\n      |  |\r\n      \\  \\\r\n       '._'-._\r\n          ```");
+
+            // Reset the cursor position to the top-left corner
+            Console.SetCursorPosition(0, 0);
+        }
+
+        public static void ShowExplosions()
+        {
+            Thread.Sleep(200);
+
+            int cursorPosX = Console.CursorLeft;
+            int cursorPosY = Console.CursorTop;
+
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
+            Random random = new Random();
+
+            // Multiple explosions
+            for (int i = 0; i < 10; i++) // Number of explosions
+            {
+                int x = random.Next(0, width - 10);
+                int y = random.Next(0, height - 5);
+
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine("   \\|/   ");
+                Console.SetCursorPosition(x, y + 1);
+                Console.WriteLine(" -- * -- ");
+                Console.SetCursorPosition(x, y + 2);
+                Console.WriteLine("   /|\\   ");
+                Thread.Sleep(200); // Pause for 300 ms
+
+                // Explosion dispersing
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine("   . .   ");
+                Console.SetCursorPosition(x, y + 1);
+                Console.WriteLine(" .     . ");
+                Console.SetCursorPosition(x, y + 2);
+                Console.WriteLine("   . .   ");
+                Thread.Sleep(100); // Pause for 200 ms
+
+            }
+
+            Console.SetCursorPosition(cursorPosX, cursorPosY);
+
+        }
+
+        public static void ShowBoom()
+        {
+            Thread.Sleep(1000);
+
+            int cursorPosX = Console.CursorLeft;
+            int cursorPosY = Console.CursorTop;
+
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
+            Random random = new Random();
+
+            int centerX = width / 2;
+            int centerY = height / 2;
+
+            for (int i = 0; i < 1; i++) // Number of explosions
+            {
+                int radius = 50; // Increased radius for a bigger explosion
+
+                // Create explosion effect
+                for (int r = 0; r < radius; r++)
+                {
+                    for (int angle = 0; angle < 360; angle += 10) // Draw explosion in circular pattern
+                    {
+                        int x = centerX + (int)(r * Math.Cos(angle * Math.PI / 180));
+                        int y = centerY + (int)(r * Math.Sin(angle * Math.PI / 180) / 2);
+
+                        if (x >= 0 && x < width && y >= 0 && y < height)
+                        {
+                            Console.SetCursorPosition(x, y);
+                            Console.WriteLine("*");
+                        }
+                    }
+
+                    Thread.Sleep(5); // Pause for 50 ms
+
+                    // Clear the explosion effect
+                    for (int angle = 0; angle < 360; angle += 10)
+                    {
+                        int x = centerX + (int)(r * Math.Cos(angle * Math.PI / 180));
+                        int y = centerY + (int)(r * Math.Sin(angle * Math.PI / 180));
+
+                        if (x >= 0 && x < width && y >= 0 && y < height)
+                        {
+                            Console.SetCursorPosition(x, y);
+                            Console.WriteLine(" ");
+                        }
+                    }
+                }
+
+                // Particle effect for explosion fading
+                for (int k = 0; k < 5; k++) // More particles for a bigger effect
+                {
+                    for (int j = 0; j < 120; j++) // More particles
+                    {
+                        int px = centerX + random.Next(-radius, radius);
+                        int py = centerY + random.Next(-radius, radius);
+                        if (px >= 0 && px < width && py >= 0 && py < height)
+                        {
+                            Console.SetCursorPosition(px, py);
+                            Console.WriteLine("*");
+                        }
+                    }
+                    Thread.Sleep(100); // Pause for 100 ms between each particle effect frame
+
+                    // Clear particles
+                    for (int j = 0; j < 40; j++)
+                    {
+                        int px = centerX + random.Next(-radius, radius);
+                        int py = centerY + random.Next(-radius, radius);
+                        if (px >= 0 && px < width && py >= 0 && py < height)
+                        {
+                            Console.SetCursorPosition(px, py);
+                            Console.WriteLine(" ");
+                        }
+                    }
+                }
+
+                Thread.Sleep(300); // Pause after explosion completely fades
+            }
+
+
+            Console.SetCursorPosition(cursorPosX, cursorPosY);
+
+        }
+
+        public static void ShowLightning()
+        {
+            Thread.Sleep(200);
+
+            int cursorPosX = Console.CursorLeft;
+            int cursorPosY = Console.CursorTop;
+
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
+            Random random = new Random();
+
+            // Multiple explosions
+            for (int i = 0; i < 5; i++) // Number of lightning bolts
+            {
+                int x = random.Next(0, width - 10);
+                int startY = 1;
+                int endY = height;
+
+                // Create lightning fork
+                for (int y = startY; y < endY; y++)
+                {
+                    Console.SetCursorPosition(x, y);
+                    Console.WriteLine("|");
+
+                    // Randomly fork the lightning
+                    if (random.Next(0, 2) == 0) // 25% chance to fork
+                    {
+
+                        int forkX = x + random.Next(-3, 4);
+                        if (forkX >= 0 && forkX < width)
+                        {
+                            Console.SetCursorPosition(forkX, y);
+                            Console.WriteLine("V");
+                        }
+                    }
+
+                    Thread.Sleep(30); // Pause for 50 ms
+
+                    // Clear lightning path
+                    Console.SetCursorPosition(x, y);
+                    Console.WriteLine(" ");
+                }
+
+                for (int k = 0; k < 7; k++)
+                    {
+                        for (int j = 0; j < 7; j++)
+                        {
+                            int particleX = x + random.Next(-3, 4);
+                            int particleY = startY + random.Next(0, endY - startY);
+                            if (particleX >= 0 && particleX < width && particleY < height)
+                            {
+                                Console.SetCursorPosition(particleX, particleY);
+                                Console.WriteLine("*");
+                            }
+                        }
+                        Thread.Sleep(50); // Pause for 100 ms between each particle effect frame
+
+                        // Clear particles
+                        for (int j = 0; j < 3; j++)
+                        {
+                            int particleX = x + random.Next(-3, 4);
+                            int particleY = startY + random.Next(0, endY - startY);
+                            if (particleX >= 0 && particleX < width && particleY < height)
+                            {
+                                Console.SetCursorPosition(particleX, particleY);
+                                Console.WriteLine(" ");
+                            }
+                        }
+                    }
+
+                Thread.Sleep(100); // Pause after lightning completely vanishes
+            }
 
 
 
+            Console.SetCursorPosition(cursorPosX, cursorPosY);
+
+        }
+
+        public static void ShowDaggers()
+        {
+            Thread.Sleep(200);
+
+            int cursorPosX = Console.CursorLeft;
+            int cursorPosY = Console.CursorTop;
+
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
+            Random random = new Random();
+
+            // Multiple explosions
+            for (int i = 0; i < 20; i++) // Number of daggers
+            {
+                int x = random.Next(0, width - 10);
+                int y = random.Next(0, height - 1);
+
+                for (int j = 0; j < 5; j++) // Dagger moving to the right
+                {
+                    Console.SetCursorPosition(x + j, y);
+                    Console.WriteLine("0=[]===> ");
+                    Thread.Sleep(70); // Pause for 100 ms
+
+                    // Clear the dagger position for the next frame
+                    Console.SetCursorPosition(x + j, y);
+                    Console.WriteLine("          ");
+                }
+
+                // Particle effect for dagger vanishing
+                for (int k = 0; k < 3; k++)
+                {
+                    Console.SetCursorPosition(x + 5, y);
+                    if (k == 0)
+                    {
+                        Console.WriteLine("*   *   *");
+                    }
+                    else if (k == 1)
+                    {
+                        Console.WriteLine(" . * * . ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("  .   .  ");
+                    }
+                    Thread.Sleep(70); // Pause for 100 ms between each particle effect frame
+
+                    // Clear particle effect after each frame
+                    Console.SetCursorPosition(x + 5, y);
+                    Console.WriteLine("          ");
+                }
+
+                Thread.Sleep(200); // Pause after dagger completely vanishes
+            }
+
+            Console.SetCursorPosition(cursorPosX, cursorPosY);
+
+        }
+
+        public static void ShowSparks()
+        {
+            Thread.Sleep(200);
+
+            int cursorPosX = Console.CursorLeft;
+            int cursorPosY = Console.CursorTop;
+
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
+            Random random = new Random();
+
+            for (int i = 0; i < 20; i++) // Number of sparks
+            {
+                int x = random.Next(0, width - 7); // Adjusting width for the spark stages
+                int y = random.Next(0, height - 3);
+
+                // Stage 1: Spark igniting
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine("   *   ");
+                Thread.Sleep(200);
+
+                // Stage 2: Spark expanding
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine("  ***  ");
+                Console.SetCursorPosition(x, y + 1);
+                Console.WriteLine(" ***** ");
+                Console.SetCursorPosition(x, y + 2);
+                Console.WriteLine("  ***  ");
+                Thread.Sleep(300);
+
+                // Stage 3: Spark fading out
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine("  . .  ");
+                Console.SetCursorPosition(x, y + 1);
+                Console.WriteLine(" .     . ");
+                Console.SetCursorPosition(x, y + 2);
+                Console.WriteLine("  . .  ");
+                Thread.Sleep(150);
+
+                // Clear the spark
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine("       ");
+                Console.SetCursorPosition(x, y + 1);
+                Console.WriteLine("       ");
+                Console.SetCursorPosition(x, y + 2);
+                Console.WriteLine("       ");
+                Thread.Sleep(100);
+            }
 
 
+            Console.SetCursorPosition(cursorPosX, cursorPosY);
 
-
-
-
-
+        }
 
     }
 }

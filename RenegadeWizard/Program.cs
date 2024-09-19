@@ -10,16 +10,15 @@ using System.Numerics;
 
 List<Interaction> actions = PopulateActions();
 
+List<string> consoleBuffer = new List<string>();
 
 Console.SetBufferSize(300, 400);
 
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
-setbackground();
+Narrator.Setbackground();
 
-int round = 0;
-Scene.Round(round);
-
+Scene.NextRound();
 Narrator.ShowRoundInfo(actions);
 
 
@@ -43,13 +42,15 @@ while (true)
         ent.ApplyRoundEndEffects();
     }
 
-    round++;
-    Scene.Round(round);
+    Scene.Round++;
+    Scene.NextRound();
+
+    Narrator.ShowExplosions();
 
     Narrator.ContinuePrompt();
 
     Console.Clear();
-    setbackground();
+    Narrator.Setbackground();
     Narrator.ShowRoundInfo(actions);
 
 }
@@ -134,7 +135,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(0, 15); 
+        var spellCount = Random.Shared.Next(10, 12); 
 
         if (spellCount == 0)
         {
@@ -238,7 +239,7 @@ List<Interaction> PopulateActions()
 
         if (spellCount == 14)
         {
-            var enrageMonster = new Interaction(player, "EnragingSpell").SelectByName(1).Enrage();
+            var enrageMonster = new Interaction(player, "Enrage").SelectByName(1).Enrage();
             enrageMonster.Description = $"{player.Name} enrages [targets]!";
             actions.Add(enrageMonster);
         }
@@ -252,43 +253,3 @@ List<Interaction> PopulateActions()
     return actions;
 }
 
-
-void setbackground()
-{
-    //Some nice console art to act as background made by gpt
-
-    // Get the current console dimensions
-    int width = Console.WindowWidth;
-    int height = Console.WindowHeight;
-
-    char[] glitchChars = new char[]
-    {
-        '.', '*', '+', 'o', 'x'
-    };
-
-    // Fill the console with spaces to apply the background color
-
-    Console.Clear();
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            var ranInt = Random.Shared.Next(200);
-
-            if (ranInt < 1) // 5% chance to place a glitch character
-            {
-                Console.Write(glitchChars[Random.Shared.Next(glitchChars.Length)]);
-            }
-            else
-            {
-                Console.Write(' ');
-            }
-        }
-    }
-
-    Console.SetCursorPosition(100, height - 10);
-    Console.Write("\n         _.._\r\n       .' .-'`\r\n      /  /\r\n      |  |\r\n      \\  \\\r\n       '._'-._\r\n          ```");
-
-    // Reset the cursor position to the top-left corner
-    Console.SetCursorPosition(0, 0);
-}

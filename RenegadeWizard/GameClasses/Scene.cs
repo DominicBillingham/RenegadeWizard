@@ -20,30 +20,32 @@ namespace RenegadeWizard.GameClasses
         public static List<Entity> Entities { get; set; } = new();
         public static List<Entity> Reinforcements { get; set; } = new();
 
+        public static int Round = 0;
+
         static Scene()
         {
             Entities.Add(new Player("NotHarry"));
         }
 
 
-        public static void Round(int round)
+        public static void NextRound()
         {
 
-            if (round == 0)
+            if (Round == 0)
             {
                 Reinforcements.Add(new Gooseling());
                 Reinforcements.Add(new Gooseling());
                 Reinforcements.Add(new Gooseling());
             }
 
-            if (round == 3)
+            if (Round == 3)
             {
                 Console.Write(" # More geese are attacking!");
                 Reinforcements.Add(new Goose());
                 Reinforcements.Add(new Goose());
             }
 
-            if (round % 3 == 0 && round > 3)
+            if (Round % 3 == 0 && Round > 3)
             {
                 var enemyGroup = Random.Shared.Next(10);
 

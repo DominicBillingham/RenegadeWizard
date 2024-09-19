@@ -338,26 +338,30 @@ namespace RenegadeWizard.GameClasses
                     {
                         var newForm = new Sheep("Sheepy");
                         newForm.Faction = entity.Faction;
-                        newForm.Name = $"{entity.Name}theSheep";
+                        newForm.Name = $"{entity.Name}";
+                        newForm.IsPlayerControlled = entity.IsPlayerControlled;
                         polymorphedEntities.Add(newForm);
                     }
 
                     if (next == 1)
                     {
-                        var newForm = new Goblin("adasdsa");
+                        var newForm = new Sheep("Sheepy");
                         newForm.Faction = entity.Faction;
-                        newForm.Name = $"{entity.Name}theGoblin";
+                        newForm.Name = $"{entity.Name}";
+                        newForm.IsPlayerControlled = entity.IsPlayerControlled;
                         polymorphedEntities.Add(newForm);
-
-
                     }
+
 
                     if (next == 2)
                     {
                         var newForm = new Demon("adasdsa");
                         newForm.Faction = entity.Faction;
-                        newForm.Name = $"{entity.Name}theDemon";
+                        newForm.Name = $"{entity.Name}";
+                        newForm.IsPlayerControlled = entity.IsPlayerControlled;
                         polymorphedEntities.Add(newForm);
+
+                        Description = Description + " But the spell goes haywire and turns them into a DEMON instead!";
 
                     }
 
