@@ -332,7 +332,7 @@ namespace RenegadeWizard.GameClasses
 
                 foreach (var entity in Targets)
                 {
-                    var next = Random.Shared.Next(2, 3);
+                    var next = Random.Shared.Next(3);
 
                     if (next == 0)
                     {
