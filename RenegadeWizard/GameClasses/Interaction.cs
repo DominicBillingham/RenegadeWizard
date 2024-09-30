@@ -21,6 +21,7 @@ namespace RenegadeWizard.GameClasses
         public string Description { get; set; } = string.Empty;
         public Entity Agent { get; set; }
         public List<Entity> Targets { get; set; } = new();
+        public List<ActionTag> Tags { get; set; } = new();
         private int Power { get; set; } = 0;
         private int DamageDealt { get; set; } = 0;
         public bool RequiresTargets { get; set; } = false;

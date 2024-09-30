@@ -1,19 +1,23 @@
 ﻿using RenegadeWizard.Entities.Creatures;
+using RenegadeWizard.Enums;
 using System.Linq.Expressions;
+using System.Security.AccessControl;
 using System.Text;
 
 namespace RenegadeWizard.GameClasses
 {
     internal static class Narrator
     {
-        public static void ShowRoundInfo(List<Interaction> actions)
+        public static void ShowRoundInfo()
         {
+
+            var actions = PlayerFunctionality.AllPlayerActions;
 
             Console.WriteLine();
             Console.WriteLine("0=[]:::::::::>  Fight!  <:::::::::[]=0");
 
             Console.Write($" - Actions: ");
-            foreach (var action in actions.Where(x => x.IsSpell == false))
+            foreach (var action in actions.Where(x => x.Tags.Contains(ActionTag.Player)))
             {
                 Console.Write($"[{action.Name}] ");
             }
@@ -21,7 +25,7 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
 
             Console.Write($" - Spells: ");
-            foreach (var action in actions.Where(x => x.IsSpell == true))
+            foreach (var action in actions.Where(x => x.Tags.Contains(ActionTag.Spell)))
             {
                 Console.Write($"[{action.Name}] ");
             }
