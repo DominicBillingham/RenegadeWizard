@@ -14,8 +14,14 @@ Console.SetBufferSize(300, 400);
 Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 Narrator.Setbackground();
-Scene.NextRound();
 
+Narrator.ShowTitleCard();
+Thread.Sleep(2000);
+Narrator.ShowExplosions();
+Narrator.Setbackground();
+
+
+Scene.NextRound();
 PlayerFunctionality.AddSpells();
 Narrator.ShowRoundInfo();
 

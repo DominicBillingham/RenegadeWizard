@@ -125,6 +125,35 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine(" - - - - - - - ?  Help  ? - - - - - - - ");
             Console.WriteLine();
         }
+
+        public static void ShowTitleCard()
+        {
+            Console.WriteLine("" +
+
+                "                                                                                                                         " + "\n" +
+                "                                                                                                                         " + "\n" +
+                "                                                                                                                         " + "\n" +
+                "                                                                                                                         " + "\n" +
+                "                                                                                                           *               " + "\n" +
+                @"                                                                                               /\                         " + "\n" +
+                @"       [][]    [][][]  []  []  [][][]  [][][]    []    [][]    [][][]                        //  \\     *       *         " + "\n" +
+                @"       []  []  []      [][ []  []      []       [][]   []  []  []                          ///    \\----.   *             " + "\n" +
+                @"       [][]    [][][]  [] ][]  [][][]  []  []  []  []  []  []  [][][]                     //       \\    \                " + "\n" +
+                @"       []  []  []      []  []  []      []  []  []  []  []  []  []                        //  /\  /\/\\    |  *   *        " + "\n" +
+                @"       []  []  [][][]  []  []  [][][]  [][][]  []  []  [][]    [][][]                    |/\/  \/    \\   |               " + "\n" +
+                @"                                                                                        //        .  \\  /  *             " + "\n" +
+                @"                                                                                       //    .         \       *          " + "\n" +
+                @"                             W  W  W  WWWWW   WWWW     WW    WWWW    WWWW            //         V      \\                 " + "\n" +
+                @"                             W  W  W    |         W   WWWW   W   WW  W   W          //     V         .  ||                " + "\n" +
+                @"                             W  W  W    |     WWWW   W    W  WWWWW   W   W         ||         .          \\               " + "\n" +
+                @"                             W  W  W    |    W       W    W  W    W  W   W        //      V        V     \\               " + "\n" +
+                @"                              WW WW   WWWWWW  WWWW   W    W  W    W  WWWW        //    .      .            \\             " + "\n" +
+                @"                                                                               ///                    V     \\\           " + "\n" +
+                @"                                                                              ///  .   V        .         .  \\\          " + "\n" +
+                "");
+        }
+
+
         public static void ShowIntro()
         {
 
@@ -148,7 +177,7 @@ namespace RenegadeWizard.GameClasses
         }
         public static void ContinuePrompt()
         {
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.Cyan;
 
             Console.WriteLine();
             Console.WriteLine(" - Press [SPACE] to continue...");
@@ -277,7 +306,6 @@ namespace RenegadeWizard.GameClasses
 
         public static void ShowExplosions()
         {
-            Thread.Sleep(500);
 
             int cursorPosX = Console.CursorLeft;
             int cursorPosY = Console.CursorTop;
@@ -287,7 +315,7 @@ namespace RenegadeWizard.GameClasses
             Random random = new Random();
 
             // Multiple explosions
-            for (int i = 0; i < 10; i++) // Number of explosions
+            for (int i = 0; i < 20; i++) // Number of explosions
             {
                 int x = random.Next(0, width - 10);
                 int y = random.Next(0, height - 5);

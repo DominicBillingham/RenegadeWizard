@@ -11,6 +11,12 @@ namespace RenegadeWizard.Enums
         Player,
         Spell,
         Ability,
+        Defensive,
+        Offensive,
+        Modifier,
+        Damaging,
+        NeedsTarget,
+        FreeAction,
 
 
     }
