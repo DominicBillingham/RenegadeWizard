@@ -14,7 +14,7 @@ namespace RenegadeWizard.Entities.Creatures.Misc
         public Player(string name)
         {
             Name = name;
-            Health = 777;
+            Health = 20;
             Description = "Admiring yourself I see?";
             Attributes = new Attributes(10, 10, 10);
             Faction = Factions.Player;

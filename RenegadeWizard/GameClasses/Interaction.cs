@@ -643,7 +643,8 @@ namespace RenegadeWizard.GameClasses
 
                 string targetString = string.Join(", ", Targets.Select(x => x.Name));
                 Description = Description.Replace("[targets]", targetString);
-                Console.Write($" # {Description}");
+
+                Narrator.ScrollText($" # {Description}");
 
                 Console.WriteLine();
             }

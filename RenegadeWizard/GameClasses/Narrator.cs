@@ -219,6 +219,16 @@ namespace RenegadeWizard.GameClasses
             return grimVoicelines[r];
         }
 
+
+        public static void ScrollText(string input)
+        {
+            foreach (char c in input)
+            {
+                Console.Write(c);
+                Thread.Sleep(6);
+            }
+        }
+
         // Some very entertaining methods made by chatgpt for animations
 
         public static void Setbackground()

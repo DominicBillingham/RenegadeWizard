@@ -30,6 +30,8 @@ while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed ==
     {
         if (ent.IsDestroyed) { continue; }
         PlayerTurn(ent);
+        Thread.Sleep(750);
+
     }
 
     var npcs = new EntQuery().SelectNpcs().SelectLiving().GetAll();
@@ -37,6 +39,8 @@ while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed ==
     {
         if (ent.IsDestroyed) { continue; }
         ent.TakeTurn();
+        Thread.Sleep(750);
+
     }
 
     if (npcs.Any())
