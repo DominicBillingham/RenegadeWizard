@@ -38,7 +38,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             {
                 var peck = new Interaction(this, "Retalitory Peck").ApplyDamage(1);
                 peck.Targets.Add(trigger.Agent);
-                peck.Description = $"{Name} takes damage and bites [targets] in response!";
+                peck.Description = $"{Name} takes damage and bites {trigger.Agent.Name} in response!";
                 trigger.FollowupInteraction = peck;
             }
 

@@ -175,7 +175,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(8, 9); 
+        var spellCount = Random.Shared.Next(0, 15); 
 
         if (spellCount == 0)
         {
@@ -189,7 +189,7 @@ List<Interaction> PopulateActions()
         if (spellCount == 1)
         {
             var thunderstorm = new Interaction(player, "ThunderStorm").SelectRandom().SelectRandom().SelectRandom().ApplyDamage(3);
-            thunderstorm.Description = $"{player.Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, they strike [targets]!";
+            thunderstorm.Description = $"{player.Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning!";
             thunderstorm.IsSpell = true;
             actions.Add(thunderstorm);
 
@@ -223,7 +223,7 @@ List<Interaction> PopulateActions()
         if (spellCount == 5)
         {
             var daggerSpray = new Interaction(player, "DaggerSpray").SelectAllEnemies().ApplyDamage(1).ApplyCondition(new Wounded(3));
-            daggerSpray.Description = $"{player.Name} conjures a fan of {Narrator.GetPowerfulWord()} daggers slashing [targets]!";
+            daggerSpray.Description = $"{player.Name} conjures a fan of {Narrator.GetPowerfulWord()} daggers!";
             daggerSpray.IsSpell = true;
             actions.Add(daggerSpray);
         }
@@ -239,7 +239,7 @@ List<Interaction> PopulateActions()
         if (spellCount == 7)
         {
             var thunderBall = new Interaction(player, "ThunderNova").SelectAllEnemies().ApplyDamage(3);
-            thunderBall.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} thunder nova smashing [targets]!";
+            thunderBall.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} thunder nova!";
             thunderBall.IsSpell = true;
             actions.Add(thunderBall);
         }

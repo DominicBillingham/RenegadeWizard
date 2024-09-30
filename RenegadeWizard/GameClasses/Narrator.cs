@@ -74,6 +74,7 @@ namespace RenegadeWizard.GameClasses
 
             }
 
+            Console.WriteLine();
 
             if (Scene.Reinforcements.Count > 0 || Scene.Allies.Count > 0)
             {

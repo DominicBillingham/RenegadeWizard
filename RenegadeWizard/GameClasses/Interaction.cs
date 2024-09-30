@@ -324,9 +324,22 @@ namespace RenegadeWizard.GameClasses
                 {
                     if (entity.IsDestroyed)
                     {
+
+                        Scene.Entities.Remove(entity);
+
                         entity.Health = 1;
                         entity.Faction = Agent.Faction;
                         entity.Name = $"Zombie{entity.Name}";
+
+                        if (entity.Faction == Factions.Player)
+                        {
+                            Scene.Allies.Add(entity);
+                        } 
+                        else
+                        {
+                            Scene.Reinforcements.Add(entity);
+                        }
+
                     }
                     else
                     {
@@ -357,6 +370,8 @@ namespace RenegadeWizard.GameClasses
                         newForm.Name = $"{entity.Name}";
                         newForm.IsPlayerControlled = entity.IsPlayerControlled;
                         polymorphedEntities.Add(newForm);
+                        Description += $" turning {entity.Name} into a cute fluffy sheep!";
+
                     }
 
                     if (next == 1)
@@ -366,6 +381,7 @@ namespace RenegadeWizard.GameClasses
                         newForm.Name = $"{entity.Name}";
                         newForm.IsPlayerControlled = entity.IsPlayerControlled;
                         polymorphedEntities.Add(newForm);
+                        Description += $" turning {entity.Name} into a cute fluffy sheep!";
                     }
 
 
@@ -621,6 +637,7 @@ namespace RenegadeWizard.GameClasses
             if (Description != string.Empty)
             {
                 Console.WriteLine();
+
                 string targetString = string.Join(", ", Targets.Select(x => x.Name));
                 Description = Description.Replace("[targets]", targetString);
                 Console.Write($" # {Description}");

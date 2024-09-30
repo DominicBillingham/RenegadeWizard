@@ -38,14 +38,14 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             if (action == 1)
             {
                 var thunderstorm = new Interaction(this, "ThunderStorm").SelectRandom().SelectRandom().SelectRandom().ApplyDamage(2);
-                thunderstorm.Description = $"{Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning, striking [targets]!";
+                thunderstorm.Description = $"{Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning!";
                 thunderstorm.Execute();
             }
 
             if (action == 2)
             {
                 var magicMissle = new Interaction(this, "ArcaneMissle").SelectRandomEnemy().ApplyDamage(1).ApplyDamage(1).ApplyDamage(1);
-                magicMissle.Description = $"{Name} casts a {Narrator.GetPowerfulWord()} missle barrage at [targets]!";
+                magicMissle.Description = $"{Name} casts a {Narrator.GetPowerfulWord()} missle barrage!";
                 magicMissle .Execute();
             }
 
