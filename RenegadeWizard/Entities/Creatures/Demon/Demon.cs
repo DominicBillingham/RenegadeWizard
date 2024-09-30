@@ -29,7 +29,7 @@ namespace RenegadeWizard.Entities.Creatures
             var bite = new Interaction(this, "Devour").SelectRandomEnemy().ApplyDamage(4);
             bite.Description = $"{Name} devours poor [targets]";
             var claws = new Interaction(this, "Slash").SelectRandomEnemy().SelectRandomEnemy().ApplyDamage(3);
-            claws.Description = $"{Name} slashes at [targets]";
+            claws.Description = $"{Name} swipes with jagged claws]";
 
 
             if (Random.Shared.Next(2) == 0)
