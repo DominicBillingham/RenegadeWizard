@@ -26,6 +26,7 @@ namespace RenegadeWizard.GameClasses
         public bool RequiresTargets { get; set; } = false;
         public bool FreeAction { get; set; } = false;
         public bool IsSpell { get; set; } = false;
+        public int ManabloomChance { get; set; } = 0;
 
         private List<Action> ActionComponents = new();
 

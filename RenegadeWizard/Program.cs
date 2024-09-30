@@ -67,8 +67,11 @@ while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed ==
 
 Console.WriteLine();
 Console.WriteLine();
-Console.WriteLine(" # You've died womp womp");
 Narrator.ShowBoom();
+
+
+Console.WriteLine("                                      You've died womp womp                              ");
+
 Narrator.ContinuePrompt();
 
 void PlayerTurn(Entity player)
