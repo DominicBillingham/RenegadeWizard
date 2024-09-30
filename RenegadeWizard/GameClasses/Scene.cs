@@ -19,6 +19,7 @@ namespace RenegadeWizard.GameClasses
     {
         public static List<Entity> Entities { get; set; } = new();
         public static List<Entity> Reinforcements { get; set; } = new();
+        public static List<Entity> Allies { get; set; } = new();
 
         public static int Round = 0;
 
@@ -121,6 +122,7 @@ namespace RenegadeWizard.GameClasses
             }
 
             AddReinforcements();
+            AddAllies();
 
         }
 
@@ -130,12 +132,12 @@ namespace RenegadeWizard.GameClasses
             var creatures = new EntQuery().SelectHostiles(Factions.Player).SelectCreatures().GetAll();
             var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Factions.Player).GetAll();
 
-            if (Reinforcements.Count == 0 || livingCreatures.Count > 4)
+            if (Reinforcements.Count == 0 || livingCreatures.Count > 3)
             {
                 return;
             }
 
-            if (creatures.Count < 5)
+            if (creatures.Count < 4)
             {
                 var ent = Reinforcements.First();
                 Entities.Add(ent);
@@ -153,6 +155,39 @@ namespace RenegadeWizard.GameClasses
                 AddReinforcements();
             }
         }
+
+        public static void AddAllies()
+        {
+
+            var creatures = new EntQuery().SelectAllies(Factions.Player).SelectCreatures().GetAll();
+            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Factions.Player).GetAll();
+
+            if (Allies.Count == 0 || livingCreatures.Count > 2)
+            {
+                return;
+            }
+
+            if (creatures.Count < 3)
+            {
+                var ent = Allies.First();
+                Entities.Add(ent);
+                Allies.Remove(ent);
+                AddAllies();
+            }
+            else
+            {
+                var dead = creatures.First(x => x.IsDestroyed);
+                Entities.Remove(dead);
+
+                var ent = Allies.First();
+                Entities.Add(ent);
+                Allies.Remove(ent);
+                AddAllies();
+            }
+        }
+
+
+
     }
 }
 

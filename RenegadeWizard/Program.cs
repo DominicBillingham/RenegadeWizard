@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Numerics;
+using RenegadeWizard.Entities.Creatures.Geese;
 
 List<Interaction> actions = PopulateActions();
 
@@ -84,7 +85,31 @@ void PlayerTurn(Entity player)
             continue;
         }
 
-        var spell = actions.FirstOrDefault(spell => input.Any(word => spell.Name.ToLower().Contains(word)));
+        Interaction spell = null;
+
+        foreach (var word in input)
+        {
+            
+            foreach (var action in actions)
+            {
+
+                if (action.Name.ToLower().Contains(word))
+                {
+                    spell = action; break;
+                }
+
+                foreach (var synonym in action.Synonyms)
+                {
+                    if (synonym.ToLower().Contains(word))
+                    {
+                        spell = action; break;
+                    }
+                }
+
+            }
+
+        }
+
 
         if (spell == null)
         {
@@ -145,11 +170,12 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(0, 15); 
+        var spellCount = Random.Shared.Next(0, 1); 
 
         if (spellCount == 0)
         {
             var fireball = new Interaction(player, "Fireball").SelectAllEnemies().ApplyCondition(new Burning(2));
+            fireball.Synonyms = new List<string> { "Bang", "Wallop", "Boom" };
             fireball.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} fireball, burning [targets]!";
             fireball.IsSpell = true;
             actions.Add(fireball);

@@ -17,6 +17,7 @@ namespace RenegadeWizard.GameClasses
     public class Interaction
     {
         public string Name { get; set; }
+        public List<string> Synonyms { get; set; } = new();
         public string Description { get; set; } = string.Empty;
         public Entity Agent { get; set; }
         public List<Entity> Targets { get; set; } = new();
@@ -286,7 +287,7 @@ namespace RenegadeWizard.GameClasses
             {
                 var gobbo = new Goblin(name);
                 gobbo.Faction = faction;
-                Scene.Entities.Add(gobbo);
+                Scene.Allies.Add(gobbo);
             });
             return this;
         }
