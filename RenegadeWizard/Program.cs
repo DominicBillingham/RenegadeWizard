@@ -271,7 +271,7 @@ List<Interaction> PopulateActions()
         if (spellCount == 11)
         {
             var polymorph = new Interaction(player, "Polymorph").SelectByName(1).Polymorph();
-            polymorph.Description = $"{player.Name} turns [targets] into a sheep!";
+            polymorph.Description = $"{player.Name} waves a wand and casts polymorph!";
             polymorph.IsSpell = true;
             actions.Add(polymorph);
         }

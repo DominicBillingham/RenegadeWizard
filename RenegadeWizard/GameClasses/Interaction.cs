@@ -444,6 +444,9 @@ namespace RenegadeWizard.GameClasses
                         entity.ApplyDamage(totalDamage, Name);
                     }
 
+                    Description += $" {target.Name} explodes dealing -{totalDamage}hp to ALL!";
+
+
                 }
 
             });
