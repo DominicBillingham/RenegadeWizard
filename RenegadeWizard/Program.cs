@@ -306,7 +306,7 @@ List<Interaction> PopulateActions()
     inspect.FreeAction = true;
     actions.Add(inspect);
 
-    var skip = new Interaction(player, "skip");
+    var skip = new Interaction(player, "Skip");
     actions.Add(skip);
 
     return actions;

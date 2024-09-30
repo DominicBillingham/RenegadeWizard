@@ -242,13 +242,20 @@ namespace RenegadeWizard.GameClasses
 
                     entity.ApplyDamage(damage, Name);
                     entity.WhenDamaged(this);
+                    DamageDealt += damage;
+
+
 
                     if (entity.IsDestroyed)
                     {
-                        Description += $" - Destroying {entity.Name}";
+                        Description += $" | Destroying {entity.Name}";
+                    } 
+                    else
+                    {
+                        Description += $" | {entity.Name} -{damage}hp";
                     }
 
-                    DamageDealt += damage;
+
                 }
             });
             return this;
@@ -617,6 +624,7 @@ namespace RenegadeWizard.GameClasses
                 string targetString = string.Join(", ", Targets.Select(x => x.Name));
                 Description = Description.Replace("[targets]", targetString);
                 Console.Write($" # {Description}");
+
                 Console.WriteLine();
             }
 

@@ -74,6 +74,12 @@ namespace RenegadeWizard.GameClasses
 
             }
 
+
+            if (Scene.Reinforcements.Count > 0 || Scene.Allies.Count > 0)
+            {
+                Console.WriteLine($" - Reinforcements: +{Scene.Reinforcements.Count} Hostiles, +{Scene.Allies.Count} Allies");
+            }
+
             var deadCreatures = new EntQuery().SelectCreatures().SelectDead().GetAll().OrderBy(ent => ent.Faction);
 
             if (deadCreatures.Any())
@@ -96,11 +102,6 @@ namespace RenegadeWizard.GameClasses
                 Console.WriteLine();
             }
 
-
-            if (Scene.Reinforcements.Count > 0)
-            {
-                Console.WriteLine($" - +{Scene.Reinforcements.Count} Reinforcements");
-            }
 
             Console.WriteLine();
 
