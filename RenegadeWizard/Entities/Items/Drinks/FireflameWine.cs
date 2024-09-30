@@ -29,10 +29,7 @@ namespace RenegadeWizard.Entities.Items.Drinks
             Scene.Entities.Remove(this);
             return 1;
         }
-        public override void SelfDestruct()
-        {
-            base.SelfDestruct();
-        }
+
 
     }
 

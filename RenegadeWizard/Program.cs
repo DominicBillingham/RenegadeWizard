@@ -39,6 +39,11 @@ while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed ==
         ent.TakeTurn();
     }
 
+    if (npcs.Any())
+    {
+        Console.WriteLine();
+    }
+
     var ents = Scene.Entities;
     foreach (var ent in ents)
     {
@@ -170,7 +175,7 @@ List<Interaction> PopulateActions()
 
     for (int i = 0; i < 4; i++)
     {
-        var spellCount = Random.Shared.Next(0, 1); 
+        var spellCount = Random.Shared.Next(8, 9); 
 
         if (spellCount == 0)
         {
@@ -300,6 +305,9 @@ List<Interaction> PopulateActions()
     var inspect = new Interaction(player, "Inspect").Inspect();
     inspect.FreeAction = true;
     actions.Add(inspect);
+
+    var skip = new Interaction(player, "skip");
+    actions.Add(skip);
 
     return actions;
 }

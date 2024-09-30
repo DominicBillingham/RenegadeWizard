@@ -123,6 +123,7 @@ namespace RenegadeWizard.GameClasses
 
             AddReinforcements();
             AddAllies();
+            CorpseCleanup();
 
         }
 
@@ -137,23 +138,11 @@ namespace RenegadeWizard.GameClasses
                 return;
             }
 
-            if (creatures.Count < 4)
-            {
-                var ent = Reinforcements.First();
-                Entities.Add(ent);
-                Reinforcements.Remove(ent);
-                AddReinforcements();
-            }
-            else
-            {
-                var dead = creatures.First(x => x.IsDestroyed);
-                Entities.Remove(dead);
-
-                var ent = Reinforcements.First();
-                Entities.Add(ent);
-                Reinforcements.Remove(ent);
-                AddReinforcements();
-            }
+            var ent = Reinforcements.First();
+            Entities.Add(ent);
+            Reinforcements.Remove(ent);
+            AddReinforcements();
+            
         }
 
         public static void AddAllies()
@@ -167,26 +156,22 @@ namespace RenegadeWizard.GameClasses
                 return;
             }
 
-            if (creatures.Count < 3)
-            {
-                var ent = Allies.First();
-                Entities.Add(ent);
-                Allies.Remove(ent);
-                AddAllies();
-            }
-            else
-            {
-                var dead = creatures.First(x => x.IsDestroyed);
-                Entities.Remove(dead);
-
-                var ent = Allies.First();
-                Entities.Add(ent);
-                Allies.Remove(ent);
-                AddAllies();
-            }
+            var ent = Allies.First();
+            Entities.Add(ent);
+            Allies.Remove(ent);
+            AddAllies();
         }
 
-
+        public static void CorpseCleanup()
+        {
+            var deadCreatures = new EntQuery().SelectCreatures().SelectDead().GetAll();
+            if (deadCreatures.Count < 6)
+            {
+                return;
+            }
+            Entities.Remove(deadCreatures.First());
+            CorpseCleanup();
+        }
 
     }
 }

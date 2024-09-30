@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using RenegadeWizard.Entities.Creatures;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace RenegadeWizard.GameClasses
@@ -32,42 +33,20 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
 
 
-            var creatures = new EntQuery().SelectCreatures().GetAll().OrderBy(ent => ent.Faction);
+            var LivingCreatures = new EntQuery().SelectCreatures().SelectLiving().GetAll().OrderBy(ent => ent.Faction);
 
-            foreach (var creature in creatures)
+            foreach (var creature in LivingCreatures)
             {
-                if (creature.IsDestroyed == false)
+
+                Console.Write($" -");
+                if (creature.Faction == Enums.Factions.Player)
                 {
-
-                    Console.Write($" -");
-                    if (creature.Faction == Enums.Factions.Player)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                    }
-                    Console.Write($" [{creature.Name}]");
-
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write($" the {creature.GetType().Name} has {creature.Health}hp");
-
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                 }
-                else
-                {
-                    Console.Write($" -");
-                    if (creature.Faction == Enums.Factions.Player)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                    }
-                    Console.Write($" [{creature.Name}]");
+                Console.Write($" [{creature.Name}]");
 
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    Console.Write($" the {creature.GetType().Name} is");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(" DEAD");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    creature.DamageTakenLastRound = 0;
-                }
-
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write($" the {creature.GetType().Name} has {creature.Health}hp");
 
                 if (creature.DamageTakenLastRound > 0)
                 {
@@ -94,6 +73,29 @@ namespace RenegadeWizard.GameClasses
                 Console.WriteLine();
 
             }
+
+            var deadCreatures = new EntQuery().SelectCreatures().SelectDead().GetAll().OrderBy(ent => ent.Faction);
+
+            if (deadCreatures.Any())
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(" - DEAD:");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                foreach (var dead in deadCreatures)
+                {
+                    if (dead.Faction == Enums.Factions.Player)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                    }
+                    Console.Write($" [{dead.Name}]");
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+
+                Console.WriteLine();
+            }
+
 
             if (Scene.Reinforcements.Count > 0)
             {

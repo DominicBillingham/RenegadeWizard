@@ -63,6 +63,7 @@ namespace RenegadeWizard.Entities
                 DamageTakenLastRound += damage;
                 Health -= damage;
                 BattleLog += $" -{damage}hp from {source} |";
+
             }
         }
 
@@ -121,9 +122,9 @@ namespace RenegadeWizard.Entities
 
         #endregion
 
-        public virtual void SelfDestruct()
+        public virtual void DeathMessage()
         {
-            Console.Write($"{Name} has been destroyed | ");
+            Console.Write($" - {Name} has been destroyed");
         }
 
     }

@@ -21,7 +21,6 @@ namespace RenegadeWizard.Entities.Items.Drinks
         public override int WhenThrown(Entity target, Entity thrower)
         {
             target.ApplyDamage(2, $"{Name} thrown by {thrower.Name}");
-            SelfDestruct();
             return 1;
         }
         public override int WhenConsumed(Entity consume)
@@ -32,12 +31,7 @@ namespace RenegadeWizard.Entities.Items.Drinks
             Scene.Entities.Remove(this);
             return 1;
         }
-        public override void SelfDestruct()
-        {
-            base.SelfDestruct();
-            Console.Write($" releasing a Demon!");
-            //Scene.Entities.Add(new Demon("Demon"));
-        }
+
 
     }
 

@@ -8,8 +8,8 @@ namespace RenegadeWizard.Enums
 {
     public enum Factions
     {
-        None,
         Player,
+        None,
         Demon,
         Goblin,
         Zombie,

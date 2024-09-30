@@ -241,6 +241,12 @@ namespace RenegadeWizard.GameClasses
 
                     entity.ApplyDamage(damage, Name);
                     entity.WhenDamaged();
+
+                    if (entity.IsDestroyed)
+                    {
+                        Description += $" - Destroying {entity.Name}";
+                    }
+
                     DamageDealt += damage;
                 }
             });
