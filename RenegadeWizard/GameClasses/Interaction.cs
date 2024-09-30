@@ -30,6 +30,7 @@ namespace RenegadeWizard.GameClasses
         private List<Action> ActionComponents = new();
 
         private List<Action> TargetComponents = new();
+        public Interaction? FollowupInteraction { get; set; } = null;
 
         public Interaction(Entity agent, string name)
         {
@@ -216,7 +217,7 @@ namespace RenegadeWizard.GameClasses
                 damage = immortal?.ModifyDamageTaken(damage) ?? damage;
 
                 Agent.ApplyDamage(damage, Name);
-                Agent.WhenDamaged();
+                Agent.WhenDamaged(this);
                 
             });
             return this;
@@ -240,7 +241,7 @@ namespace RenegadeWizard.GameClasses
                     damage = immortal?.ModifyDamageTaken(damage) ?? damage;
 
                     entity.ApplyDamage(damage, Name);
-                    entity.WhenDamaged();
+                    entity.WhenDamaged(this);
 
                     if (entity.IsDestroyed)
                     {
@@ -617,6 +618,11 @@ namespace RenegadeWizard.GameClasses
                 Description = Description.Replace("[targets]", targetString);
                 Console.Write($" # {Description}");
                 Console.WriteLine();
+            }
+
+            if (FollowupInteraction != null)
+            {
+                FollowupInteraction.Execute();
             }
 
 

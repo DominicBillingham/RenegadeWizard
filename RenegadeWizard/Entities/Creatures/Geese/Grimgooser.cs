@@ -48,7 +48,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
 
         }
 
-        public override void WhenDamaged()
+        public override void WhenDamaged(Interaction? trigger = null)
         {
             DamageCount++;
         }

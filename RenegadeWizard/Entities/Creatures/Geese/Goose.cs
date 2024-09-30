@@ -25,16 +25,26 @@ namespace RenegadeWizard.Entities.Creatures.Geese
 
         public override void TakeTurn()
         {
+            if (IsDestroyed) return;
             var peck = new Interaction(this, "Bite").SelectRandomEnemy().ApplyDamage(2);
             peck.Description = $"{Name} bites [targets], with intent to wound!";
             peck.Execute();
         }
 
-        public override void WhenDamaged()
+        public override void WhenDamaged(Interaction? trigger = null)
         {
-            var peck = new Interaction(this, "Retalitory Peck").SelectRandomEnemy().ApplyDamage(1);
-            peck.Description = $"{Name} takes damage and bites [targets] in response!";
-            peck.Execute();
+            if (IsDestroyed) return;
+            if (trigger != null)
+            {
+                var peck = new Interaction(this, "Retalitory Peck").ApplyDamage(1);
+                peck.Targets.Add(trigger.Agent);
+                peck.Description = $"{Name} takes damage and bites [targets] in response!";
+                trigger.FollowupInteraction = peck;
+            }
+
+
+
+
         }
 
         private string GetName()

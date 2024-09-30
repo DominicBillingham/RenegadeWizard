@@ -4,7 +4,6 @@ using RenegadeWizard.Enums;
 using RenegadeWizard.GameClasses;
 using static System.Net.Mime.MediaTypeNames;
 using RenegadeWizard.Entities.Creatures;
-using Microsoft.VisualBasic;
 using System.Reflection;
 
 namespace RenegadeWizard.Entities
@@ -25,13 +24,14 @@ namespace RenegadeWizard.Entities
         public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();
         public Attributes? Attributes { get; set; }
 
+
         #region WhenMethods
-        public virtual void WhenDamaged()
+        public virtual void WhenDamaged(Interaction? trigger = null)
         {
 
         }
 
-        public virtual void WhenHealed()
+        public virtual void WhenHealed(Interaction? trigger = null)
         {
 
         }
