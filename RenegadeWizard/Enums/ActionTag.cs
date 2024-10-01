@@ -15,8 +15,17 @@ namespace RenegadeWizard.Enums
         Offensive,
         Modifier,
         Damaging,
-        NeedsTarget,
         FreeAction,
+        AffectsAllEnemies,
+        AffectsAllCreatures,
+        AffectsSingleTarget,
+        RequiresTargetName,
+        Loud,
+        Quiet,
+        Destructive,
+        Igniting,
+
+
 
 
     }

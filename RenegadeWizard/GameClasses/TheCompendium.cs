@@ -110,20 +110,20 @@ namespace RenegadeWizard.GameClasses
 
             var fireball = new Interaction(CompendiumHuman, "Fireball").SelectAllEnemies().ApplyCondition(new Burning(2));
             fireball.Synonyms = new List<string> { "Bang", "Wallop", "Boom" };
-            fireball.Tags = new List<ActionTag> { ActionTag.Spell };
+            fireball.Tags = new List<ActionTag> { ActionTag.Spell, ActionTag.AffectsAllEnemies, ActionTag.Offensive, ActionTag.Igniting };
             fireball.Description = $"{CompendiumHuman.Name} casts a {Narrator.GetPowerfulWord()} fireball, burning [targets]!";
             fireball.CompendiumNote = "Sets all hostile enemies on fire, but doesn't deal any damage directly. Becareful, fire spreads!";
             Actions.Add(fireball);
 
             var thunderstorm = new Interaction(CompendiumHuman, "ThunderStorm").SelectRandom().SelectRandom().SelectRandom().ApplyDamage(3);
             thunderstorm.Description = $"{CompendiumHuman.Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning!";
-            thunderstorm.Tags = new List<ActionTag> { ActionTag.Spell };
+            thunderstorm.Tags = new List<ActionTag> { ActionTag.Spell, ActionTag.AffectsAllCreatures, ActionTag.Loud, ActionTag.Damaging };
             thunderstorm.CompendiumNote = "Rains down 3 bolts of lightning, that strike randomly (that includes you!)";
             Actions.Add(thunderstorm);
 
             var heal = new Interaction(CompendiumHuman, "HealingBurst").SelectAll().ApplyHealing(3);
             heal.Description = $"{CompendiumHuman.Name} casts a {Narrator.GetPowerfulWord()} healing nova restoring health!";
-            heal.Tags = new List<ActionTag> { ActionTag.Spell };
+            heal.Tags = new List<ActionTag> { ActionTag.Spell, ActionTag.AffectsAllCreatures };
             heal.CompendiumNote = "Heals everyone 3 health, that's right, EVERYONE!";
             Actions.Add(heal);
 
@@ -196,12 +196,6 @@ namespace RenegadeWizard.GameClasses
             Actions.Add(enrageMonster);
 
         }
-
-
-
-
-
-
 
     }
 }

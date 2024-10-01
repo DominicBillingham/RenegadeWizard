@@ -132,7 +132,7 @@ namespace RenegadeWizard.GameClasses
 
             var inspect = new Interaction(player, "Inspect").Inspect();
             inspect.FreeAction = true;
-            inspect.Tags = new List<ActionTag> { ActionTag.Player };
+            inspect.Tags = new List<ActionTag> { ActionTag.Player, ActionTag.RequiresTargetName, ActionTag.Quiet };
             actions.Add(inspect);
 
             var skip = new Interaction(player, "Skip");
@@ -150,7 +150,7 @@ namespace RenegadeWizard.GameClasses
                     var fireball = new Interaction(player, "Fireball").SelectAllEnemies().ApplyCondition(new Burning(2));
 
                     fireball.Synonyms = new List<string> { "Bang", "Wallop", "Boom" };
-                    fireball.Tags = new List<ActionTag> { ActionTag.Spell };
+                    fireball.Tags = new List<ActionTag> { ActionTag.Spell, ActionTag.AffectsAllEnemies, ActionTag.Offensive, ActionTag.Igniting };
                     fireball.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} fireball, burning [targets]!";
 
                     actions.Add(fireball);
@@ -160,7 +160,7 @@ namespace RenegadeWizard.GameClasses
                 {
                     var thunderstorm = new Interaction(player, "ThunderStorm").SelectRandom().SelectRandom().SelectRandom().ApplyDamage(3);
                     thunderstorm.Description = $"{player.Name} rains down {Narrator.GetPowerfulWord()} bolts of lightning!";
-                    thunderstorm.Tags = new List<ActionTag> { ActionTag.Spell };
+                    thunderstorm.Tags = new List<ActionTag> { ActionTag.Spell, ActionTag.AffectsAllCreatures, ActionTag.Loud, ActionTag.Damaging };
                     actions.Add(thunderstorm);
 
                 }
@@ -169,7 +169,7 @@ namespace RenegadeWizard.GameClasses
                 {
                     var heal = new Interaction(player, "HealingBurst").SelectAll().ApplyHealing(3);
                     heal.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} healing nova restoring health!";
-                    heal.Tags = new List<ActionTag> { ActionTag.Spell };
+                    heal.Tags = new List<ActionTag> { ActionTag.Spell, ActionTag.AffectsAllCreatures };
                     actions.Add(heal);
                 }
 
@@ -177,7 +177,7 @@ namespace RenegadeWizard.GameClasses
                 {
                     var leech = new Interaction(player, "LifeSteal").SelectAllEnemies().ApplyDamage(1).Lifesteal();
                     leech.Description = $"{player.Name} casts a {Narrator.GetPowerfulWord()} lifestealing nova!";
-                    leech.Tags = new List<ActionTag> { ActionTag.Spell };
+                    leech.Tags = new List<ActionTag> { ActionTag.Spell, ActionTag.Offensive, ActionTag.Damaging };
                     actions.Add(leech);
                 }
 
