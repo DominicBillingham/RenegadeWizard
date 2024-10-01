@@ -41,7 +41,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             if (action == 1)
             {
                 var devour = new Interaction(this, "Devour").SelectRandomAlly().Devour();
-                devour.Description = $"{Name} attempts to devour [targets]! ";
+                devour.Description = $"{Name} attempts to {Narrator.GetViolentWord()} devour [targets]! ";
                 devour.Execute();
             }
 

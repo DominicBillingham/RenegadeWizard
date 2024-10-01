@@ -16,8 +16,11 @@ Console.ForegroundColor = ConsoleColor.White;
 Narrator.Setbackground();
 
 Narrator.ShowTitleCard();
-Thread.Sleep(2000);
+Thread.Sleep(4000);
 Narrator.ShowExplosions();
+Narrator.Setbackground();
+
+Narrator.ShowIntro();
 Narrator.Setbackground();
 
 

@@ -27,7 +27,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
         {
             if (IsDestroyed) return;
             var peck = new Interaction(this, "Bite").SelectRandomEnemy().ApplyDamage(2);
-            peck.Description = $"{Name} bites [targets], with intent to wound!";
+            peck.Description = $"{Name} {Narrator.GetViolentWord()} bites [targets] {Narrator.GetBodypart()} , with intent to wound!";
             peck.Execute();
         }
 

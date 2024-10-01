@@ -30,7 +30,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
         public override void TakeTurn()
         {
 
-            var action = Random.Shared.Next(3);
+            var action = Random.Shared.Next(2);
 
             if (action == 0)
             {

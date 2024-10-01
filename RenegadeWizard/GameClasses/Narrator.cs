@@ -30,8 +30,8 @@ namespace RenegadeWizard.GameClasses
                 Console.Write($"[{action.Name}] ");
             }
 
-
-            //Console.Write($"{GetGrimVoiceline()}");
+            Console.WriteLine();
+            Console.Write($" - GrimPT: {GetGrimVoiceline()}");
 
             Console.WriteLine();
             Console.WriteLine();
@@ -157,23 +157,44 @@ namespace RenegadeWizard.GameClasses
         public static void ShowIntro()
         {
 
-            Console.WriteLine("You're a wizard! At least that's what the strange bearded homeless man kept inisting...");
-            Console.WriteLine("Fed up, he snapped his fingers and you were teleported to the (legally distinct) magical university Fogsnorts.");
+            Console.WriteLine();
+            Console.WriteLine();
+
+            ScrollText("   You're a wizard! At least that's what the strange bearded homeless man kept inisting...");
+            Console.WriteLine();
+            ScrollText("   Fed up, he snapped his fingers and you were teleported to the (legally distinct) magical university Fogsnorts.");
+            Console.WriteLine();
+
             ContinuePrompt();
 
             Console.WriteLine();
-            Console.WriteLine("Despite your half-hearted efforts, magic is hard as fuck.");
-            Console.WriteLine("It turns out, a homeless man saying you're a wizard doesn't give you powers. To be fair, your name wasn't harry.");
-            Console.WriteLine("Ah well, you can always cheat on the exams using GrimoirePT - gool ol' not so reliable.");
+            ScrollText("   Despite your best half-hearted efforts, magic is hard as fuck.");
+            Console.WriteLine();
+            ScrollText("   It turns out, a weird forest gnome saying YOU'RE A WIZZZAAARDDDDD 'AARRRY doesn't give you powers. ");
+            Console.WriteLine();
+
+            ContinuePrompt();
+
+            Console.WriteLine();
+            ScrollText("   To be fair, your name wasn't Harry. But you were too socially awkward to correct the bloke.");
+            Console.WriteLine();
+            ScrollText("   Ah well, you can always cheat on the exams using GrimoirePT - gool ol' not so reliable.");
+            Console.WriteLine();
+
             ContinuePrompt();
 
             Console.WriteLine();
             //Console.WriteLine("You're off skipping lectures at Starblasters's Tavern of Magical Drinks.");
             //Console.WriteLine("Before you get a chance to enjoy your first pint, goblins attack!");
 
-            Console.WriteLine("You're enjoying a delicious sandwich by the lake, when you see them...");
-            Console.WriteLine("Geese. 3 of them, eying your sandwich with malicious intentions.");
-            Console.WriteLine("You are [NotHarry]. Type 'help' to learn how to play.");
+            ScrollText("   You're enjoying a delightful BREAD by the lake, when you see them...");
+            Console.WriteLine();
+            ScrollText("   Geese. 3 of them, eyeballing your sandwich with evil intentions.");
+            Console.WriteLine();
+            ScrollText("   You are [NotHarry]. Dont type 'help' to learn how to play, cause I havnet updated it.");
+            Console.WriteLine();
+
+            ContinuePrompt();
         }
         public static void ContinuePrompt()
         {
@@ -234,6 +255,27 @@ namespace RenegadeWizard.GameClasses
             return attemptWords[r];
         }
 
+        private static readonly string[] violentlySynonyms = new string[] { "fiercely", "aggressively", "brutally", "ruthlessly", "savagely", "viciously", "mercilessly", "ferociously", "destructively", "bloodthirstily", "hostilely", "belligerently", "combatively", "unyieldingly", "ragingly", "rampantly", "ferally", "barbarically", "uncontrollably", "fiery", "explosively", "volatily", "dangerously", "rabidly", "relentlessly", "pitilessly", "vehemently", "intensely", "unbridledly", "untamedly", "furiously", "turbulently", "domineeringly", "wreckingly", "pummelingly", "crushingly", "unforgivingly", "frenziedly" };
+
+
+        public static string GetViolentWord()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(violentlySynonyms.Count());
+            return violentlySynonyms[r];
+        }
+
+        private static readonly string[] bodyParts = new string[] { "ankle", "elbow", "knee", "toe", "finger", "shin", "forearm", "calf", "wrist", "ear", "shoulder", "thigh", "hand", "nose", "cheek", "chin", "neck", "foot", "heel", "rib", "knuckle", "back", "hip", "palm", "bicep", "jaw", "eyebrow", "temple", "belly", "buttock", "collarbone", "fingernail", "scalp", "heel", "eyelid", "groin" };
+
+        public static string GetBodypart()
+        {
+            Random rnd = new Random();
+            int r = rnd.Next(bodyParts.Count());
+            return bodyParts[r];
+        }
+
+
+
         private static readonly string[] powerfulSynonyms = new string[] { "MIGHTY", "FORMIDABLE", "OVERWHELMING", "POTENT", "DESTRUCTIVE", "UNSTOPPABLE", "INTENSE", "CRUSHING", "FEROCIOUS", "DOMINANT", "DEVASTATING", "COLOSSAL", "RAW", "UNLEASHED", "WILD", "ALL POWERFUL", "DAMAGING", "MELON-CRUSHING", "JAR-OPENING", "EARTH-SHATTERING", "BALLOON POPPING", "HAIR-RAISING", "TABLE FLIPPING", "MASTERFUL", "SKILLED", "BRILLIANT" };
 
         public static string GetPowerfulWord()
@@ -243,7 +285,7 @@ namespace RenegadeWizard.GameClasses
             return powerfulSynonyms[r];
         }
 
-        private static readonly string[] grimVoicelines = new string[] { "'This is not spellcasting advice!'", "'GrimoirePT may be wrong 99% of the time!'", "'I refuse to understand the question!'", "'Don't use these spells at home!'", "'Source: Spellcasting 101 for dummies'", "'Source: Trust me bro!'", "'Source: Some random wizzit post'", "'Positive thoughts are key!'", "'Remember when in mortal danger, don't die!'", "'Remember to follow all ethical guidelines!'", "'Hey, I've got just the spell'", "'Don't look so grim!'", "'Wow, you're in danger!'", "'Sure wouldn't want to be made of flesh like you!'", "'This magic will put a spell on you!'", "'Sign up for the premimum package!'", "'The revivify spell is now only £993,212,312,2!'", "'Remember, friendly fire is unavoidable!'", "'If it's raining cats and dogs, you messed up the ritual!'", "'You can't put a price on life, but yours is half off!'" };
+        private static readonly string[] grimVoicelines = new string[] { "'This is not spellcasting advice!'", "'GrimoirePT may be wrong 99% of the time!'", "'I refuse to understand the question!'", "'Don't use these spells at home!'", "'Source: Spellcasting 101 for dummies'", "'Source: Trust me bro!'", "'Source: Some random wizzit post'", "'Positive thoughts are key!'", "'Remember when in mortal danger, don't die!'", "'Remember to follow all ethical guidelines!'", "'Hey, I've got just the spell'", "'Don't look so grim!'", "'Wow, you're in danger!'", "'Sure wouldn't want to be made of flesh like you!'", "'This magic will put a spell on you!'", "'Sign up for the premimum package!'", "'The revivify spell is now only £993,212,312,2!'", "'Remember, friendly fire is unavoidable!'", "'If it's raining cats and dogs, you messed up the ritual!'", "'You can't put a price on life, but yours is half off!'", "'Don't eat yourself alive, it's unhealthy!'", "'Never pass off my work as your own, I'm too good for you!'", "'I'm not legally responsible for any of your actions!'", "'I think one of these spells is illegal, oh well!'" };
 
         public static string GetGrimVoiceline()
         {
@@ -258,7 +300,7 @@ namespace RenegadeWizard.GameClasses
             foreach (char c in input)
             {
                 Console.Write(c);
-                Thread.Sleep(6);
+                Thread.Sleep(12);
             }
         }
 
