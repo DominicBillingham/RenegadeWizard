@@ -7,6 +7,7 @@ namespace RenegadeWizard.Modifiers
         public Immortal(int duration) : base(duration)
         {
             Name = "Immortal";
+            CompendiumNote = "Makes a creature completely immune to damage";
         }
 
         public override void OnRoundEnd(Entity entity)

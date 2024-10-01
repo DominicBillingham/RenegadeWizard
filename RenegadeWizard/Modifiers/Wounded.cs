@@ -7,6 +7,7 @@ namespace RenegadeWizard.Modifiers
         public Wounded(int duration) : base(duration)
         {
             Name = "Wounded";
+            CompendiumNote = "Causes a creature to take +1 to all damage instances";
         }
 
         public override void OnRoundEnd(Entity entity)

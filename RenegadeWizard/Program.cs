@@ -17,10 +17,11 @@ Narrator.Setbackground();
 
 Narrator.ShowTitleCard();
 Thread.Sleep(4000);
-Narrator.ShowExplosions();
-Narrator.Setbackground();
 
-Narrator.ShowIntro();
+//Narrator.ShowExplosions();
+//Narrator.Setbackground();
+//Narrator.ShowIntro();
+
 Narrator.Setbackground();
 
 

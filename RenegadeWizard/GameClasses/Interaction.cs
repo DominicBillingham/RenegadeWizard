@@ -19,6 +19,7 @@ namespace RenegadeWizard.GameClasses
         public string Name { get; set; }
         public List<string> Synonyms { get; set; } = new();
         public string Description { get; set; } = string.Empty;
+        public string CompendiumNote { get; set; } = string.Empty;
         public Entity Agent { get; set; }
         public List<Entity> Targets { get; set; } = new();
         public List<ActionTag> Tags { get; set; } = new();

@@ -12,7 +12,7 @@ namespace RenegadeWizard.GameClasses
     public static class PlayerFunctionality
     {
 
-        public static List<Interaction> AllPlayerActions { get; set; } = new();
+        public static List<Interaction> AvailablePlayerActions { get; set; } = new();
 
         public static void PlayerTurn(Entity player)
         {
@@ -38,12 +38,21 @@ namespace RenegadeWizard.GameClasses
                     continue;
                 }
 
+                if (input.Any(x => x.ToLower().Contains("info")))
+                {
+                    foreach (var word in input)
+                    {
+                        TheCompendium.Search(word);
+                    }
+                    continue;
+                }
+
                 Interaction? ChosenAction = null;
 
                 foreach (var word in input)
                 {
 
-                    foreach (var action in AllPlayerActions)
+                    foreach (var action in AvailablePlayerActions)
                     {
 
                         if (action.Name.ToLower().Contains(word))
@@ -263,7 +272,7 @@ namespace RenegadeWizard.GameClasses
 
             }
 
-            AllPlayerActions = actions;
+            AvailablePlayerActions = actions;
         }
 
 

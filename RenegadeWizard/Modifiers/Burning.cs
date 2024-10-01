@@ -8,6 +8,8 @@ namespace RenegadeWizard.Modifiers
         public Burning(int duration) : base(duration)
         {
             Name = "Burning";
+            CompendiumNote = "Deals 2 damage at the end of the round, and can also spread randomly";
+           
         }
         public override void OnRoundEnd(Entity entity)
         {

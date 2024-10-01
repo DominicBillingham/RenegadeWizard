@@ -7,6 +7,7 @@ namespace RenegadeWizard.Modifiers
     public abstract class Modifier
     {
         public int Duration { get; set; } = 1;
+        public string CompendiumNote { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public Modifier(int duration)
         {
