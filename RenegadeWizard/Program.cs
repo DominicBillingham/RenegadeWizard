@@ -15,12 +15,8 @@ Console.BackgroundColor = ConsoleColor.Blue;
 Console.ForegroundColor = ConsoleColor.White;
 Narrator.Setbackground();
 
-Narrator.ShowTitleCard();
-Thread.Sleep(4000);
 
-//Narrator.ShowExplosions();
-//Narrator.Setbackground();
-//Narrator.ShowIntro();
+WorldNavigation.ExplorationLoop();
 
 Narrator.Setbackground();
 

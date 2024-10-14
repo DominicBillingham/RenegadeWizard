@@ -173,6 +173,14 @@ namespace RenegadeWizard.GameClasses
             CorpseCleanup();
         }
 
+        public static void ResetScene()
+        {
+            Entities = new();
+            Reinforcements = new();
+            Allies = new();
+            Round = 0;
+        }
+
     }
 }
 
