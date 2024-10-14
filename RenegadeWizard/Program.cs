@@ -16,13 +16,89 @@ Console.ForegroundColor = ConsoleColor.White;
 Narrator.Setbackground();
 
 
+Scene.NextRound();
+PlayerInput.AddSpells();
+Narrator.ShowRoundInfo();
+
+
+while (true)
+{
+
+    PlayerInput.TakeInput();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 WorldNavigation.ExplorationLoop();
 
 Narrator.Setbackground();
 
 
 Scene.NextRound();
-PlayerFunctionality.AddSpells();
+PlayerInput.AddSpells();
 Narrator.ShowRoundInfo();
 
 
@@ -32,7 +108,7 @@ while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed ==
     foreach (Entity ent in players)
     {
         if (ent.IsDestroyed) { continue; }
-        PlayerFunctionality.PlayerTurn(ent);
+        //PlayerFunctionality.PlayerTurn(ent);
         Thread.Sleep(750);
 
     }

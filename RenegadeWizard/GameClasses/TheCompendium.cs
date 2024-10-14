@@ -16,6 +16,9 @@ namespace RenegadeWizard.GameClasses
 {
     static public class TheCompendium
     {
+        // Used to store a generic instance of each ACTION, ENTITY, MODIFIER etc.
+        // This is primarily for being able to quickly find information about a game mechanic using the INFO command
+
         public static List<Entity> Entities { get; set; } = new();
         public static List<Interaction> Actions { get; set; } = new();
         public static List<Modifier> Modifiers { get; set; } = new();

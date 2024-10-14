@@ -6,121 +6,137 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace RenegadeWizard.GameClasses
 {
-    public static class PlayerFunctionality
+    public static class PlayerInput
     {
 
+        public static List<string> Input = new();
         public static List<Interaction> AvailablePlayerActions { get; set; } = new();
+        public static Interaction? ChosenAction { get; set; } = null;
+        public static List<Entity> ActionParamters { get; set; } = new();
 
-        public static void PlayerTurn(Entity player)
+        public static void TakeInput()
         {
 
-            int actionCost = 0;
+            Console.Write(" > ");
+            Input = Console.ReadLine().ToLower().Split(" ")
+                .Where(x => x.Length > 2)
+                .ToList();
 
-            while (actionCost == 0)
+            if (Input.Count == 0)
             {
-                Console.Write(" > ");
-                var input = Console.ReadLine().ToLower().Split(" ")
-                    .Where(x => x.Length > 2)
-                    .ToArray();
+                Console.WriteLine(" ! No words were found");
+                return;
+            }
 
-                if (input.Length == 0)
+            if ( InputContains("help") )
+            {
+                Narrator.ShowHelp();
+                return;
+            }
+
+            if ( InputContains("info") )
+            {
+                foreach (var word in Input)
                 {
-                    Console.WriteLine(" ! No words were found");
-                    continue;
+                    TheCompendium.Search(word);
+                    return;
+                }
+            }
+
+            // If it's not a command keyword, only then run the full Process
+            ProcessInput();
+
+        }
+
+        private static void ProcessInput()
+        {
+
+            ChosenAction = null;
+            ActionParamters.Clear();
+
+            foreach (var action in AvailablePlayerActions)
+            {
+
+                if (InputContains(action.Name.ToLower()))
+                {
+                    ChosenAction = action;
                 }
 
-                if (input.Any(x => x.ToLower().Contains("help")))
+                foreach (var synonym in action.Synonyms)
                 {
-                    Narrator.ShowHelp();
-                    continue;
-                }
-
-                if (input.Any(x => x.ToLower().Contains("info")))
-                {
-                    foreach (var word in input)
+                    if (InputContains(synonym.ToLower()))
                     {
-                        TheCompendium.Search(word);
-                    }
-                    continue;
-                }
-
-                Interaction? ChosenAction = null;
-
-                foreach (var word in input)
-                {
-
-                    foreach (var action in AvailablePlayerActions)
-                    {
-
-                        if (action.Name.ToLower().Contains(word))
-                        {
-                            ChosenAction = action; break;
-                        }
-
-                        foreach (var synonym in action.Synonyms)
-                        {
-                            if (synonym.ToLower().Contains(word))
-                            {
-                                ChosenAction = action; break;
-                            }
-                        }
-
-                    }
-
-                }
-
-
-                if (ChosenAction == null)
-                {
-                    Console.WriteLine(" ! No matching actions were found");
-                    continue;
-                }
-
-                List<Entity> sceneEntities = new List<Entity>(Scene.Entities);
-                List<Entity> actionParameters = new();
-
-                foreach (var word in input)
-                {
-                    var paramerter = sceneEntities.FirstOrDefault(x => x.Name.ToLower().Contains(word));
-                    if (paramerter != null)
-                    {
-                        actionParameters.Add(paramerter);
-                        sceneEntities.Remove(paramerter);
+                        ChosenAction = action;
                     }
                 }
+            }
 
-                if (ChosenAction != null)
+            foreach (var entity in Scene.Entities)
+            {
+
+                if (InputContains(entity.Name.ToLower()))
                 {
-                    ChosenAction.Targets = actionParameters;
-                    ChosenAction.Execute();
-
-                    if (ChosenAction.FreeAction)
-                    {
-                        actionCost = 0;
-
-                        Narrator.ContinuePrompt();
-                        Console.Clear();
-                        Narrator.ShowRoundInfo();
-
-                    }
-                    else
-                    {
-                        actionCost = 1;
-                        if (Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed == false))
-                        {
-                            AddSpells(player);
-                        }
-
-                    }
+                    ActionParamters.Add(entity);
                 }
-
             }
 
         }
 
+        private static bool InputContains(string word)
+        {
+
+            if (Input.Any(inputWord => inputWord.ToLower().Contains(word)))
+            {
+                return true;
+            }
+
+            if (Input.Any(inputWord => word.ToLower().Contains(inputWord)))
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+
+        //public static void TakeTurn(Entity player)
+        //{
+
+        //    if (ChosenAction != null)
+        //    {
+        //        ChosenAction.Targets = actionParameters;
+        //        ChosenAction.Execute();
+
+        //        if (ChosenAction.FreeAction)
+        //        {
+        //            actionCost = 0;
+
+        //            Narrator.ContinuePrompt();
+        //            Console.Clear();
+        //            Narrator.ShowRoundInfo();
+
+        //        }
+        //        else
+        //        {
+        //            actionCost = 1;
+        //            if (Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed == false))
+        //            {
+        //                AddSpells();
+        //            }
+
+        //        }
+        //    }
+
+
+        //}
+
+
+        // this should pull from the compendium, and not re-create spells because that's a pain
         public static void AddSpells(Entity? player = null)
         {
             List<Interaction> actions = new();

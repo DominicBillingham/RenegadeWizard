@@ -4,13 +4,6 @@ using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.Entities.Creatures.Goblin;
 using RenegadeWizard.Enums;
 using RenegadeWizard.Modifiers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace RenegadeWizard.GameClasses
 {
