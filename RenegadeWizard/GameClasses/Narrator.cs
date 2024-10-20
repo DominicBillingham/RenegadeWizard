@@ -3,6 +3,7 @@ using RenegadeWizard.Enums;
 using System.Linq.Expressions;
 using System.Security.AccessControl;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -15,9 +16,12 @@ namespace RenegadeWizard.GameClasses
             var actions = PlayerInput.PossibleActions;
 
             Console.WriteLine();
-            Console.WriteLine(" 0=[]:::::::::>  ----------  <:::::::::[]=0");
+            Console.WriteLine(" 0=[]:::::::::>  Exploration  <:::::::::[]=0");
+            Console.WriteLine(" -i- type any of the following: 'help', 'actions', 'spells'");
+            Console.WriteLine();
 
-            Console.WriteLine(" ! type one of the follwing to begin: HELP, ACTIONS, SPELLS");
+            //Console.WriteLine($" # {Scene.Description}");
+            ScrollText( " # " + Scene.Description);
             Console.WriteLine();
 
             var LivingCreatures = new EntQuery().SelectCreatures().SelectLiving().GetAll().OrderBy(ent => ent.Faction);
@@ -105,7 +109,7 @@ namespace RenegadeWizard.GameClasses
         public static void SetupConsole()
         {
             List<string> consoleBuffer = new List<string>();
-            Console.SetBufferSize(300, 400);
+            Console.SetBufferSize(400, 400);
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.White;
             Narrator.Setbackground();
@@ -115,10 +119,10 @@ namespace RenegadeWizard.GameClasses
         {
             Console.WriteLine("" +
 
-                "                                                                                                                         " + "\n" +
-                "                                                                                                                         " + "\n" +
-                "                                                                                                                         " + "\n" +
-                "                                                                                                                         " + "\n" +
+                "                                                                                                                           " + "\n" +
+                "                                                                                                                           " + "\n" +
+                "                                                                                                                           " + "\n" +
+                "                                                                                                                           " + "\n" +
                 "                                                                                                           *               " + "\n" +
                 @"                                                                                               /\                         " + "\n" +
                 @"       [][]    [][][]  []  []  [][][]  [][][]    []    [][]    [][][]                        //  \\     *       *         " + "\n" +
@@ -280,13 +284,22 @@ namespace RenegadeWizard.GameClasses
         }
 
 
+
+
         public static void ScrollText(string input)
         {
-            foreach (char c in input)
+
+            for (int i = 0; i < input.Length; i += Console.WindowWidth)
             {
-                Console.Write(c);
-                Thread.Sleep(12);
+                string line = input.Substring(i, Math.Min(Console.WindowWidth, input.Length - i));
+
+                foreach (char c in line)
+                {
+                    Console.Write(c);
+                    Thread.Sleep(12);
+                }
             }
+
         }
 
         // Some very entertaining methods made by chatgpt for animations

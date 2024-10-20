@@ -17,6 +17,13 @@ while (true)
     Narrator.DescribeScene();
     PlayerInput.TakeInput();
 
+
+
+
+
+
+
+
     Narrator.ContinuePrompt();
 }
 
@@ -60,11 +67,3 @@ while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed ==
 
 }
 
-Console.WriteLine();
-Console.WriteLine();
-Narrator.ShowBoom();
-
-
-Console.WriteLine("                                      You've died womp womp                              ");
-
-Narrator.ContinuePrompt();

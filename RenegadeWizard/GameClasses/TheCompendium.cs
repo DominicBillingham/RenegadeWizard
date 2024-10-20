@@ -116,10 +116,12 @@ namespace RenegadeWizard.GameClasses
         {
             var inspect = new Interaction(Player, "Inspect").Inspect();
             inspect.FreeAction = true;
+            inspect.CompendiumNote = "Inspect a creature or item to learn more information, depending on how smart you are...";
             inspect.Tags = new List<ActionTag> { ActionTag.Player, ActionTag.FreeAction };
             CoreActions.Add(inspect);
 
             var skip = new Interaction(Player, "Skip");
+            skip.CompendiumNote = "Allows you to skip your turn in combat.";
             skip.Tags = new List<ActionTag> { ActionTag.Player };
             CoreActions.Add(skip);
         }

@@ -38,17 +38,31 @@ namespace RenegadeWizard.GameClasses
                 return;
             }
 
-            if (InputContains("Actions"))
+            if (InputContains("actions"))
             {
                 TheCompendium.ListCoreActions();
                 return;
             }
 
-            if (InputContains("Spells"))
+            if (InputContains("spells"))
             {
                 TheCompendium.ListSpells();
                 return;
             }
+
+            if (InputContains("travel"))
+            {
+                foreach (var word in Input)
+                {
+                    WorldNavigation.TravelTo(word);
+                }
+            }
+
+            if (InputContains("locations"))
+            {
+
+            }
+
 
             if ( InputContains("info") )
             {
