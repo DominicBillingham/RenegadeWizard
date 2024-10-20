@@ -9,97 +9,16 @@ using System.Reflection;
 using System.Numerics;
 using RenegadeWizard.Entities.Creatures.Geese;
 
-List<string> consoleBuffer = new List<string>();
-Console.SetBufferSize(300, 400);
-Console.BackgroundColor = ConsoleColor.Blue;
-Console.ForegroundColor = ConsoleColor.White;
-Narrator.Setbackground();
-
-
-Scene.NextRound();
-PlayerInput.PopulatePossibleActions();
-Narrator.ShowRoundInfo();
-
+Narrator.SetupConsole();
 
 while (true)
 {
-
+    Scene.Update();
+    Narrator.DescribeScene();
     PlayerInput.TakeInput();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Narrator.ContinuePrompt();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-WorldNavigation.ExplorationLoop();
-
-Narrator.Setbackground();
-
-
-Scene.NextRound();
-Narrator.ShowRoundInfo();
-
 
 while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed == false) )
 {
@@ -132,14 +51,12 @@ while ( Scene.Entities.Any(x => x.IsPlayerControlled == true && x.IsDestroyed ==
         ent.ApplyRoundEndEffects();
     }
 
-    Scene.Round++;
-    Scene.NextRound();
 
     Narrator.ContinuePrompt();
 
     Console.Clear();
     Narrator.Setbackground();
-    Narrator.ShowRoundInfo();
+    Narrator.DescribeScene();
 
 }
 

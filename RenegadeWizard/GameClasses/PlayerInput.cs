@@ -38,6 +38,18 @@ namespace RenegadeWizard.GameClasses
                 return;
             }
 
+            if (InputContains("Actions"))
+            {
+                TheCompendium.ListCoreActions();
+                return;
+            }
+
+            if (InputContains("Spells"))
+            {
+                TheCompendium.ListSpells();
+                return;
+            }
+
             if ( InputContains("info") )
             {
                 foreach (var word in Input)
@@ -102,22 +114,6 @@ namespace RenegadeWizard.GameClasses
             }
 
             return false;
-
-        }
-
-        public static void PopulatePossibleActions(Entity? player = null)
-        {
-            List<Interaction> possibleActions = new();
-
-            possibleActions = possibleActions.Concat(TheCompendium.PlayerActions).ToList();
-
-            for (int i = 0; i < 4; i++)
-            {
-                int nextSpell = Random.Shared.Next(0, TheCompendium.Spells.Count);
-                possibleActions.Add(TheCompendium.Spells[nextSpell]);
-            }
-
-            PossibleActions = possibleActions;
 
         }
 

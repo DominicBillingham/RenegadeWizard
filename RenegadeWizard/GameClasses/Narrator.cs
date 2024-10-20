@@ -8,34 +8,17 @@ namespace RenegadeWizard.GameClasses
 {
     internal static class Narrator
     {
-        public static void ShowRoundInfo()
+        public static void DescribeScene()
         {
+            Console.Clear();
 
             var actions = PlayerInput.PossibleActions;
 
             Console.WriteLine();
-            Console.WriteLine("0=[]:::::::::>  Fight!  <:::::::::[]=0");
+            Console.WriteLine(" 0=[]:::::::::>  ----------  <:::::::::[]=0");
 
-            Console.Write($" - Actions: ");
-            foreach (var action in actions.Where(x => x.Tags.Contains(ActionTag.Player)))
-            {
-                Console.Write($"[{action.Name}] ");
-            }
-
+            Console.WriteLine(" ! type one of the follwing to begin: HELP, ACTIONS, SPELLS");
             Console.WriteLine();
-
-            Console.Write($" - Spells: ");
-            foreach (var action in actions.Where(x => x.Tags.Contains(ActionTag.Spell)))
-            {
-                Console.Write($"[{action.Name}] ");
-            }
-
-            Console.WriteLine();
-            Console.Write($" - GrimPT: {GetGrimVoiceline()}");
-
-            Console.WriteLine();
-            Console.WriteLine();
-
 
             var LivingCreatures = new EntQuery().SelectCreatures().SelectLiving().GetAll().OrderBy(ent => ent.Faction);
 
@@ -107,23 +90,25 @@ namespace RenegadeWizard.GameClasses
                 Console.WriteLine();
             }
 
-
-            Console.WriteLine();
-
         }
         public static void ShowHelp()
         {
             Console.WriteLine();
             Console.WriteLine(" - - - - - - - ?  Help  ? - - - - - - - ");
-            Console.WriteLine("This is a 1st person, text combat system. Type any sentence that includes one of the commands:");
-            Console.WriteLine("'Throw' 'Inspect' 'Consume'");
-            Console.WriteLine(" 'Fireball' 'DiguiseAs' 'CharmMonster' 'ConjureFriend' 'Enrage' 'TitanBrawl' 'Immortality' 'TransferConditions' 'Heal' 'Invisibility' ");
-            Console.WriteLine("EXAMPLE 'I throw beer at the goblin'");
-            Console.WriteLine();
-            Console.WriteLine("When you enter a command, it then searches for creature/item names. Anything in [ ] is a valid name.");
-            Console.WriteLine("No word is case sensitive. Any word can shortened down to 3 letters. EXAMPLE throw -> thr");
+            Console.WriteLine(" -i- This is a 1st person, text combat system. For example: 'I throw beer at the goblin'");
+            Console.WriteLine(" -i- Most actions or spells require a target name, anything in [] is a valid name");
+            Console.WriteLine(" -i- No words are case sensitive, and any [name] can be shortened down to 3 letters");
             Console.WriteLine(" - - - - - - - ?  Help  ? - - - - - - - ");
             Console.WriteLine();
+        }
+
+        public static void SetupConsole()
+        {
+            List<string> consoleBuffer = new List<string>();
+            Console.SetBufferSize(300, 400);
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.White;
+            Narrator.Setbackground();
         }
 
         public static void ShowTitleCard()
