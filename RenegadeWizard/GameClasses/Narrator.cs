@@ -11,7 +11,7 @@ namespace RenegadeWizard.GameClasses
         public static void ShowRoundInfo()
         {
 
-            var actions = PlayerInput.AvailablePlayerActions;
+            var actions = PlayerInput.PossibleActions;
 
             Console.WriteLine();
             Console.WriteLine("0=[]:::::::::>  Fight!  <:::::::::[]=0");

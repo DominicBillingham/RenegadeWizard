@@ -17,7 +17,7 @@ Narrator.Setbackground();
 
 
 Scene.NextRound();
-PlayerInput.AddSpells();
+PlayerInput.PopulatePossibleActions();
 Narrator.ShowRoundInfo();
 
 
@@ -98,7 +98,6 @@ Narrator.Setbackground();
 
 
 Scene.NextRound();
-PlayerInput.AddSpells();
 Narrator.ShowRoundInfo();
 
 
