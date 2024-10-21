@@ -9,6 +9,10 @@ namespace RenegadeWizard.GameClasses
 {
     internal static class Narrator
     {
+
+        // have the ability to change / highlight words. 
+
+
         public static void DescribeScene()
         {
             Console.Clear();
@@ -100,8 +104,9 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
             Console.WriteLine(" - - - - - - - ?  Help  ? - - - - - - - ");
             Console.WriteLine(" -i- This is a 1st person, text combat system. For example: 'I throw beer at the goblin'");
-            Console.WriteLine(" -i- Most actions or spells require a target name, anything in [] is a valid name");
-            Console.WriteLine(" -i- No words are case sensitive, and any [name] can be shortened down to 3 letters");
+            Console.WriteLine(" -i- Most actions or spells require a target name, anything between [] is a valid name");
+            Console.WriteLine(" -i- Nothing is case sensitive, and any [name] can be shortened down to 3 letters");
+            Console.WriteLine(" -i- Try 'actions' or 'spells' next!");
             Console.WriteLine(" - - - - - - - ?  Help  ? - - - - - - - ");
             Console.WriteLine();
         }

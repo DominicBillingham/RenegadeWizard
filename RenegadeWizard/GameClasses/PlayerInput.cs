@@ -13,6 +13,8 @@ namespace RenegadeWizard.GameClasses
     public static class PlayerInput
     {
 
+        // this shouldn't be a static class
+
         public static List<string> Input = new();
         public static List<Interaction> PossibleActions { get; set; } = new();
         public static Interaction? ChosenAction { get; set; } = null;
@@ -20,6 +22,8 @@ namespace RenegadeWizard.GameClasses
 
         public static void TakeInput()
         {
+
+            PossibleActions = TheCompendium.Actions;
 
             Console.Write(" > ");
             Input = Console.ReadLine().ToLower().Split(" ")
@@ -57,12 +61,6 @@ namespace RenegadeWizard.GameClasses
                     WorldNavigation.TravelTo(word);
                 }
             }
-
-            if (InputContains("locations"))
-            {
-
-            }
-
 
             if ( InputContains("info") )
             {
@@ -114,7 +112,7 @@ namespace RenegadeWizard.GameClasses
 
         }
 
-        private static bool InputContains(string word)
+        public static bool InputContains(string word)
         {
 
             if (Input.Any(inputWord => inputWord.ToLower().Contains(word)))

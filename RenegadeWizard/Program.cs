@@ -15,14 +15,9 @@ while (true)
 {
     Scene.Update();
     Narrator.DescribeScene();
+
     PlayerInput.TakeInput();
-
-
-
-
-
-
-
+    PlayerInput.ChosenAction?.Execute();
 
     Narrator.ContinuePrompt();
 }

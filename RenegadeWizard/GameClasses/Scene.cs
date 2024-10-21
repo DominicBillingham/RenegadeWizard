@@ -21,6 +21,7 @@ namespace RenegadeWizard.GameClasses
 
         static Scene()
         {
+            Scene.Entities.Add(new Goose());
         }
 
         public static void Update()

@@ -4,6 +4,7 @@ using RenegadeWizard.Entities.Creatures;
 using RenegadeWizard.Entities.Creatures.Goblin;
 using RenegadeWizard.Enums;
 using RenegadeWizard.Modifiers;
+using System.Xml.Linq;
 
 namespace RenegadeWizard.GameClasses
 {
@@ -312,6 +313,20 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
+        public Interaction Speak()
+        {
+
+            ActionComponents.Add(() =>
+            {
+                foreach (var entity in Targets)
+                {
+                    entity.WhenHearing();
+                }
+
+
+            });
+            return this;
+        }
         public Interaction RaiseDead()
         {
             ActionComponents.Add(() =>

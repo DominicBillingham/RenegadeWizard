@@ -127,6 +127,39 @@ namespace RenegadeWizard.Entities
             Console.Write($" - {Name} has been destroyed");
         }
 
+        public virtual void WhenHearing()
+        {
+
+
+
+            if (PlayerInput.InputContains("hello"))
+            {
+                Console.WriteLine($" @ {Name}: HOOOOOOOOOOOOOOONNNNNNNKK, I can speak human! Finally all that duolingoing has paid off. Got [bread]");
+                return;
+            }
+
+            if (PlayerInput.InputContains("honk"))
+            {
+                Console.WriteLine($" @ {Name}: HONK HONK [HELLO]");
+                return;
+            }
+
+            if (PlayerInput.InputContains("fuck"))
+            {
+                Console.WriteLine($" @ {Name}: swearing is immature");
+                return;
+            }
+
+            if (PlayerInput.InputContains("bread"))
+            {
+                Console.WriteLine($" @ {Name}: love lakes, love bread, ate' knees simple as");
+                return;
+            }
+
+            Console.WriteLine($" @ {Name}: [HONK]");
+
+        }
+
     }
 
    

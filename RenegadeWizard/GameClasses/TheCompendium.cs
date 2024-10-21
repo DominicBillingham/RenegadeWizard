@@ -120,6 +120,12 @@ namespace RenegadeWizard.GameClasses
             inspect.Tags = new List<ActionTag> { ActionTag.Player, ActionTag.FreeAction };
             CoreActions.Add(inspect);
 
+            var speak = new Interaction(Player, "Speak").SelectAll().Speak();
+            speak.Synonyms = new List<string> { "Say", "Shout", "Yell", "Whisper", "Announce", "State",  };
+            speak.CompendiumNote = "Say something outloud! Speak to people, monsters or monsterous people :D";
+            speak.Tags = new List<ActionTag> { ActionTag.Player};
+            CoreActions.Add(speak);
+
             var skip = new Interaction(Player, "Skip");
             skip.CompendiumNote = "Allows you to skip your turn in combat.";
             skip.Tags = new List<ActionTag> { ActionTag.Player };
