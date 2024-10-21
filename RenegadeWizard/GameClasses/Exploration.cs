@@ -20,8 +20,10 @@ namespace RenegadeWizard.GameClasses
 
                 Scene.ResetScene();
                 Scene.Description =
-                    "The pleasant sunlight flickers through the oak leaves, small creatures dart through the undergrowths. <WayfarerForest>" +
-                    "\n # a small stream wanders through the mud, seemingly making it's own path through the woodland. <FisherCreek>";
+                    "The pleasant sunlight flickers through the birch trees of <WayfarerWoods>, leaving the autumn leaves speckled with light." +
+                    " A small creek wanders through the mud, it's waters emboldened by the morning rain as it trails towards <FisherCreek>." +
+                    " Some form of monster has scarred the landscape leaving upturned mud and leaf in it's wake. " +
+                    " As if it was the aftermath of a violent river, the destruction winds and bends before entering <TheSlitheringHalls> "; 
             }
 
 

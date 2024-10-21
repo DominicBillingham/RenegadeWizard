@@ -14,8 +14,9 @@ namespace RenegadeWizard.GameClasses
         public static List<Entity> Reinforcements { get; set; } = new();
         public static List<Entity> Allies { get; set; } = new();
         public static string Description { get; set; } = 
-            "Your journey starts at the foot of Mount Endeavour, it's colossal size invites you to climb ever higher." +
-            "\n # But first you'll need to find your way through the dense trees. <WayfarerForest> ";
+            "<MountainBase> You wake up in the shadow of Mount Endeavour, it's peak eclipising the bright sun." +
+            " Nobody has ever made it to the summit, and from down here you can see why. It's a long way to go." +
+            " Looking around, you're surrounded birch trees, winding dirts paths seemingly invite you to explore further, leading you towards <WayfarerWoods>";
         public static bool inCombat { get; set; } = false;
 
         static Scene()

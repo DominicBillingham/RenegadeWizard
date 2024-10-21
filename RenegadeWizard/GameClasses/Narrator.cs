@@ -289,16 +289,31 @@ namespace RenegadeWizard.GameClasses
         public static void ScrollText(string input)
         {
 
-            for (int i = 0; i < input.Length; i += Console.WindowWidth)
-            {
-                string line = input.Substring(i, Math.Min(Console.WindowWidth, input.Length - i));
+            var fish = input.Split(' ');
+            int count = 0;
 
-                foreach (char c in line)
+            foreach (var word in fish)
+            {
+                count += word.Length + 1;
+
+                if (count < Console.WindowWidth - 10)
                 {
-                    Console.Write(c);
-                    Thread.Sleep(12);
+                    Console.Write(word + " ");
                 }
+                else
+                {
+                    Console.Write("\n   " + word + " ");
+                    count = 0;
+                }
+
             }
+
+            //foreach (char c in line)
+            //{
+            //    Console.Write(c);
+            //    Thread.Sleep(12);
+            //}
+            
 
         }
 
