@@ -1,4 +1,9 @@
 ﻿
+using RenegadeWizard.Components;
+using RenegadeWizard.Entities.Creatures;
+using RenegadeWizard.Entities.Creatures.Human;
+using RenegadeWizard.Entities.Creatures.Misc;
+
 namespace RenegadeWizard.GameClasses
 {
     static public class WorldNavigation
@@ -26,7 +31,20 @@ namespace RenegadeWizard.GameClasses
                     " As if it was the aftermath of a violent river, the destruction winds and bends before entering <TheSlitheringHalls> "; 
             }
 
+            if ( "fishercreek".Contains(location) )
+            {
+                Console.WriteLine(" # You arrive at Fisher Creek");
 
+                Scene.ResetScene();
+                Scene.Description =
+                    "After following the creek, the water coalesces into a crescent lake. Peering into the suprisingly clear water, you see a blend of colours." +
+                    " An endless river of koi fish create their own stream not of water, but colour below the surface. Some are colossal, but they glide all the same.";
+
+                var pete = new Human("FishermanPete");
+                pete.Conversation = new FishermanConversation();
+
+                Scene.Entities.Add(pete);
+            }
 
 
 

@@ -23,6 +23,7 @@ namespace RenegadeWizard.Entities
         public List<Modifier> Modifiers { get; set; } = new List<Modifier>();
         public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();
         public Attributes? Attributes { get; set; }
+        public Conversation? Conversation { get; set; }
 
 
         #region WhenMethods
@@ -130,33 +131,9 @@ namespace RenegadeWizard.Entities
         public virtual void WhenHearing()
         {
 
+            Conversation?.Listen(this.Name);
 
 
-            if (PlayerInput.InputContains("hello"))
-            {
-                Console.WriteLine($" @ {Name}: HOOOOOOOOOOOOOOONNNNNNNKK, I can speak human! Finally all that duolingoing has paid off. Got [bread]");
-                return;
-            }
-
-            if (PlayerInput.InputContains("honk"))
-            {
-                Console.WriteLine($" @ {Name}: HONK HONK [HELLO]");
-                return;
-            }
-
-            if (PlayerInput.InputContains("fuck"))
-            {
-                Console.WriteLine($" @ {Name}: swearing is immature");
-                return;
-            }
-
-            if (PlayerInput.InputContains("bread"))
-            {
-                Console.WriteLine($" @ {Name}: love lakes, love bread, ate' knees simple as");
-                return;
-            }
-
-            Console.WriteLine($" @ {Name}: [HONK]");
 
         }
 

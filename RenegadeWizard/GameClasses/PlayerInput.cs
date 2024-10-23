@@ -97,6 +97,7 @@ namespace RenegadeWizard.GameClasses
                 if (InputContains(action.Name.ToLower()))
                 {
                     ChosenAction = action;
+                    ChosenAction.Targets = ActionParamters;
                 }
 
                 foreach (var synonym in action.Synonyms)
@@ -104,11 +105,10 @@ namespace RenegadeWizard.GameClasses
                     if (InputContains(synonym.ToLower()))
                     {
                         ChosenAction = action;
+                        ChosenAction.Targets = ActionParamters;
                     }
                 }
             }
-
-
 
         }
 
