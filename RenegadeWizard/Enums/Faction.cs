@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RenegadeWizard.Enums
 {
-    public enum Factions
+    public enum Faction
     {
         Player,
         None,

@@ -17,7 +17,7 @@ namespace RenegadeWizard.Entities.Creatures.Misc
             Health = 20;
             Description = "Admiring yourself I see?";
             Attributes = new Attributes(10, 10, 10);
-            Faction = Factions.Player;
+            Faction = Faction.Player;
             IsPlayerControlled = true;
         }
 

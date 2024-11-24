@@ -292,7 +292,7 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
-        public Interaction ConjureGoblin(Factions faction, string name = "JoeTheFriend")
+        public Interaction ConjureGoblin(Faction faction, string name = "JoeTheFriend")
         {
             ActionComponents.Add(() =>
             {
@@ -342,7 +342,7 @@ namespace RenegadeWizard.GameClasses
                         entity.Faction = Agent.Faction;
                         entity.Name = $"Zombie{entity.Name}";
 
-                        if (entity.Faction == Factions.Player)
+                        if (entity.Faction == Faction.Player)
                         {
                             Scene.Allies.Add(entity);
                         } 
@@ -434,7 +434,7 @@ namespace RenegadeWizard.GameClasses
             {
                 foreach (var target in Targets)
                 {
-                    target.Faction = Factions.None;
+                    target.Faction = Faction.None;
                 }
 
             });

@@ -21,7 +21,7 @@ namespace RenegadeWizard.Entities.Creatures
             Health = 8;
             Weight = 12;
             Attributes = new Attributes(15, 15, 15);
-            Faction = Factions.Demon;
+            Faction = Faction.Demon;
         }
 
         public override void TakeTurn()

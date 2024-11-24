@@ -22,7 +22,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             Health = 5;
             Weight = 5;
             Attributes = new Attributes(7, 10, 8);
-            Faction = Factions.Geese;
+            Faction = Faction.Geese;
         }
 
         int DamageCount = 0;

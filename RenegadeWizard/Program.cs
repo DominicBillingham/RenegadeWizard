@@ -13,13 +13,16 @@ Narrator.SetupConsole();
 Narrator.ShowTitleCard();
 Thread.Sleep(1000);
 
+
+var gameState = GameState.Exploration;
+
 while (true)
 {
     Scene.Update();
     Narrator.DescribeScene();
 
     PlayerInput.TakeInput();
-    PlayerInput.ChosenAction?.Execute();
 
+    PlayerInput.ChosenAction?.Execute();
     Narrator.ContinuePrompt();
 }

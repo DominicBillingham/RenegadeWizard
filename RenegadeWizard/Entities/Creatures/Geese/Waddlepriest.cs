@@ -21,7 +21,7 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             Health = 3;
             Weight = 3;
             Attributes = new Attributes(3, 3, 7);
-            Faction = Factions.Geese;
+            Faction = Faction.Geese;
         }
 
         public override void TakeTurn()

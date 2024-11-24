@@ -46,6 +46,16 @@ namespace RenegadeWizard.GameClasses
                 Scene.Entities.Add(pete);
             }
 
+            if ("slitheringhalls".Contains(location))
+            {
+                Console.WriteLine(" # You arrive at the slithering halls");
+
+                Scene.ResetScene();
+                Scene.Description =
+                    " Colossal tunnels have been carved from the rock, " +
+                    " An endless river of koi fish create their own stream not of water, but colour below the surface. Some are colossal, but they glide all the same.";
+            }
+
 
 
         }

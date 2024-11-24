@@ -56,13 +56,13 @@ namespace RenegadeWizard.GameClasses
             return this;
         }
 
-        public EntQuery SelectHostiles(Factions faction)
+        public EntQuery SelectHostiles(Faction faction)
         {
-            Query = Query.Where(ent => ent.Faction != faction || ent.Faction == Factions.None);
+            Query = Query.Where(ent => ent.Faction != faction || ent.Faction == Faction.None);
             return this;
         }
 
-        public EntQuery SelectAllies(Factions faction)
+        public EntQuery SelectAllies(Faction faction)
         {
             Query = Query.Where(ent => ent.Faction == faction);
             return this;

@@ -20,7 +20,7 @@ namespace RenegadeWizard.Entities.Creatures.Goblin
             Health = 5;
             Weight = 12;
             Attributes = new Attributes(5, 5, 5);
-            Faction = Factions.Goblin;
+            Faction = Faction.Goblin;
         }
 
         public override void TakeTurn()

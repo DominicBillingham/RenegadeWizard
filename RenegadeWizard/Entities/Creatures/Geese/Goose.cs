@@ -20,7 +20,8 @@ namespace RenegadeWizard.Entities.Creatures.Geese
             Health = 3;
             Weight = 3;
             Attributes = new Attributes(5, 6, 3);
-            Faction = Factions.Geese;
+            Faction = Faction.Geese;
+            Conversation = new GooseConversation();
         }
 
         public override void TakeTurn()

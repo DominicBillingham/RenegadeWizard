@@ -34,8 +34,8 @@ namespace RenegadeWizard.GameClasses
         public static void AddReinforcements()
         {
 
-            var creatures = new EntQuery().SelectHostiles(Factions.Player).SelectCreatures().GetAll();
-            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Factions.Player).GetAll();
+            var creatures = new EntQuery().SelectHostiles(Faction.Player).SelectCreatures().GetAll();
+            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().SelectHostiles(Faction.Player).GetAll();
 
             if (Reinforcements.Count == 0 || livingCreatures.Count > 3)
             {
@@ -52,8 +52,8 @@ namespace RenegadeWizard.GameClasses
         public static void AddAllies()
         {
 
-            var creatures = new EntQuery().SelectAllies(Factions.Player).SelectCreatures().GetAll();
-            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Factions.Player).GetAll();
+            var creatures = new EntQuery().SelectAllies(Faction.Player).SelectCreatures().GetAll();
+            var livingCreatures = new EntQuery().SelectCreatures().SelectLiving().SelectAllies(Faction.Player).GetAll();
 
             if (Allies.Count == 0 || livingCreatures.Count > 2)
             {

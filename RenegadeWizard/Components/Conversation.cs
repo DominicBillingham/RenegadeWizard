@@ -16,7 +16,7 @@ namespace RenegadeWizard.Components
         }
     }
 
-    public class Goose : Conversation
+    public class GooseConversation : Conversation
     {
 
         public override void Listen(string name)

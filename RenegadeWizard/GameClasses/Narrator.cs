@@ -34,7 +34,7 @@ namespace RenegadeWizard.GameClasses
             {
 
                 Console.Write($" -");
-                if (creature.Faction == Enums.Factions.Player)
+                if (creature.Faction == Enums.Faction.Player)
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
                 }
@@ -86,7 +86,7 @@ namespace RenegadeWizard.GameClasses
 
                 foreach (var dead in deadCreatures)
                 {
-                    if (dead.Faction == Enums.Factions.Player)
+                    if (dead.Faction == Enums.Faction.Player)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
                     }

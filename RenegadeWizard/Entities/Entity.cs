@@ -18,7 +18,7 @@ namespace RenegadeWizard.Entities
         public string BattleLog { get; set; } = string.Empty;
         public int DamageTakenLastRound { get; set; } = 0;
         public int HealingLastRound { get; set; } = 0;
-        public Factions Faction { get; set; }
+        public Faction Faction { get; set; }
         public bool IsDestroyed { get { return Health < 1; } }
         public List<Modifier> Modifiers { get; set; } = new List<Modifier>();
         public List<Modifier> ModifierImmunities { get; set; } = new List<Modifier>();

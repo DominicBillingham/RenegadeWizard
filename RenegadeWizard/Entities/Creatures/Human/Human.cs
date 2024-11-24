@@ -17,7 +17,7 @@ namespace RenegadeWizard.Entities.Creatures.Human
             Health = 5;
             Description = "A random, awesome person!";
             Attributes = new Attributes(10, 10, 10);
-            Faction = Factions.Player;
+            Faction = Faction.Player;
         }
 
     }

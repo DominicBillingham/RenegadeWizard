@@ -110,6 +110,15 @@ namespace RenegadeWizard.GameClasses
                 }
             }
 
+
+            if (PlayerInput.ChosenAction == null)
+            {
+                foreach (var ent in Scene.Entities)
+                {
+                    ent.WhenHearing();
+                }
+
+            }
         }
 
         public static bool InputContains(string word)
