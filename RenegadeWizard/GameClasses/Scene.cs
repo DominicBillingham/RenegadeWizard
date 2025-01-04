@@ -13,15 +13,12 @@ namespace RenegadeWizard.GameClasses
         public static List<Entity> Entities { get; set; } = new();
         public static List<Entity> Reinforcements { get; set; } = new();
         public static List<Entity> Allies { get; set; } = new();
-        public static string Description { get; set; } = 
-            "<MountainBase> You wake up in the shadow of Mount Endeavour, it's peak eclipising the bright sun." +
-            " Nobody has ever made it to the summit, and from down here you can see why. It's a long way to go." +
-            " Looking around, you're surrounded birch trees, winding dirts paths seemingly invite you to explore further, leading you towards <WayfarerWoods>";
+        public static string Description { get; set; } = string.Empty;
         public static bool inCombat { get; set; } = false;
 
         static Scene()
         {
-            Scene.Entities.Add(new Goose());
+            WorldNavigation.TravelTo("mount");
         }
 
         public static void Update()

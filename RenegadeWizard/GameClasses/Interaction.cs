@@ -655,7 +655,7 @@ namespace RenegadeWizard.GameClasses
                 string targetString = string.Join(", ", Targets.Select(x => x.Name));
                 Description = Description.Replace("[targets]", targetString);
 
-                Narrator.ScrollText($" # {Description}");
+                Narrator.AutoLine($" # {Description}");
 
                 Console.WriteLine();
             }

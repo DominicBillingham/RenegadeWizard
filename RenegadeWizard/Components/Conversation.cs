@@ -64,5 +64,68 @@ namespace RenegadeWizard.Components
             Console.WriteLine($" @ {name}: [HONK]");
         }
 
+    }    
+    
+    public class ScholarConversation : Conversation
+    {
+
+        override public void Listen(string name)
+        {
+
+            Console.Write($" @ {name}: ");
+
+            if (PlayerInput.InputContains("passed"))
+            {
+                Narrator.AutoLine("'I do not know why before you ask. You are far away from <defiance>, and I cannot fathom why someone else would be here <too>.'");
+                Console.WriteLine();
+                return;
+            }
+
+            if (PlayerInput.InputContains("too"))
+            {
+                Narrator.AutoLine("'I am inspecting the ");
+                Console.WriteLine();
+                return;
+            }
+
+
+            Narrator.AutoLine( "He shuts his dusty tome with a hefty motion, all the while his eyes are focused on you." +
+                               " 'Take it easy. I've been keeping watch, while you were <passed> out.'"
+                             );
+            Console.WriteLine();
+        }
+
+    }    
+    
+    
+    public class PriestessConversation : Conversation
+    {
+
+        override public void Listen(string name)
+        {
+
+            Console.WriteLine($" @ {name}: ");
+
+            if (PlayerInput.InputContains("passed"))
+            {
+                Narrator.AutoLine("'I do not know why before you ask. You are far away from <defiance>, and I cannot fathom why someone else would be here <too>.'");
+                Console.WriteLine();
+                return;
+            }
+
+            if (PlayerInput.InputContains("too"))
+            {
+                Narrator.AutoLine("'I am inspecting the ");
+                Console.WriteLine();
+                return;
+            }
+
+
+            Narrator.AutoLine( "They flash you an awkward smile, their eyes laced with concern about your situation. " +
+                               " 'So um, strange <place> to take a respite. '"
+                             );
+            Console.WriteLine();
+        }
+
     }
 }

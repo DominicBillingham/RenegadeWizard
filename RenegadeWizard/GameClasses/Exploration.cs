@@ -18,8 +18,25 @@ namespace RenegadeWizard.GameClasses
                 return;
             }
 
+            if ("mountainbase".Contains(location))
+            {
+                Scene.ResetScene();
+                Scene.Description =
+                    "<MountainBase> You wake to the shadow of Mount Endeavour, it's peak eclipising the bright sun." +
+                    " Your eyes are blinded by the light, in response you instinctly turn away to avoid the sun's gaze." +
+                    " As you do, your eyes meet with an old scholar's, who has seemingly been watching over you." +
+                    " Beyond him, a dirt path winds deeper into <WayfarerWoods>";
 
-            if ( "wayfarerforest".Contains(location) )
+
+                var Historian = new Human("Old Scholar");
+                Historian.Conversation = new ScholarConversation();
+                Scene.Entities.Add(Historian);
+
+
+            }
+
+
+            if ( "wayfarerwoods".Contains(location) )
             {
                 Console.WriteLine(" # You arrive at Wayfarer Forest");
 

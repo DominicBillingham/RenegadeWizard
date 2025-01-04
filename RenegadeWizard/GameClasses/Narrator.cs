@@ -25,7 +25,7 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
 
             //Console.WriteLine($" # {Scene.Description}");
-            ScrollText( " # " + Scene.Description);
+            AutoLine( " # " + Scene.Description);
             Console.WriteLine();
 
             var LivingCreatures = new EntQuery().SelectCreatures().SelectLiving().GetAll().OrderBy(ent => ent.Faction);
@@ -154,25 +154,25 @@ namespace RenegadeWizard.GameClasses
             Console.WriteLine();
             Console.WriteLine();
 
-            ScrollText("   You're a wizard! At least that's what the strange bearded homeless man kept inisting...");
+            AutoLine("   You're a wizard! At least that's what the strange bearded homeless man kept inisting...");
             Console.WriteLine();
-            ScrollText("   Fed up, he snapped his fingers and you were teleported to the (legally distinct) magical university Fogsnorts.");
-            Console.WriteLine();
-
-            ContinuePrompt();
-
-            Console.WriteLine();
-            ScrollText("   Despite your best half-hearted efforts, magic is hard as fuck.");
-            Console.WriteLine();
-            ScrollText("   It turns out, a weird forest gnome saying YOU'RE A WIZZZAAARDDDDD 'AARRRY doesn't give you powers. ");
+            AutoLine("   Fed up, he snapped his fingers and you were teleported to the (legally distinct) magical university Fogsnorts.");
             Console.WriteLine();
 
             ContinuePrompt();
 
             Console.WriteLine();
-            ScrollText("   To be fair, your name wasn't Harry. But you were too socially awkward to correct the bloke.");
+            AutoLine("   Despite your best half-hearted efforts, magic is hard as fuck.");
             Console.WriteLine();
-            ScrollText("   Ah well, you can always cheat on the exams using GrimoirePT - gool ol' not so reliable.");
+            AutoLine("   It turns out, a weird forest gnome saying YOU'RE A WIZZZAAARDDDDD 'AARRRY doesn't give you powers. ");
+            Console.WriteLine();
+
+            ContinuePrompt();
+
+            Console.WriteLine();
+            AutoLine("   To be fair, your name wasn't Harry. But you were too socially awkward to correct the bloke.");
+            Console.WriteLine();
+            AutoLine("   Ah well, you can always cheat on the exams using GrimoirePT - gool ol' not so reliable.");
             Console.WriteLine();
 
             ContinuePrompt();
@@ -181,11 +181,11 @@ namespace RenegadeWizard.GameClasses
             //Console.WriteLine("You're off skipping lectures at Starblasters's Tavern of Magical Drinks.");
             //Console.WriteLine("Before you get a chance to enjoy your first pint, goblins attack!");
 
-            ScrollText("   You're enjoying a delightful BREAD by the lake, when you see them...");
+            AutoLine("   You're enjoying a delightful BREAD by the lake, when you see them...");
             Console.WriteLine();
-            ScrollText("   Geese. 3 of them, eyeballing your sandwich with evil intentions.");
+            AutoLine("   Geese. 3 of them, eyeballing your sandwich with evil intentions.");
             Console.WriteLine();
-            ScrollText("   You are [NotHarry]. Dont type 'help' to learn how to play, cause I havnet updated it.");
+            AutoLine("   You are [NotHarry]. Dont type 'help' to learn how to play, cause I havnet updated it.");
             Console.WriteLine();
 
             ContinuePrompt();
@@ -291,7 +291,7 @@ namespace RenegadeWizard.GameClasses
 
 
 
-        public static void ScrollText(string input)
+        public static void AutoLine(string input)
         {
 
             var fish = input.Split(' ');
@@ -301,25 +301,30 @@ namespace RenegadeWizard.GameClasses
             {
                 count += word.Length + 1;
 
-                if (count < Console.WindowWidth - 10)
+                if (count < Console.WindowWidth - 15)
                 {
-                    Console.Write(word + " ");
+                    ScrollText(word + " ");
                 }
                 else
                 {
-                    Console.Write("\n   " + word + " ");
+                    ScrollText("\n   " + word + " ");
                     count = 0;
                 }
 
             }
 
-            //foreach (char c in line)
-            //{
-            //    Console.Write(c);
-            //    Thread.Sleep(12);
-            //}
             
 
+        }
+
+        public static void ScrollText(string line)
+        {
+
+            foreach (char c in line)
+            {
+                Console.Write(c);
+                Thread.Sleep(0);
+            }
         }
 
         // Some very entertaining methods made by chatgpt for animations
